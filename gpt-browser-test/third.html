@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" >
+
+    <meta name="author" content="Jakevin 羅旭辰" />
+    <meta name="publisher" content="Jakevin 羅旭辰" />
+    <meta name="company" content="北科大工工所" />
+
+    <meta name="rating" content="general" />
+    <meta name="copyright" content="&copy; Jakevin Lo" />
+    <meta name="robots" content="all" />
+    <meta name="spiders" content="all" />
+    <meta name="webcrawlers" content="all" />
+    <meta name="theme-color" content="#0085d5">
+    <meta name="abstract" content="This is the abstract of test page" />
+    <meta name="subject" content="This is the subject of test page" />
+    <meta name="description" content="This is the description of test page" />
+    <meta name="keywords" content="keyword1, keyword2, keyword3, keyword4" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <title>This is the Title of test page</title>
+    <style>
+      
+    </style>
+  </head>
+  <body>
+    <div id="app">
+        <h1>{{ state.title }}</h1>
+        <h6>{{ state.content }}</h6>
+    </div>
+
+    <script>
+        const { createApp, reactive, onMounted } = Vue
+        const app = createApp({
+            setup() {
+                const state = reactive({
+                    title:"縮胃手術就可以減重？一篇帶你了解手術過程、手術前後注意事項和風險",
+                    content:`體重控制對某些人來說較困難，他們因為遺傳、荷爾蒙失衡、特定藥物或其他身體狀況，難以透過飲食習慣和運動減重，縮胃手術就成為另外一種減重的方法。縮胃手術是什麼？縮胃手術就能成功減重嗎？本篇將說明縮胃手術原理和種類，以及縮胃手術後遺症和術後注意事項，並列舉3大常見縮胃手術問題，讓你對縮胃手術更了解。`
+                })
+
+                return {
+                    state,
+                };
+            }
+        }).mount("#app");
+      </script>
+  </body>
+</html>
