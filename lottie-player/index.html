@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://unpkg.com/@dotlottie/player-component@1.0.0/dist/dotlottie-player.js"></script>
+    <script src="https://unpkg.com/vue@3" ></script>
+    <script src="https://cdn.master.co/css" ></script>
+    <script src="https://unpkg.com/element-plus"></script>
+    <link rel="stylesheet" href="//unpkg.com/element-plus/dist/index.css" />
+
+    <title>Lottie Player</title>
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div style="display: flex;">
+            <input type="file" @change="onFileUploaded" style="width: 300px;" accept=".lottie">
+        </div>
+        <div ref="ok" style="width: 320px;">
+            <dotlottie-player ref="anim" :src="playFile" controls autoplay loop speed="1"></dotlottie-player>
+        </div>
+    </div>
+
+    <script>
+        const { ElMessage } = ElementPlus;
+        const app = Vue.createApp({
+            setup() {
+
+                // 使用 ref() 進行雙向綁定
+                const playFile = Vue.ref('https://assets5.lottiefiles.com/packages/lf20_H0vxmL.json')
+                const anim = Vue.ref(null)
+
+                const onFileUploaded = (e) => {
+                    const image = e.target.files[0]
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        playFile.value = e.target.result;
+                        anim.value.load(playFile.value)
+                    }
+                    //Imagepath.files[0] is blob type
+                    reader.readAsDataURL(image);
+                }
+
+                Vue.onMounted(() => {
+                    anim.value.addEventListener("error", () => {
+                        ElMessage.error('Oops, The file format is incorrect.')
+                    });
+                })
+
+                // 需要回傳值，才能在 HTML 使用
+                return{
+                    message: 'Hello Vue!',
+                    playFile,
+                    anim,
+                    onFileUploaded
+                }
+            }
+        });
+
+        app.use(ElementPlus).mount('#app')
+    </script>
+</body>
+
+</html>
