@@ -9,6 +9,7 @@ $(function () {
             .replace(/台銀/g, "台灣銀行")
             .replace(/郵局/g, "中華郵政")
             .replace(/中信/g, "中國信託商業銀行")
+            .replace(/中國信託銀行/g, "中國信託商業銀行")
             .replace(/合庫/g, "合作金庫")
             .replace(/凱基銀行/g,"凱基商業銀行")
             .replace(/匯豐銀行/g,"滙豐(台灣)商業銀行")
