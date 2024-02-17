@@ -1,0 +1,99 @@
+openapi: 3.0.1
+info:
+  title: 搜尋ACCUPASS活動！
+  description: 查詢關鍵字活動.
+  version: 'v1'
+servers:
+  - url: https://api.accupass.com/v3
+paths:
+  /search/SearchEvents:
+    post:
+      operationId: SearchEventByKeyword
+      summary: SearchEventByKeyword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/searchRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/events"
+
+components:
+  schemas:
+    searchRequest:
+      type: object
+      required:
+      - keyword
+      - sortBy
+      - categoryTypeList
+      - simpleEventPlaceTypeList
+      - cityLocationList
+      properties:
+        keyword:
+          type: string
+          description: 用關鍵字查詢活動.
+          required: true 
+
+        sortBy:
+          type: integer
+          description: 用關鍵字查詢活動.
+          required: true
+          default: 4
+
+        categoryTypeList:
+          type: array
+          description: 類別.
+          required: true
+          default: []
+        
+        simpleEventPlaceTypeList:
+          type: array
+          description: 票價.
+          required: true
+          default: []
+        
+        cityLocationList:
+          type: array
+          description: 城市.
+          required: true
+          default: []
+
+    event:
+      type: object
+      required:
+      - photoUrl
+      - name
+      - startDateTime
+      - endDateTime
+      - location
+      properties:
+        photoUrl:
+          type: string
+        name:
+          type: string
+        startDateTime:
+          type: datetime
+        endDateTime:
+          type: datetime
+        location:
+          type: string
+
+    events:
+      type: object
+      required:
+      - total
+      - items
+      properties:
+        total:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/event"
+        

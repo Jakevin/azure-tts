@@ -3,7 +3,7 @@ $(function () {
     var bankJson = JSON.parse(bank)
     $("#btnChange").click(function () {
         let output = ''
-        let source = $('#inputText').val()
+        let source = $("#inputText").val()
             .replace(/臺/g, '台')
             .replace(/簡易型/g, "")
             .replace(/台銀/g, "台灣銀行")
