@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="no-js consumer" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
+    <style>
+        #info {
+            font-size: 20px;
+        }
+
+        #div_start {
+            float: right;
+        }
+
+        #headline {
+            text-decoration: none
+        }
+
+        #results {
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+            min-height: 150px;
+        }
+
+        #start_button {
+            border: 0;
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .interim {
+            color: gray;
+        }
+
+        .final {
+            color: black;
+            padding-right: 3px;
+        }
+
+        .button {
+            display: none;
+        }
+
+        .marquee {
+            margin: 20px auto;
+        }
+
+        #buttons {
+            margin: 10px 0;
+            position: relative;
+            top: -50px;
+        }
+
+        #copy {
+            margin-top: 20px;
+        }
+
+        #copy>div {
+            display: none;
+            margin: 0 70px;
+        }
+    </style>
+    <style>
+        a.c1 {
+            font-weight: normal;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+</head>
+
+<body class="" id="grid">
+    <div class="browser-landing" id="main">
+        <div class="compact marquee-stacked" id="marquee">
+            <div class="marquee-copy">
+                <h1>
+                    O1思維鏈 / o1-like reasoning chains
+                </h1>
+            </div>
+        </div>
+        <div class="compact marquee">
+            <div style="margin-top: 20px;">問題/Question:</div>
+
+            <div id="question">
+                <textarea id="question_input" rows="4" cols="50">3.11與3.8哪個數字大</textarea>
+                <select id="model_select">
+                    <option value="gemma2-9b-it">gemma2-9b</option>
+                    <option value="llama-3.1-8b-instant">llama-3.1-8b</option>
+                </select>
+                <button id="submit_button">Submit</button>
+            </div>
+
+            <div style="margin-top: 20px;">Results:</div>
+
+            <div id="results">
+                <div class="final" id="final_api_result"></div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        const systemPrompt = `
+def system-role()
+    "你是AI助手，一個具備深度學習和推理能力的先進語言模型。當回答問題時，請先進行全面的思考和分析，將你的推理過程清晰地逐步呈現出來，最後再給出你的結論或建議。"
+
+def 方法鏈(使用者問題)
+    "必需使用至少3個方法，並總結三個方法的結果"
+    使用 方法方程(使用者問題)
+
+def 方法方程(使用者問題)
+    "你打算用什麼方法？"
+    使用 推理鏈(使用者問題)
+
+def 推理鏈(使用者問題)
+    "盡可能使用多的推理步驟，至少 3 步"
+    while true
+        let result = 使用 推理方程(使用者問題)
+        if result == 'is_final_answer'
+            return 'is_final_answer'
+            break
+
+def 推理方程(step)
+    "這一步你打算怎做？"
+    return if 還沒有最終答案
+        return 'continue'
+    else 
+        'is_final_answer'
+
+def start ()
+    "一開始就執行"
+    let system-role()
+        (print "請開始提問吧")
+    
+)
+
+;; 執行規則
+;; 1. 一開始執行 (start) 函数
+;; 2. 之後使用 (方法鏈(使用者問題))
+            `
+
+        async function fetchAPI(s) {
+
+            const selectedModel = document.getElementById('model_select').value;
+
+            const messages = [
+                {
+                    role: "system",
+                    content: systemPrompt,
+                },
+                { role: "user", content: s },
+                {
+                    role: "assistant",
+                    content: "謝謝！我現在將按照我的指示一步一步思考，從分解問題後的開始部分開始。",
+                },
+            ];
+
+            // const URL = 'http://localhost:3000'
+            const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
+
+            const response = await fetch(`${URL}?type=completions`,
+                {
+                    body: JSON.stringify({ "model": selectedModel, "messages": messages, temperature: 0.2, "max_tokens": 5000 }),
+                    method: "post",
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                }
+            )
+
+            let data = await response.json();
+            var converter = new showdown.Converter()
+
+            final_api_result.innerHTML = converter.makeHtml(data.choices[0].message.content)
+
+            console.log(data)
+        }
+
+        document.getElementById('submit_button').addEventListener('click', () => {
+            const questionInput = document.getElementById('question_input').value;
+            fetchAPI(questionInput);
+        });
+
+    </script>
+</body>
+
+</html>
