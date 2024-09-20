@@ -80,10 +80,10 @@
                     O1思維鏈 / o1-like reasoning chains
                 </h1>
                 <h4>
-                    你是中文使用者的話，請選擇gemma2-9b-it模型。
+                    你是中文使用者的話，請選擇gemma2-9b-it模型。他對中文的理解能力較強。
                 </h4>
                 <h4>
-                    If you are an English user, please select the llama-3.1-8b-instant model.
+                    If you are an English user, please select the English System Prompt.
                 </h4>
                 Github:<a href="https://github.com/Jakevin/o1-like-prompt">https://github.com/Jakevin/o1-like-prompt</a>
             </div>
@@ -217,8 +217,8 @@ def start ()
                 },
             ];
 
-            // const URL = 'http://localhost:3000'
-            const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
+            const URL = 'http://localhost:3000'
+            // const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
 
             const response = await fetch(`${URL}?type=completions`,
                 {
