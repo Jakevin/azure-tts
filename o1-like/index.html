@@ -105,6 +105,13 @@
                 <div class="final" id="final_api_result"></div>
             </div>
 
+            <div style="margin-top: 20px;">Select System Prompt:</div>
+            <select id="prompt_select">
+                <option value="systemPrompt">中文System Prompt</option>
+                <option value="enSystemPrompt">English System Prompt</option>
+            </select>
+            <div id="prompt_display" style="white-space: pre-wrap; margin-top: 10px; background-color: #CCCCCC;"></div>
+
         </div>
     </div>
     <script>
@@ -184,6 +191,7 @@ def start ()
 ;; 1. 一開始執行 (start) 函数
 ;; 2. 之後使用 (方法鏈(使用者問題))
             `
+        let selectedPrompt = 'systemPrompt'
 
         async function fetchAPI(s) {
             let prompt = systemPrompt
@@ -191,7 +199,7 @@ def start ()
 
             const selectedModel = document.getElementById('model_select').value;
 
-            if (selectedModel === 'llama-3.1-8b-instant') {
+            if (selectedPrompt === 'enSystemPrompt') {
                 prompt = enSystemPrompt
                 assistantSay = "OK, let me think about it."
             }
@@ -208,8 +216,8 @@ def start ()
                 },
             ];
 
-            // const URL = 'http://localhost:3000'
-            const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
+            const URL = 'http://localhost:3000'
+            // const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
 
             const response = await fetch(`${URL}?type=completions`,
                 {
@@ -233,6 +241,19 @@ def start ()
             const questionInput = document.getElementById('question_input').value;
             fetchAPI(questionInput);
         });
+
+        // 顯示選擇的 Prompt
+        document.getElementById('prompt_select').addEventListener('change', (event) => {
+            selectedPrompt = event.target.value;
+            if (selectedPrompt === 'systemPrompt') {
+                document.getElementById('prompt_display').textContent = systemPrompt;
+            } else if (selectedPrompt === 'enSystemPrompt') {
+                document.getElementById('prompt_display').textContent = enSystemPrompt;
+            }
+        });
+
+        // 預設顯示 systemPrompt
+        document.getElementById('prompt_display').textContent = systemPrompt;
 
     </script>
 </body>
