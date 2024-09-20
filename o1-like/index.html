@@ -95,7 +95,9 @@
                 <textarea id="question_input" rows="4" cols="50">3.11 and 3.8 which one is bigger</textarea>
                 <select id="model_select">
                     <option value="gemma2-9b-it">gemma2-9b</option>
-                    <option value="llama-3.1-70b-versatile">llama-3.1-70b</option>
+                    <option value="llama-3.1-8b-instant">llama-3.1-8b</option>
+                    <option value="llama-3.1-70b-instant">llama-3.1-70b</option>
+
                 </select>
                 <button id="submit_button">Submit</button>
             </div>
@@ -130,7 +132,7 @@ def methodChain(user_question):
         if result == 'is_final_answer' || step > 3
             return 'is_final_answer'
             break
-   
+
 
 def methodEquation(user_question):
     "Which method do you intend to use?"
@@ -176,7 +178,7 @@ def 方法鏈(使用者問題)
         if result == 'is_final_answer' || step > 3
             return 'is_final_answer'
             break
-    
+
 
 def 方法方程(使用者問題)
     "你打算用什麼方法？請描述"
@@ -194,19 +196,20 @@ def 推理方程(step, 使用者問題)
     "這是第 step 步你打算怎做？"
     return if 還沒有最終答案
         return 'continue'
-    else 
+    else
         'is_final_answer'
 
 def start ()
     "一開始就執行"
     let system-role()
         (print "請開始提問吧")
-    
+
 )
 
 ;; 執行規則
 ;; 1. 一開始執行 (start) 函数
 ;; 2. 之後使用 (方法鏈(使用者問題))
+
             `
         let selectedPrompt = 'systemPrompt'
 
@@ -233,8 +236,8 @@ def start ()
                 },
             ];
 
-            // const URL = 'http://localhost:3000'
-            const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
+            const URL = 'http://localhost:3000'
+            // const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
 
             const response = await fetch(`${URL}?type=completions`,
                 {
@@ -254,10 +257,10 @@ def start ()
             console.log(data)
         }
 
-        document.getElementById('submit_button').addEventListener('click', () => {
+        document.getElementById('submit_button').addEventListener('click', async () => {
             const questionInput = document.getElementById('question_input').value;
             final_api_result.innerHTML = 'Loading...';
-            fetchAPI(questionInput);
+            await fetchAPI(questionInput);
         });
 
         // 顯示選擇的 Prompt
