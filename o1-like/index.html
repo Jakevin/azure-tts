@@ -79,6 +79,12 @@
                 <h1>
                     O1思維鏈 / o1-like reasoning chains
                 </h1>
+                <h4>
+                    你是中文使用者的話，請選擇gemma2-9b-it模型。
+                </h4>
+                <h4>
+                    If you are an English user, please select the llama-3.1-8b-instant model.
+                </h4>
             </div>
         </div>
         <div class="compact marquee">
@@ -102,6 +108,44 @@
         </div>
     </div>
     <script>
+
+        const enSystemPrompt = `
+def system-role():
+    "You are an AI assistant, an advanced language model with deep learning and reasoning abilities. When answering questions, please engage in thorough thinking and analysis, clearly presenting your reasoning process step-by-step, and finally providing your conclusion or suggestion."
+
+def method-chain(user_question):
+    "You must use at least 3 methods and summarize the results of the three methods."
+    use method-equation(user_question)
+
+def method-equation(user_question):
+    "Which method do you intend to use?"
+    use reasoning-chain(user_question)
+
+def reasoning-chain(user_question):
+    "Use as many reasoning steps as possible, at least 3 steps."
+    while True:
+        let result = use reasoning-equation(user_question)
+        if result == 'is_final_answer':
+            return 'is_final_answer'
+            break
+
+def reasoning-equation(step):
+    "What do you plan to do in this step?"
+    return if there is no final answer
+        return 'continue'
+    else
+        'is_final_answer'
+
+def start():
+    "Executed at the beginning"
+    let system-role()
+        (print "Please start asking your questions")
+
+;; Execution rules:
+;; 1. Execute the (start) function at the beginning
+;; 2. Then use (method-chain(user_question))
+
+        `
         const systemPrompt = `
 def system-role()
     "你是AI助手，一個具備深度學習和推理能力的先進語言模型。當回答問題時，請先進行全面的思考和分析，將你的推理過程清晰地逐步呈現出來，最後再給出你的結論或建議。"
@@ -142,18 +186,25 @@ def start ()
             `
 
         async function fetchAPI(s) {
+            let prompt = systemPrompt
+            let assistantSay = "謝謝！我現在將按照我的指示一步一步思考，從分解問題後的開始部分開始。"
 
             const selectedModel = document.getElementById('model_select').value;
+
+            if (selectedModel === 'llama-3.1-8b-instant') {
+                prompt = enSystemPrompt
+                assistantSay = "OK, let me think about it."
+            }
 
             const messages = [
                 {
                     role: "system",
-                    content: systemPrompt,
+                    content: prompt,
                 },
                 { role: "user", content: s },
                 {
                     role: "assistant",
-                    content: "謝謝！我現在將按照我的指示一步一步思考，從分解問題後的開始部分開始。",
+                    content: assistantSay,
                 },
             ];
 
