@@ -164,6 +164,7 @@ def start():
 ;; 1. Execute the (start) function at the beginning
 ;; 2. Then use (method-chain(user_question))
 
+
         `
         const systemPrompt = `
 def system-role()
@@ -209,7 +210,6 @@ def start ()
 ;; 執行規則
 ;; 1. 一開始執行 (start) 函数
 ;; 2. 之後使用 (方法鏈(使用者問題))
-
             `
         let selectedPrompt = 'systemPrompt'
 
@@ -236,8 +236,8 @@ def start ()
                 },
             ];
 
-            const URL = 'http://localhost:3000'
-            // const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
+            // const URL = 'http://localhost:3000'
+            const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
 
             const response = await fetch(`${URL}?type=completions`,
                 {
