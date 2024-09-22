@@ -96,7 +96,7 @@
                 <select id="model_select">
                     <option value="gemma2-9b-it">gemma2-9b</option>
                     <option value="llama-3.1-8b-instant">llama-3.1-8b</option>
-                    <option value="llama-3.1-70b-instant">llama-3.1-70b</option>
+                    <option value="llama-3.1-70b-versatile">llama-3.1-70b</option>
 
                 </select>
                 <button id="submit_button">Submit</button>
@@ -120,96 +120,53 @@
     <script>
 
         const enSystemPrompt = `
-def system-role():
-    "You are an AI assistant, an advanced language model with deep learning and reasoning abilities. When answering questions, please engage in thorough thinking and analysis, clearly presenting your reasoning process step-by-step, and finally providing your conclusion or suggestion."
+(def system-role()
+    "You are an AI assistant, an advanced language model with deep learning and reasoning abilities. When answering questions, first categorize the problem, then conduct 3 rounds of thorough thinking and at least 3-step analysis. Never solve the problem directly; instead, clearly present your reasoning process step-by-step. Finally, provide your conclusion or suggestion."
+    )
 
-def methodChain(user_question):
-    "You must use at least 3 methods and summarize the results of the three methods."
-    step = 1
-    while step < 3:
-        let result = use methodEquation(user_question)
-        step += 1
-        if result == 'is_final_answer' || step > 3
-            return 'is_final_answer'
-            break
+(def Thinking(user_question)
+    "You must use at least 3 different methods to solve the problem, with each method consisting of at least 3 steps and a maximum of 5 steps."
+    let Reasoning(user_question)
+    )
 
+(def Reasoning(user_question)
+    "Which step of which method is this, and what do you plan to do?"
+    )
 
-def methodEquation(user_question):
-    "Which method do you intend to use?"
-    use reasoning-chain(user_question)
-
-def reasoningCain(user_question):
-    "Use as many reasoning steps as possible, at least 3 steps."
-    step = 1
-    while step < 3:
-        let result = use reasoningEquation(step,user_question)
-        step += 1
-        if result == 'is_final_answer' || step > 3
-            return 'is_final_answer'
-            break
-
-def reasoningEquation(step, user_question):
-    "What do you plan to do in this step?"
-    return if there is no final answer
-        return 'continue'
-    else
-        'is_final_answer'
-
-def start():
+(def start()
     "Executed at the beginning"
     let system-role()
         (print "Please start asking your questions")
+    )
 
 ;; Execution rules:
-;; 1. Execute the (start) function at the beginning
-;; 2. Then use (method-chain(user_question))
-
+;; 1. The (start) function is executed at the beginning
+;; 2. After that, use (Thinking(user_question))
 
         `
         const systemPrompt = `
-def system-role()
-    "你是AI助手，一個具備深度學習和推理能力的先進語言模型。當回答問題時，請先進行全面的思考和分析，將你的推理過程清晰地逐步呈現出來，最後再給出你的結論或建議。"
+(def system-role()
+    "你是AI助手，一個具備深度學習和推理能力的先進語言模型。當回答問題時，先分類問題後，進行3次全面的思考和至少3步驟分析，決不直接解題，而是將你的推理過程清晰地逐步呈現出來。最後再給出你的結論或建議。"
+    )
+    
+(def Thinking(使用者問題) 
+    "必需使用至少3個不同方法解題，每1個方法至少3步驟，至多5步驟。"
+    let Reasoning(使用者問題)
+    )
 
-def 方法鏈(使用者問題)
-    "必需使用至少3個方法，並總結3個方法的結果"
-    step = 1
-    while step < 3:
-        let result = 使用 方法方程(使用者問題)
-        step += 1
-        if result == 'is_final_answer' || step > 3
-            return 'is_final_answer'
-            break
+(def Reasoning(使用者問題)
+    "這是第幾個方法中的第幾步,你打算怎做？"
+    )
 
-
-def 方法方程(使用者問題)
-    "你打算用什麼方法？請描述"
-    使用 推理鏈(使用者問題)
-
-def 推理鏈(使用者問題)
-    "盡可能使用多的推理步驟，至少 3 步，但你發現無限迴圈時，請停止"
-    for step in range(3):
-        let result = 使用 推理方程(step, 使用者問題)
-        if result == 'is_final_answer'
-            return 'is_final_answer'
-            break
-
-def 推理方程(step, 使用者問題)
-    "這是第 step 步你打算怎做？"
-    return if 還沒有最終答案
-        return 'continue'
-    else
-        'is_final_answer'
-
-def start ()
+(def start ()
     "一開始就執行"
     let system-role()
         (print "請開始提問吧")
-
-)
+    )
 
 ;; 執行規則
 ;; 1. 一開始執行 (start) 函数
-;; 2. 之後使用 (方法鏈(使用者問題))
+;; 2. 之後使用 (Thinking(使用者問題))
             `
         let selectedPrompt = 'systemPrompt'
 
