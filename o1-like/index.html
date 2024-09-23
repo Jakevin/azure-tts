@@ -97,7 +97,9 @@
                     <option value="gemma2-9b-it">gemma2-9b</option>
                     <option value="llama-3.1-8b-instant">llama-3.1-8b</option>
                     <option value="llama-3.1-70b-versatile">llama-3.1-70b</option>
-
+                    <option value="Qwen/Qwen2.5-72B-Instruct">Qwen2.5-72B</option>
+                    <option value="THUDM/glm-4-9b-chat">glm-4-9b-chat</option>
+                    <option value="01-ai/Yi-1.5-9B-Chat-16K">Yi-1.5-9B</option>
                 </select>
                 <button id="submit_button">Submit</button>
             </div>
@@ -198,7 +200,7 @@
 
             const response = await fetch(`${URL}?type=completions`,
                 {
-                    body: JSON.stringify({ "model": selectedModel, "messages": messages, temperature: 0.2, "max_tokens": 5000 }),
+                    body: JSON.stringify({ "model": selectedModel, "messages": messages, temperature: 0.2, "max_tokens": 2000 }),
                     method: "post",
                     headers: {
                         "content-type": "application/json",
