@@ -100,6 +100,9 @@
                     <option value="Qwen/Qwen2.5-7B-Instruct">Qwen2.5-7B</option>
                     <option value="THUDM/glm-4-9b-chat">glm-4-9b-chat</option>
                     <option value="01-ai/Yi-1.5-9B-Chat-16K">Yi-1.5-9B</option>
+                    <option value="mistral-large-latest">Mistral-large-latest</option>
+                    <option value="mistral-small-latest">Mistral-small-latest</option>
+                    <option value="open-mixtral-8x22b">Open-mixtral-8x22b</option>
                 </select>
                 <button id="submit_button">Submit</button>
             </div>
@@ -188,11 +191,12 @@
                     role: "system",
                     content: prompt,
                 },
-                { role: "user", content: s },
+
                 {
                     role: "assistant",
                     content: assistantSay,
                 },
+                { role: "user", content: s },
             ];
 
             // const URL = 'http://localhost:3000'
