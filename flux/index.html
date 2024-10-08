@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="no-js consumer" lang="en">
+
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750932727344358" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
+    <style>
+        #info {
+            font-size: 20px;
+        }
+
+        #div_start {
+            float: right;
+        }
+
+        #headline {
+            text-decoration: none
+        }
+
+
+        #start_button {
+            border: 0;
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .interim {
+            color: gray;
+        }
+
+        .button {
+            display: none;
+        }
+
+        .marquee {
+            margin: 20px auto;
+        }
+
+        #buttons {
+            margin: 10px 0;
+            position: relative;
+            top: -50px;
+        }
+
+        #copy {
+            margin-top: 20px;
+        }
+
+        #copy>div {
+            display: none;
+            margin: 0 70px;
+        }
+
+        #main {
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .contain-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    </style>
+    <style>
+        a.c1 {
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body class="" id="grid">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750932727344358" crossorigin="anonymous"></script>
+    <script>
+        window['addAds'] = function () {
+            const cardList = document.getElementsByClassName('gads');
+            for (let i = 0; i < cardList.length; i++) {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }
+        }
+    </script>
+    <div class="browser-landing" id="main">
+        <div class="compact marquee-stacked" id="marquee">
+            <div class="marquee-copy">
+                <h1>即時Flux 文字產圖</h1>
+                <h1>Grenrate images in real-time</h1>
+            </div>
+        </div>
+        <div class="compact marquee">
+            <div style="margin-top: 20px;">請描述你的圖片/Describe your image</div>
+
+            <div id="question">
+                <textarea id="image_prompt" rows="4" cols="50">一位白人在雪地裡</textarea>
+            </div>
+            <div>
+                <button id="submit_button" style="display: none;">送出/Submit</button>
+            </div>
+
+            <div id="results" style="margin-top: 20px;">
+                <div class="final" id="final_api_result"></div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        let timer;
+        const textarea = document.getElementById('image_prompt');
+        const submitButton = document.getElementById('submit_button');
+
+        textarea.addEventListener('input', () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                submitButton.click();
+            }, 2000);
+        });
+
+        async function fetchAPI(s) {
+
+            const messages = [
+                {
+                    "role": "user", "content": `"${s}"，用"English-美式英文"簡短翻譯，不要發音、注解。`
+                }
+            ]
+
+            const URL = 'http://localhost:3000/'
+            // const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
+
+            const response = await fetch(`${URL}?type=completions`,
+                {
+                    body: JSON.stringify({ "model": "llama-3.1-70b-versatile", "messages": messages, temperature: 0.2, "max_tokens": 2000 }),
+                    method: "post",
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                }
+            )
+
+            let data = await response.json();
+            const englishPrompt = data.choices[0].message.content;
+
+            const imageRespons = await fetch(`${URL}?type=tti`,
+                {
+                    body: JSON.stringify({ "prompt": englishPrompt }),
+                    method: "post",
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                }
+            )
+            let imageData = await imageRespons.json();
+
+            if (imageData.error) {
+                final_api_result.innerHTML = imageData.error.message;
+                return;
+            }
+            final_api_result.innerHTML = `<img class="contain-img" src="${imageData.url}" alt="image" style="width: 100%; height: auto;">`;
+
+            console.log(data)
+        }
+
+        document.getElementById('submit_button').addEventListener('click', async () => {
+            const questionInput = document.getElementById('image_prompt').value;
+            final_api_result.innerHTML = 'Loading...';
+            await fetchAPI(questionInput);
+        });
+
+
+    </script>
+</body>
+
+</html>
