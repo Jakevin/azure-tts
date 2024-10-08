@@ -98,8 +98,8 @@
                 <div class="final" id="final_api_result"></div>
             </div>
             <div id="share_buttons" style="margin-top: 20px;">
-                <button id="share_facebook">分享到Facebook</button>
-                <button id="share_twitter">分享到Twitter</button>
+                <button id="share_facebook">Share to Facebook</button>
+                <button id="share_twitter">Share to Twitter</button>
                 <button id="share_line">分享到LINE</button>
             </div>
         </div>
@@ -175,14 +175,14 @@
         document.getElementById('share_facebook').addEventListener('click', () => {
             const imageUrl = document.querySelector('#final_api_result img').src;
             const questionInput = document.getElementById('image_prompt').value;
-            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imageUrl)}&description=${encodeURIComponent(questionInput)}`;
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imageUrl)}&description=${encodeURIComponent(questionInput + ' https://jakevin.github.io/azure-tts/flux/index.html')}`;
             window.open(facebookUrl, '_blank');
         });
 
         document.getElementById('share_twitter').addEventListener('click', () => {
             const imageUrl = document.querySelector('#final_api_result img').src;
             const questionInput = document.getElementById('image_prompt').value;
-            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(questionInput)}&url=${encodeURIComponent(imageUrl)}`;
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(questionInput + ' https://jakevin.github.io/azure-tts/flux/index.html')}&url=${encodeURIComponent(imageUrl)}`;
             window.open(twitterUrl, '_blank');
         });
 
