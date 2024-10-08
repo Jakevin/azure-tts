@@ -207,7 +207,7 @@
                 return;
             }
             final_api_result.innerHTML = `
-            <h1>${s}</h1>
+            <h1 style="text-align: center;">${s}</h1>
             <img class="contain-img" src="data:image/png;base64,${imageData.b64_json}" alt="image" style="width: 100%; height: auto;">
     `;
         }
@@ -239,6 +239,10 @@
                                 console.log('分享成功');
                             }).catch(err => {
                                 console.error('分享失敗', err);
+                                const link = document.createElement('a');
+                                link.href = base64image;
+                                link.download = 'screenshot.png';
+                                link.click();
                             });
                         });
                 } else {
