@@ -138,6 +138,7 @@
     </div>
     <script>
         let timer;
+        let countdowntimer = 2000;
         const textarea = document.getElementById('image_prompt');
         const submitButton = document.getElementById('submit_button');
 
@@ -160,7 +161,7 @@
             clearTimeout(timer);
             timer = setTimeout(() => {
                 submitButton.click();
-            }, 5000);
+            }, countdowntimer);
         });
 
         async function fetchAPI(s) {
@@ -201,6 +202,7 @@
             if (imageData.error) {
                 if (imageData.error.message.indexOf('limited') >= 0) {
                     final_api_result.innerHTML = '使用人數過多，請稍後再試/Too many requests, please try again later';
+                    countdowntimer = 5000;
                     return;
                 } else if (imageData.error.message.indexOf('NSFW') >= 0)
                     final_api_result.innerHTML = '請更換描述/Please change the description';
