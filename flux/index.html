@@ -174,13 +174,15 @@
 
         document.getElementById('share_facebook').addEventListener('click', () => {
             const imageUrl = document.querySelector('#final_api_result img').src;
-            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imageUrl)}`;
+            const questionInput = document.getElementById('image_prompt').value;
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imageUrl)}&description=${encodeURIComponent(questionInput)}`;
             window.open(facebookUrl, '_blank');
         });
 
         document.getElementById('share_twitter').addEventListener('click', () => {
             const imageUrl = document.querySelector('#final_api_result img').src;
-            const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(imageUrl)}`;
+            const questionInput = document.getElementById('image_prompt').value;
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(questionInput)}&url=${encodeURIComponent(imageUrl)}`;
             window.open(twitterUrl, '_blank');
         });
 
