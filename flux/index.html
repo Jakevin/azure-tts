@@ -139,6 +139,7 @@
     <script>
         let timer;
         let countdowntimer = 2000;
+        let apiType = 'tti';
         const textarea = document.getElementById('image_prompt');
         const submitButton = document.getElementById('submit_button');
 
@@ -188,7 +189,7 @@
             let data = await response.json();
             const englishPrompt = data.choices[0].message.content;
 
-            const imageRespons = await fetch(`${URL}?type=tti`,
+            const imageRespons = await fetch(`${URL}?type=${apiType}`,
                 {
                     body: JSON.stringify({ "prompt": englishPrompt, 'response_format': "b64_json" }),
                     method: "post",
@@ -203,11 +204,13 @@
                 if (imageData.error.message.indexOf('limited') >= 0) {
                     final_api_result.innerHTML = '使用人數過多，請稍後再試/Too many requests, please try again later';
                     countdowntimer = 5000;
+                    apiType = 'tti_free';
                     return;
                 } else if (imageData.error.message.indexOf('NSFW') >= 0)
                     final_api_result.innerHTML = '請更換描述/Please change the description';
                 return;
             }
+            apiType = 'tti';
             final_api_result.innerHTML = `
             <h1 style="text-align: center;">${s}</h1>
             <img class="contain-img" src="data:image/png;base64,${imageData.b64_json}" alt="image" style="width: 100%; height: auto;">
