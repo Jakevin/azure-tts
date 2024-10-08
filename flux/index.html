@@ -3,6 +3,9 @@
 
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750932727344358" crossorigin="anonymous"></script>
+    <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v21.0&appId=201943233161386"></script>
     <meta charset="utf-8">
     <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
     <style>
@@ -71,16 +74,19 @@
 </head>
 
 <body class="" id="grid">
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v21.0&appId=143723395741683"></script>
     <div class="browser-landing" id="main">
         <div class="compact marquee-stacked" id="marquee">
             <div class="marquee-copy">
                 <h1>即時Flux 文字產圖</h1>
                 <h1>Grenrate images in real-time</h1>
+                <div class="line-it-button" data-lang="en" data-type="share-a" data-env="REAL" data-url="https://jakevin.uk" data-color="default"
+                    data-size="large" data-count="false" data-ver="3"></div>
             </div>
         </div>
         <div class="compact marquee">
             <div style="margin-top: 20px;">請描述你的圖片/Describe your image</div>
-
             <div id="question">
                 <textarea id="image_prompt" rows="4" cols="50"></textarea>
             </div>
@@ -91,7 +97,11 @@
             <div id="results" style="margin-top: 20px;">
                 <div class="final" id="final_api_result"></div>
             </div>
-
+            <div id="share_buttons" style="margin-top: 20px;">
+                <button id="share_facebook">分享到Facebook</button>
+                <button id="share_twitter">分享到Twitter</button>
+                <button id="share_line">分享到LINE</button>
+            </div>
         </div>
     </div>
     <script>
@@ -103,7 +113,7 @@
             clearTimeout(timer);
             timer = setTimeout(() => {
                 submitButton.click();
-            }, 2000);
+            }, 5000);
         });
 
         async function fetchAPI(s) {
@@ -142,10 +152,16 @@
             let imageData = await imageRespons.json();
 
             if (imageData.error) {
-                final_api_result.innerHTML = imageData.error.message;
+                if (imageData.error.message.indexOf('limited') >= 0) {
+                    final_api_result.innerHTML = '使用人數過多，請稍後再試/Too many requests, please try again later';
+                    return;
+                } else if (imageData.error.message.indexOf('NSFW') >= 0)
+                    final_api_result.innerHTML = '請更換描述/Please change the description';
                 return;
             }
-            final_api_result.innerHTML = `<img class="contain-img" src="${imageData.url}" alt="image" style="width: 100%; height: auto;">`;
+            final_api_result.innerHTML = `
+            <img class="contain-img" src="${imageData.url}" alt="image" style="width: 100%; height: auto;">
+    `;
 
             console.log(data)
         }
@@ -156,7 +172,23 @@
             await fetchAPI(questionInput);
         });
 
+        document.getElementById('share_facebook').addEventListener('click', () => {
+            const imageUrl = document.querySelector('#final_api_result img').src;
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imageUrl)}`;
+            window.open(facebookUrl, '_blank');
+        });
 
+        document.getElementById('share_twitter').addEventListener('click', () => {
+            const imageUrl = document.querySelector('#final_api_result img').src;
+            const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(imageUrl)}`;
+            window.open(twitterUrl, '_blank');
+        });
+
+        document.getElementById('share_line').addEventListener('click', () => {
+            const imageUrl = document.querySelector('#final_api_result img').src;
+            const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(imageUrl)}`;
+            window.open(lineUrl, '_blank');
+        });
     </script>
 </body>
 
