@@ -128,8 +128,6 @@
             <div id="results" style="margin-top: 20px;">
                 <div class="final" id="final_api_result"></div>
             </div>
-
-
         </div>
         <div id="share_buttons" style="margin-top: 20px;">
             <button id="capture_button">分享/Share</button>
@@ -138,7 +136,7 @@
     </div>
     <script>
         let timer;
-        let countdowntimer = 2000;
+        let countdowntimer = 3000;
         let apiType = 'tti';
         const textarea = document.getElementById('image_prompt');
         const submitButton = document.getElementById('submit_button');
@@ -244,14 +242,18 @@
                                 console.log('分享成功');
                             }).catch(err => {
                                 console.error('分享失敗', err);
-                                const link = document.createElement('a');
+                                const newWindow = window.open();
+                                newWindow.document.write(`<img src="${base64image}" alt="Screenshot">`);
+                                const link = newWindow.document.createElement('a');
                                 link.href = base64image;
                                 link.download = 'screenshot.png';
                                 link.click();
                             });
                         });
                 } else {
-                    const link = document.createElement('a');
+                    const newWindow = window.open();
+                    newWindow.document.write(`<img src="${base64image}" alt="Screenshot">`);
+                    const link = newWindow.document.createElement('a');
                     link.href = base64image;
                     link.download = 'screenshot.png';
                     link.click();
