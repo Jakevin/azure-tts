@@ -201,6 +201,7 @@
             if (imageData.error) {
                 if (imageData.error.message.indexOf('limited') >= 0) {
                     final_api_result.innerHTML = '使用人數過多，請稍後再試/Too many requests, please try again later';
+                    submitButton.style.display = 'block';
                     countdowntimer = 5000;
                     apiType = 'tti_free';
                     return;
@@ -209,14 +210,23 @@
                 return;
             }
             apiType = 'tti';
-            final_api_result.innerHTML = `
-            <h1 style="text-align: center;">${s}</h1>
-            <img class="contain-img" src="data:image/png;base64,${imageData.b64_json}" alt="image" style="width: 100%; height: auto;">
-    `;
+
+            if (imageData.url) {
+                final_api_result.innerHTML = `
+                <h1 style="text-align: center;">${s}</h1>
+                <img class="contain-img" src="${imageData.url}" alt="image" style="width: 100%; height: auto;">`;
+                return;
+            } else if (imageData.b64_json) {
+                final_api_result.innerHTML = `
+                <h1 style="text-align: center;">${s}</h1>
+                <img class="contain-img" src="data:image/png;base64,${imageData.b64_json}" alt="image" style="width: 100%; height: auto;">`;
+            }
+
         }
 
         document.getElementById('submit_button').addEventListener('click', async () => {
             clearTimeout(timer);
+            submitButton.style.display = 'none';
             const questionInput = document.getElementById('image_prompt').value;
             final_api_result.innerHTML = 'Loading...';
             await fetchAPI(questionInput);
@@ -224,11 +234,15 @@
 
         // 截圖功能
         document.getElementById('capture_button').addEventListener('click', () => {
-            html2canvas(document.getElementById('final_api_result')).then(canvas => {
+            html2canvas(document.getElementById('final_api_result'), {
+                logging: true,
+                allowTaint: true,
+                useCORS: true,
+            }).then(canvas => {
                 const base64image = canvas.toDataURL('image/png');
                 const questionInput = document.getElementById('image_prompt').value;
 
-                if (navigator.share) {
+                if (navigator.share && navigator.canShare()) {
                     // 將Base64數據轉換為Blob
                     fetch(base64image)
                         .then(res => res.blob())
