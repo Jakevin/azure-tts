@@ -100,7 +100,7 @@
         <h1>即時語言字幕+翻譯</h1>
         <button @click="startRecording" :disabled="isRecording">開始錄音</button>
         <button @click="stopRecording" :disabled="!isRecording">停止錄音</button>
-        <button @click="concussionFunc" :disabled="isRecording">總結</button>
+        <!-- <button @click="concussionFunc" :disabled="isRecording">總結</button> -->
 
         <div v-if="concussion!=''" class="concussion">
             <div>
@@ -134,8 +134,8 @@
                 const transcription = ref([]);
                 const concussion = ref("");
 
-                // const BASE_URL = 'https://asia-southeast1-durable-pulsar-384402.cloudfunctions.net/sttt';
-                const BASE_URL = "http://localhost:3000"
+                const BASE_URL = 'https://asia-southeast1-durable-pulsar-384402.cloudfunctions.net/sttt';
+                // const BASE_URL = "http://localhost:3000"
 
                 const recordAndSend = (stream) => {
                     const recorder = new MediaRecorder(stream);
