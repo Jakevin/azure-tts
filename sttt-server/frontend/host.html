@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Jakevin 羅旭辰" />
+    <meta name="publisher" content="Jakevin 羅旭辰" />
+    <meta name="company" content="北科大工工所" />
+    <title>即時語言字幕+翻譯 HOST</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #app {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .transcription-container {
+            flex: 1;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+
+        .transcription-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .transcription-item p {
+            margin: 5px 0;
+        }
+
+        .transcription-item .time {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .transcription-item .text {
+            color: #333;
+        }
+
+        .transcription-item .trans {
+            color: #007bff;
+        }
+
+        .concussion {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+
+        .clear-button-container {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>即時語言字幕+翻譯</h1>
+        <button @click="startRecording" :disabled="isRecording">開始錄音</button>
+        <button @click="stopRecording" :disabled="!isRecording">停止錄音</button>
+        <button @click="concussionFunc" :disabled="isRecording">總結</button>
+
+        <div v-if="concussion!=''" class="concussion">
+            <div>
+                <button @click="clearConcussion">X</button>
+            </div>
+            {{ concussion }}
+        </div>
+
+        <div class="transcription-container" style="text-align: left; width: 600px; max-height: 800px;">
+            <div class="clear-button-container">
+                <button v-if="transcription.length>0" @click="clearTranscription">清除記錄/Clean</button>
+            </div>
+            <div v-for="(item, index) in transcription.slice().reverse()" :key="index" class="transcription-item">
+                <div style="text-align: right;">
+                    <p style="color:#5B4B00">{{ item.time }}</p>
+                </div>
+                <p>{{ item.text }}</p>
+                <p style="color:#000079">{{ item.trans }}</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                let mediaStream;
+                let recordingInterval;
+                const isRecording = ref(false);
+                const transcription = ref([]);
+                const concussion = ref("");
+
+                // const BASE_URL = 'https://asia-southeast1-durable-pulsar-384402.cloudfunctions.net/sttt';
+                const BASE_URL = "http://localhost:3000"
+
+                const recordAndSend = (stream) => {
+                    const recorder = new MediaRecorder(stream);
+                    const chunks = [];
+
+                    recorder.ondataavailable = (e) => chunks.push(e.data);
+                    recorder.onstop = async () => {
+                        const audioBlob = new Blob(chunks);
+                        await sendAudioToServer(audioBlob);
+                    };
+
+                    recorder.start(); // 立即開始錄音
+                    setTimeout(() => recorder.stop(), 10000); // 每 10 秒生成一個媒體文件
+                };
+
+                const startRecording = async () => {
+                    try {
+                        mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                        recordAndSend(mediaStream); // 立即開始錄音
+                        recordingInterval = setInterval(() => recordAndSend(mediaStream), 10000);
+                        isRecording.value = true;
+                    } catch (error) {
+                        console.error('無法訪問麥克風：', error);
+                    }
+                };
+
+                const stopRecording = () => {
+                    if (recordingInterval) {
+                        clearInterval(recordingInterval);
+                    }
+                    if (mediaStream) {
+                        mediaStream.getTracks().forEach(track => track.stop()); // 釋放媒體流
+                    }
+                    isRecording.value = false;
+                };
+
+                const sendAudioToServer = async (audioBlob) => {
+                    const formData = new FormData();
+                    formData.append('file', audioBlob, 'audio.webm');
+                    try {
+                        const response = await fetch(`${BASE_URL}?type=transcriptions`, {
+                            method: 'POST',
+                            headers: {
+                                "x-app-id": `sttt`,
+                            },
+                            body: formData
+                        });
+
+                        const enData = await response.json();
+                        const currentTime = new Date().toLocaleTimeString('zh-TW', { hour12: false });
+                        console.log(enData);
+                        const twMsg = enData['msg_tw'] || ""
+                        const msg = enData['msg'] || ""
+
+                        transcription.value.push({ time: currentTime, text: msg, trans: twMsg });
+
+                    } catch (error) {
+                        console.error('發送音頻到服務器時出錯：', error);
+                    }
+                };
+
+                const concussionFunc = async () => {
+                    const text = transcription.value.map(item => item.text).join(' ');
+                    const concussionResponse = await fetch(`${BASE_URL}?type=concussion`, {
+                        method: 'POST',
+                        body: JSON.stringify({ msg: text })
+                    });
+
+                    const data = await concussionResponse.json();
+                    const resultText = data.msg || ""
+                    concussion.value = resultText;
+                }
+
+                const clearTranscription = () => {
+                    transcription.value = [];
+                };
+
+                const clearConcussion = () => {
+                    concussion.value = "";
+                };
+                return {
+                    isRecording,
+                    transcription,
+                    concussion,
+                    startRecording,
+                    stopRecording,
+                    concussionFunc,
+                    clearTranscription,
+                    clearConcussion
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>
