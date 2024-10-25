@@ -183,14 +183,15 @@
                         syncTime = 10000
                         retryTime += 1
                     }
-                    if (retryTime >= 5) {
-                        clearInterval(recordingInterval)
+                    if (retryTime >= 10) {
+                        recordingInterval = null
                         stopSync.value = true
                         console.log("Stop Sync")
                         return
                     } else {
                         stopSync.value = false
                     }
+                    clearInterval(recordingInterval)
                     recordingInterval = setInterval(() => syncData(), syncTime);
                 }
 
