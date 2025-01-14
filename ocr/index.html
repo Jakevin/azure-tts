@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="https://jakevin.github.io/azure-tts/ocr/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script>
+    function waitForMathJax(callback, maxTries = 30) {
+      let tries = 0;
+      const checkMathJax = () => {
+        tries++;
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          callback();
+        } else if (tries < maxTries) {
+          setTimeout(checkMathJax, 100);
+        }
+      };
+      checkMathJax();
+    }
+  </script>
+  <title>AI OCR智慧識別系統</title>
+  <script type="module" crossorigin src="https://jakevin.github.io/azure-tts/ocr/assets/index-bt5Zp-pI.js"></script>
+  <link rel="stylesheet" crossorigin href="https://jakevin.github.io/azure-tts/ocr/assets/index-CRGkAozI.css">
+</head>
+
+<body>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750932727344358" crossorigin="anonymous"></script>
+  <script>
+    window['addAds'] = function () {
+      const cardList = document.getElementsByClassName('gads');
+      for (let i = 0; i < cardList.length; i++) {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      }
+    }
+  </script>
+  <div id="app"></div>
+</body>
+
+</html>
