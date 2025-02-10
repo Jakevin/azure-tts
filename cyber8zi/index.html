@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750932727344358" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
+    <meta name="author" content="Jakevin 羅旭辰" />
+    <meta name="publisher" content="Jakevin 羅旭辰" />
+    <meta name="company" content="北科大工工所" />
+
+    <meta name="rating" content="general" />
+    <meta name="copyright" content="&copy; Jakevin Lo" />
+    <meta name="robots" content="all" />
+    <meta name="spiders" content="all" />
+    <meta name="webcrawlers" content="all" />
+    <meta name="theme-color" content="#0085d5">
+    <meta name="abstract" content="賽博八字籤詩卡| Cyber Fortune Telling Cards" />
+    <meta name="subject" content="賽博八字籤詩卡| Cyber Fortune Telling Cards" />
+    <meta name="description" content="賽博八字籤詩卡| Cyber Fortune Telling Cards" />
+    <meta name="keywords" content="北科大, TTI, AI, FLUX, GPT" />
+    <meta property="og:site_name" content="ACCUPASS" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="賽博八字籤詩卡| Cyber Fortune Telling Cards" />
+    <meta property="og:url" content="https://jakevin.github.io/" />
+    <meta property="og:description" content="賽博八字籤詩卡| Cyber Fortune Telling Cards" />
+    <meta property="og:image"
+        content="https://api.together.ai/imgproxy/pXOo77HixdTIUEFb39BSE0_szy_9bn6i9y-uP5kFH5g/format:jpg/aHR0cHM6Ly90b2dldGhlci1haS1iZmwtaW1hZ2VzLXByb2QuczMudXMtd2VzdC0yLmFtYXpvbmF3cy5jb20vaW1hZ2VzLzk0OGRjMzBkYmM2MDBmNzRhZWZmMGU0ZmUwMDM1ZjhjNTFjNGRlYTNhNWY5MGFkNzM0NzBlNzQxZDIyOWYwNmQ_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ29udGVudC1TaGEyNTY9VU5TSUdORUQtUEFZTE9BRCZYLUFtei1DcmVkZW50aWFsPUFTSUFZV1pXNEhWQ0FUV1Q3SlJIJTJGMjAyNDEwMDglMkZ1cy13ZXN0LTIlMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMDA4VDE2MDAxOVomWC1BbXotRXhwaXJlcz0zNjAwJlgtQW16LVNlY3VyaXR5LVRva2VuPUlRb0piM0pwWjJsdVgyVmpFUEQlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkZ3RWFDWFZ6TFhkbGMzUXRNaUpHTUVRQ0lEd2dydUNUOVdZOFpSSUFHV2dSRXR4TFZrJTJCdWg4R3ZaUyUyQjVZczNDSUFZdUFpQnUxNWkzeWxmNzFFJTJGb0x6WFAlMkJRWkpaa0RldVhZQWI2QlJCJTJCMSUyRmtSUHczeXFRQlFoSkVBQWFERFU1T0RjeU5qRTJNemM0TUNJTXhBUiUyQlRhWUtPejlyMWxEYkt1MEUwJTJCbUM1UzNtQlY0Q0daeWowJTJGR0hUZ1J1cyUyRkVJYVk0UXh4c2V6dGwyNHBqeVlMZDhJWHZueGdVVVJuYnNFZ0lFaldac3ViZ1lONyUyQnl3TGV0MUJkcCUyQiUyQnNnTmZ3Y1pSOTkzN0NickRTbGVpODB0cDdyb3cwT2hTd2x1QTNIM3BpakFzRElkSzNqaWR2Z2hNWkFYUkolMkYyUndSUHZPaHlseEU2b2toS2IyMGRKekhEUzNRRlRVRG5jZGpNJTJGaWoyZmV1MFN6VDhBd1RZQWNBaFJGaEo3ViUyQnFvMElyZ2ZRRVV6RmNSSEhmVTlzb3hkUjZYQUUxdSUyQndBb3htOUVJNllqT2NNckVPNzFjSHRjd0IwV3FnJTJGNThlbnoyOEZMdlUlMkZYY3RSS2F6dm9zUHNMcGdHamJLeXc3b3hTJTJGSFAlMkZFb2haVTBzZUhGZVBRdXlKcTg5dHNHQnU5RmJpNUVyekg4amxHNGtMMmQ3RTJwNFFETm11RHNiR2tmTGRLY1EyZSUyQkUlMkZrR1M3MWNJVjNkU0FNRERmMmpPcUdUcUtVa3dCZVElMkJuNndnaWZ3cGEybnpvak5hcGFRbFhQNThUbkpBQSUyQk83U3QzU0dSYkdQQm1tZFRIJTJGenFRZ2tjTTBDRVNqMzNSTEZLTjJWOU1mTXFxakkzJTJCRGJtYm1SbVBSc0NoY2ZPNnNjaFJiNlJOdiUyQmZIczU2M0ZDZkgzNjNJeVNtNEx3Yk54TlFncENVMGdDeEI0dEFOMmo4ck9xemJSVmMyJTJCVVhqYW10VCUyQnF0SmtBOWxXaTNaUTZRazlXTU9hanJqdnQxSmhnY2VrQlN0TXklMkZUaGd5QjhaWUEyclBpczdKRk41ZVY1JTJCOUo4TmdGNGh3Z044U05jSTZtJTJGQXNhb1dvSUNPV1NSb1NsRHViQ0Z5UVVvSFlHMUwlMkJGNEpxczlKS1RrOE9JRDUlMkJlNDFSeDQ2TW9HY1k5ZHBwVmVUNVhtdkdlS2xoNGhKNG5LS0xzN3R0bGJFZFVnYjMlMkJMVGkzdmNEdXNRSmE5ZUxDJTJCczQlMkJNWXc2Tzg3NDZ6NktoSTRnb1hReUQxMHZEejFKYUFsdXdjWDdQJTJGdVBUSEdWd0pnV3hrQ0hhN2w5TUpPdWxiZ0dPcHdCQVhUVGZNRHVITDVtNU5nRVdtTmd4JTJCUmNic1hOcUMzUDFKdWZnOGVJT1lsU1lSVklVZFJLODlzVHJHa3dZU0JzNUJNSnlkalJTQnBJeUxjdnppVk1PWWFGZExiZVAlMkZJZmJZTXRFeno0STh0WnBycUpFeWJScDZ2R21vUTNIWSUyRlBoWlolMkZWR2lMQkY3NGYxV1hUYnBobnp1VjVRTXRkcTMzclNleWhwVHNlYjJwRHhKcSUyRnYwNDQ5T0N2dHo5NTZiMWlCejh5OGtLbDB4M3N3cDcmWC1BbXotU2lnbmF0dXJlPWViZDU4NDU1ODg0OTM0M2ZiNDdjMmMwMDg5MzU0ZjIxYjViYmVmOGY5NDhjOTI3ZjcyMDJjMmE4ODkzMzgxOGUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JngtaWQ9R2V0T2JqZWN0" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Jakevin16" />
+    <meta name="twitter:title" content="賽博八字籤詩卡| Cyber Fortune Telling Cards" />
+    <meta name="twitter:url" content="https://jakevin.github.io/" />
+    <meta name="twitter:description" content="賽博八字籤詩卡| Cyber Fortune Telling Cards" />
+    <meta name="twitter:image:src"
+        content="https://api.together.ai/imgproxy/pXOo77HixdTIUEFb39BSE0_szy_9bn6i9y-uP5kFH5g/format:jpg/aHR0cHM6Ly90b2dldGhlci1haS1iZmwtaW1hZ2VzLXByb2QuczMudXMtd2VzdC0yLmFtYXpvbmF3cy5jb20vaW1hZ2VzLzk0OGRjMzBkYmM2MDBmNzRhZWZmMGU0ZmUwMDM1ZjhjNTFjNGRlYTNhNWY5MGFkNzM0NzBlNzQxZDIyOWYwNmQ_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ29udGVudC1TaGEyNTY9VU5TSUdORUQtUEFZTE9BRCZYLUFtei1DcmVkZW50aWFsPUFTSUFZV1pXNEhWQ0FUV1Q3SlJIJTJGMjAyNDEwMDglMkZ1cy13ZXN0LTIlMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMDA4VDE2MDAxOVomWC1BbXotRXhwaXJlcz0zNjAwJlgtQW16LVNlY3VyaXR5LVRva2VuPUlRb0piM0pwWjJsdVgyVmpFUEQlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkZ3RWFDWFZ6TFhkbGMzUXRNaUpHTUVRQ0lEd2dydUNUOVdZOFpSSUFHV2dSRXR4TFZrJTJCdWg4R3ZaUyUyQjVZczNDSUFZdUFpQnUxNWkzeWxmNzFFJTJGb0x6WFAlMkJRWkpaa0RldVhZQWI2QlJCJTJCMSUyRmtSUHczeXFRQlFoSkVBQWFERFU1T0RjeU5qRTJNemM0TUNJTXhBUiUyQlRhWUtPejlyMWxEYkt1MEUwJTJCbUM1UzNtQlY0Q0daeWowJTJGR0hUZ1J1cyUyRkVJYVk0UXh4c2V6dGwyNHBqeVlMZDhJWHZueGdVVVJuYnNFZ0lFaldac3ViZ1lONyUyQnl3TGV0MUJkcCUyQiUyQnNnTmZ3Y1pSOTkzN0NickRTbGVpODB0cDdyb3cwT2hTd2x1QTNIM3BpakFzRElkSzNqaWR2Z2hNWkFYUkolMkYyUndSUHZPaHlseEU2b2toS2IyMGRKekhEUzNRRlRVRG5jZGpNJTJGaWoyZmV1MFN6VDhBd1RZQWNBaFJGaEo3ViUyQnFvMElyZ2ZRRVV6RmNSSEhmVTlzb3hkUjZYQUUxdSUyQndBb3htOUVJNllqT2NNckVPNzFjSHRjd0IwV3FnJTJGNThlbnoyOEZMdlUlMkZYY3RSS2F6dm9zUHNMcGdHamJLeXc3b3hTJTJGSFAlMkZFb2haVTBzZUhGZVBRdXlKcTg5dHNHQnU5RmJpNUVyekg4amxHNGtMMmQ3RTJwNFFETm11RHNiR2tmTGRLY1EyZSUyQkUlMkZrR1M3MWNJVjNkU0FNRERmMmpPcUdUcUtVa3dCZVElMkJuNndnaWZ3cGEybnpvak5hcGFRbFhQNThUbkpBQSUyQk83U3QzU0dSYkdQQm1tZFRIJTJGenFRZ2tjTTBDRVNqMzNSTEZLTjJWOU1mTXFxakkzJTJCRGJtYm1SbVBSc0NoY2ZPNnNjaFJiNlJOdiUyQmZIczU2M0ZDZkgzNjNJeVNtNEx3Yk54TlFncENVMGdDeEI0dEFOMmo4ck9xemJSVmMyJTJCVVhqYW10VCUyQnF0SmtBOWxXaTNaUTZRazlXTU9hanJqdnQxSmhnY2VrQlN0TXklMkZUaGd5QjhaWUEyclBpczdKRk41ZVY1JTJCOUo4TmdGNGh3Z044U05jSTZtJTJGQXNhb1dvSUNPV1NSb1NsRHViQ0Z5UVVvSFlHMUwlMkJGNEpxczlKS1RrOE9JRDUlMkJlNDFSeDQ2TW9HY1k5ZHBwVmVUNVhtdkdlS2xoNGhKNG5LS0xzN3R0bGJFZFVnYjMlMkJMVGkzdmNEdXNRSmE5ZUxDJTJCczQlMkJNWXc2Tzg3NDZ6NktoSTRnb1hReUQxMHZEejFKYUFsdXdjWDdQJTJGdVBUSEdWd0pnV3hrQ0hhN2w5TUpPdWxiZ0dPcHdCQVhUVGZNRHVITDVtNU5nRVdtTmd4JTJCUmNic1hOcUMzUDFKdWZnOGVJT1lsU1lSVklVZFJLODlzVHJHa3dZU0JzNUJNSnlkalJTQnBJeUxjdnppVk1PWWFGZExiZVAlMkZJZmJZTXRFeno0STh0WnBycUpFeWJScDZ2R21vUTNIWSUyRlBoWlolMkZWR2lMQkY3NGYxV1hUYnBobnp1VjVRTXRkcTMzclNleWhwVHNlYjJwRHhKcSUyRnYwNDQ5T0N2dHo5NTZiMWlCejh5OGtLbDB4M3N3cDcmWC1BbXotU2lnbmF0dXJlPWViZDU4NDU1ODg0OTM0M2ZiNDdjMmMwMDg5MzU0ZjIxYjViYmVmOGY5NDhjOTI3ZjcyMDJjMmE4ODkzMzgxOGUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JngtaWQ9R2V0T2JqZWN0" />
+
+    <title>賽博八字籤詩卡</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .datetime-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input[type="datetime-local"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+        }
+
+        button {
+            padding: 8px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #svgOutput {
+            border: 1px solid #ddd;
+            min-height: 200px;
+            max-width: 400px;
+        }
+
+        .loading {
+            display: none;
+            color: #666;
+        }
+
+        label {
+            margin-right: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        #shareBtn {
+            background-color: #4267B2;
+            /* Facebook 藍色 */
+        }
+    </style>
+    <script src="./paipan.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>賽博八字卡</h1>
+        <div class="input-group">
+            <div class="datetime-group">
+                <label>日期時間：</label>
+                <input type="datetime-local" id="datetime" step="1">
+            </div>
+            <button id="submitBtn">生成我的八字卡</button>
+            <div class="action-buttons" style="display: none;">
+                <button id="downloadBtn">下載圖片</button>
+                <button id="shareBtn">分享</button>
+            </div>
+        </div>
+        <div id="loading" class="loading">處理中...</div>
+        <div id="svgOutput"></div>
+    </div>
+
+    <script>
+        // 初始化日期時間選擇器
+        function initializeSelectors() {
+            const datetimeInput = document.getElementById('datetime');
+            const now = new Date('1984-05-25T13:00:00');
+            // 格式化當前時間為datetime-local接受的格式 (YYYY-MM-DDThh:mm:ss)
+            const year = now.getFullYear();
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            datetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+        }
+
+        // const apiUrl = 'https://lmstudio.jakevin.uk/v1/chat/completions';
+        // const apiUrl = 'https://gemini.jakevin.uk/v1/chat/completions'
+        // const apiUrl = "https://asia-east1-durable-pulsar-384402.cloudfunctions.net/ai/"
+        const apiUrl = "http://localhost:3000/ai/"
+
+        const submitBtn = document.getElementById('submitBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const actionButtons = document.querySelector('.action-buttons');
+        const svgOutput = document.getElementById('svgOutput');
+        const loading = document.getElementById('loading');
+
+
+        // 分享功能
+        async function shareSVG() {
+            try {
+                const element = document.getElementById('svgOutput');
+                if (!element.querySelector('svg')) {
+                    alert('請先生成 SVG 圖片');
+                    return;
+                }
+
+                // 使用 html2canvas 擷取元素
+                const canvas = await html2canvas(element, {
+                    backgroundColor: '#ffffff',
+                    scale: 2, // 提高解析度
+                    logging: false,
+                    useCORS: true
+                });
+
+                // 轉換為 blob
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.95));
+
+                // 檢查是否支援 Web Share API
+                if (navigator.share) {
+                    const file = new File([blob], '賽博八字卡.jpg', { type: 'image/jpeg' });
+                    await navigator.share({
+                        title: '賽博八字卡',
+                        text: '查看我的賽博八字卡！',
+                        files: [file]
+                    });
+                } else {
+                    // 回退到 Facebook 分享
+                    const imageUrl = URL.createObjectURL(blob);
+                    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imageUrl)}`;
+                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                    URL.revokeObjectURL(imageUrl);
+                }
+            } catch (error) {
+                console.error('分享失敗:', error);
+                alert('分享失敗，請稍後再試');
+            }
+        }
+
+        // 下載整個 SVG 輸出區域為 JPG
+        async function downloadAsJPG() {
+            try {
+                const element = document.getElementById('svgOutput');
+                if (!element.querySelector('svg')) {
+                    alert('請先生成 SVG 圖片');
+                    return;
+                }
+
+                // 使用 html2canvas 擷取元素
+                const canvas = await html2canvas(element, {
+                    backgroundColor: '#ffffff',
+                    scale: 2, // 提高解析度
+                    logging: false,
+                    useCORS: true
+                });
+
+                // 轉換為 JPG 並下載
+                canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = '賽博八字卡.jpg';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 'image/jpeg', 0.95);
+            } catch (error) {
+                console.error('轉換失敗:', error);
+                alert('圖片轉換失敗，請稍後再試');
+            }
+        }
+
+        async function fetchSvg() {
+            const datetimeInput = document.getElementById('datetime');
+
+            const now = new Date(datetimeInput.value);
+            // 格式化當前時間為datetime-local接受的格式 (YYYY-MM-DDThh:mm:ss)
+            const year = now.getFullYear();
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            // const datetime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            // console.log(datetime);
+
+            let p = new paipan();
+            p.zwz = true; //分早晚子时
+            const bazi = p.GetInfo(0, year, month, day, hours, minutes, seconds).bazi; //获取生辰八字信息
+            console.log(bazi);
+            const datetime = `${bazi.slice(0, 2)}年${bazi.slice(2, 4)}月${bazi.slice(4, 6)}日${bazi.slice(6, 8)}時`;
+            console.log(datetime);
+
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            svgOutput.innerHTML = ``
+
+            const apiBody = {
+                "userId": '0_cyber8',
+                "text": datetime,
+                "type": "text",
+            }
+
+            try {
+                const response = await fetch(`${apiUrl}?type=8z`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(apiBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (data.msg) {
+                    let content = data.msg.trim();
+                    // const svgMatch = content.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
+                    // let result = svgMatch ? `<svg style="width:400px; height:600px">${svgMatch[1]}</svg>` : content;
+                    let jsonContent = content.replace('```json\n', '').replace('```', '');
+                    console.log('jsonContent', jsonContent);
+                    jsonContent = JSON.parse(jsonContent);
+
+                    // 解析 SVG 字符串
+                    const parser = new DOMParser();
+                    const svgDoc = parser.parseFromString(jsonContent['svg'], 'image/svg+xml');
+                    const svgElement = svgDoc.documentElement;
+
+                    const messages = [
+                        {
+                            "role": "user", "content": `"${jsonContent['summary']}"，用"English-美式英文"簡短翻譯，不要發音、注解。`
+                        }
+                    ]
+
+                    // const URL = 'http://localhost:3000/'
+                    const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
+
+                    const c2eResponse = await fetch(`${URL}?type=completions`,
+                        {
+                            body: JSON.stringify({ "model": "gemma2-9b-it", "messages": messages, temperature: 0.2, "max_tokens": 2000 }),
+                            method: "post",
+                            headers: {
+                                "content-type": "application/json",
+                            },
+                        }
+                    )
+
+                    let c2eData = await c2eResponse.json();
+                    const englishPrompt = c2eData.choices[0].message.content;
+
+                    const imageRespons = await fetch(`https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop?type=tti`,
+                        {
+                            body: JSON.stringify({ "prompt": englishPrompt, 'response_format': "b64_json" }),
+                            method: "post",
+                            headers: {
+                                "content-type": "application/json",
+                            },
+                        }
+                    )
+                    let imageData = await imageRespons.json();
+
+                    if (imageData.error) {
+                        if (imageData.error.message.indexOf('limit') >= 0) {
+                            confirm('使用人數過多，請稍後再試/Too many requests, please try again later');
+                            return;
+                        } else if (imageData.error.message.indexOf('NSFW') >= 0)
+                            confirm('請更換描述/Please change the description');
+                        return;
+                    }
+
+                    if (imageData.url) {
+                        svgOutput.innerHTML =
+                            `<img class="contain-img" src="${imageData.url}" alt="image" style="width: 100%; height: auto;">` + svgElement.outerHTML;
+                        return;
+                    } else if (imageData.b64_json) {
+                        svgOutput.innerHTML =
+                            `<img class="contain-img" src="data:image/png;base64,${imageData.b64_json}" alt="image" style="width: 100%; height: auto;">`
+                            + svgElement.outerHTML;
+                    }
+                    // 更新 SVG 內容
+
+                    actionButtons.style.display = 'flex'; // 顯示按鈕組
+                } else {
+                    throw new Error('回應中沒有SVG數據');
+                }
+            } catch (error) {
+                console.error('錯誤:', error);
+                svgOutput.innerHTML = `<p style="color: red;">發生錯誤: ${error.message}</p>`;
+                actionButtons.style.display = 'none'; // 隱藏按鈕組
+            } finally {
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+            }
+        }
+
+        // 初始化頁面
+        initializeSelectors();
+        // 事件監聽
+        submitBtn.addEventListener('click', fetchSvg);
+        downloadBtn.addEventListener('click', downloadAsJPG);
+        shareBtn.addEventListener('click', shareSVG);
+
+
+    </script>
+</body>
+
+</html>
