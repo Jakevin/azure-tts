@@ -117,7 +117,7 @@
         <h1>賽博八字卡</h1>
         <div class="input-group">
             <div class="datetime-group">
-                <label>日期時間：</label>
+                <label>你的西曆生辰：</label>
                 <input type="datetime-local" id="datetime" step="1">
             </div>
             <button id="submitBtn">生成我的八字卡</button>
@@ -134,7 +134,7 @@
         // 初始化日期時間選擇器
         function initializeSelectors() {
             const datetimeInput = document.getElementById('datetime');
-            const now = new Date('1984-05-25T13:00:00');
+            const now = new Date('2000-01-01T13:00:00');
             // 格式化當前時間為datetime-local接受的格式 (YYYY-MM-DDThh:mm:ss)
             const year = now.getFullYear();
             const month = (now.getMonth() + 1).toString().padStart(2, '0');
@@ -145,10 +145,7 @@
             datetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
         }
 
-        // const apiUrl = 'https://lmstudio.jakevin.uk/v1/chat/completions';
-        // const apiUrl = 'https://gemini.jakevin.uk/v1/chat/completions'
-        // const apiUrl = "https://asia-east1-durable-pulsar-384402.cloudfunctions.net/ai/"
-        const apiUrl = "http://localhost:3000/ai/"
+        const apiUrl = "https://asia-east1-durable-pulsar-384402.cloudfunctions.net/ai/"
 
         const submitBtn = document.getElementById('submitBtn');
         const downloadBtn = document.getElementById('downloadBtn');
@@ -297,10 +294,7 @@
                         }
                     ]
 
-                    // const URL = 'http://localhost:3000/'
-                    const URL = 'https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop'
-
-                    const c2eResponse = await fetch(`${URL}?type=completions`,
+                    const c2eResponse = await fetch('https://asia-east1-durable-pulsar-384402.cloudfunctions.net/open-grop?type=completions',
                         {
                             body: JSON.stringify({ "model": "gemma2-9b-it", "messages": messages, temperature: 0.2, "max_tokens": 2000 }),
                             method: "post",
