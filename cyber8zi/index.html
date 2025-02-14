@@ -3,7 +3,37 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>賽博算命</title>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
+    <meta name="author" content="Jakevin 羅旭辰" />
+    <meta name="publisher" content="Jakevin 羅旭辰" />
+    <meta name="company" content="北科大工工所" />
+
+    <meta name="rating" content="general" />
+    <meta name="copyright" content="&copy; Jakevin Lo" />
+    <meta name="robots" content="all" />
+    <meta name="spiders" content="all" />
+    <meta name="webcrawlers" content="all" />
+    <meta name="theme-color" content="#0085d5">
+    <meta name="abstract" content="賽博八字算命| Cyber Fortune Telling" />
+    <meta name="subject" content="賽博八字算命| Cyber Fortune Telling" />
+    <meta name="description" content="賽博八字算命| Cyber Fortune Telling" />
+    <meta name="keywords" content="北科大, TTI, AI, FLUX, GPT" />
+    <meta property="og:site_name" content="Jakevin" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="賽博八字算命| Cyber Fortune Telling" />
+    <meta property="og:url" content="https://jakevin.github.io/" />
+    <meta property="og:description" content="賽博八字算命| Cyber Fortune Telling" />
+    <meta property="og:image"
+        content="https://api.together.ai/imgproxy/pXOo77HixdTIUEFb39BSE0_szy_9bn6i9y-uP5kFH5g/format:jpg/aHR0cHM6Ly90b2dldGhlci1haS1iZmwtaW1hZ2VzLXByb2QuczMudXMtd2VzdC0yLmFtYXpvbmF3cy5jb20vaW1hZ2VzLzk0OGRjMzBkYmM2MDBmNzRhZWZmMGU0ZmUwMDM1ZjhjNTFjNGRlYTNhNWY5MGFkNzM0NzBlNzQxZDIyOWYwNmQ_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ29udGVudC1TaGEyNTY9VU5TSUdORUQtUEFZTE9BRCZYLUFtei1DcmVkZW50aWFsPUFTSUFZV1pXNEhWQ0FUV1Q3SlJIJTJGMjAyNDEwMDglMkZ1cy13ZXN0LTIlMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMDA4VDE2MDAxOVomWC1BbXotRXhwaXJlcz0zNjAwJlgtQW16LVNlY3VyaXR5LVRva2VuPUlRb0piM0pwWjJsdVgyVmpFUEQlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkZ3RWFDWFZ6TFhkbGMzUXRNaUpHTUVRQ0lEd2dydUNUOVdZOFpSSUFHV2dSRXR4TFZrJTJCdWg4R3ZaUyUyQjVZczNDSUFZdUFpQnUxNWkzeWxmNzFFJTJGb0x6WFAlMkJRWkpaa0RldVhZQWI2QlJCJTJCMSUyRmtSUHczeXFRQlFoSkVBQWFERFU1T0RjeU5qRTJNemM0TUNJTXhBUiUyQlRhWUtPejlyMWxEYkt1MEUwJTJCbUM1UzNtQlY0Q0daeWowJTJGR0hUZ1J1cyUyRkVJYVk0UXh4c2V6dGwyNHBqeVlMZDhJWHZueGdVVVJuYnNFZ0lFaldac3ViZ1lONyUyQnl3TGV0MUJkcCUyQiUyQnNnTmZ3Y1pSOTkzN0NickRTbGVpODB0cDdyb3cwT2hTd2x1QTNIM3BpakFzRElkSzNqaWR2Z2hNWkFYUkolMkYyUndSUHZPaHlseEU2b2toS2IyMGRKekhEUzNRRlRVRG5jZGpNJTJGaWoyZmV1MFN6VDhBd1RZQWNBaFJGaEo3ViUyQnFvMElyZ2ZRRVV6RmNSSEhmVTlzb3hkUjZYQUUxdSUyQndBb3htOUVJNllqT2NNckVPNzFjSHRjd0IwV3FnJTJGNThlbnoyOEZMdlUlMkZYY3RSS2F6dm9zUHNMcGdHamJLeXc3b3hTJTJGSFAlMkZFb2haVTBzZUhGZVBRdXlKcTg5dHNHQnU5RmJpNUVyekg4amxHNGtMMmQ3RTJwNFFETm11RHNiR2tmTGRLY1EyZSUyQkUlMkZrR1M3MWNJVjNkU0FNRERmMmpPcUdUcUtVa3dCZVElMkJuNndnaWZ3cGEybnpvak5hcGFRbFhQNThUbkpBQSUyQk83U3QzU0dSYkdQQm1tZFRIJTJGenFRZ2tjTTBDRVNqMzNSTEZLTjJWOU1mTXFxakkzJTJCRGJtYm1SbVBSc0NoY2ZPNnNjaFJiNlJOdiUyQmZIczU2M0ZDZkgzNjNJeVNtNEx3Yk54TlFncENVMGdDeEI0dEFOMmo4ck9xemJSVmMyJTJCVVhqYW10VCUyQnF0SmtBOWxXaTNaUTZRazlXTU9hanJqdnQxSmhnY2VrQlN0TXklMkZUaGd5QjhaWUEyclBpczdKRk41ZVY1JTJCOUo4TmdGNGh3Z044U05jSTZtJTJGQXNhb1dvSUNPV1NSb1NsRHViQ0Z5UVVvSFlHMUwlMkJGNEpxczlKS1RrOE9JRDUlMkJlNDFSeDQ2TW9HY1k5ZHBwVmVUNVhtdkdlS2xoNGhKNG5LS0xzN3R0bGJFZFVnYjMlMkJMVGkzdmNEdXNRSmE5ZUxDJTJCczQlMkJNWXc2Tzg3NDZ6NktoSTRnb1hReUQxMHZEejFKYUFsdXdjWDdQJTJGdVBUSEdWd0pnV3hrQ0hhN2w5TUpPdWxiZ0dPcHdCQVhUVGZNRHVITDVtNU5nRVdtTmd4JTJCUmNic1hOcUMzUDFKdWZnOGVJT1lsU1lSVklVZFJLODlzVHJHa3dZU0JzNUJNSnlkalJTQnBJeUxjdnppVk1PWWFGZExiZVAlMkZJZmJZTXRFeno0STh0WnBycUpFeWJScDZ2R21vUTNIWSUyRlBoWlolMkZWR2lMQkY3NGYxV1hUYnBobnp1VjVRTXRkcTMzclNleWhwVHNlYjJwRHhKcSUyRnYwNDQ5T0N2dHo5NTZiMWlCejh5OGtLbDB4M3N3cDcmWC1BbXotU2lnbmF0dXJlPWViZDU4NDU1ODg0OTM0M2ZiNDdjMmMwMDg5MzU0ZjIxYjViYmVmOGY5NDhjOTI3ZjcyMDJjMmE4ODkzMzgxOGUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JngtaWQ9R2V0T2JqZWN0" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Jakevin16" />
+    <meta name="twitter:title" content="賽博八字算命| Cyber Fortune Telling" />
+    <meta name="twitter:url" content="https://jakevin.github.io/" />
+    <meta name="twitter:description" content="賽博八字算命| Cyber Fortune Telling" />
+    <meta name="twitter:image:src"
+        content="https://api.together.ai/imgproxy/pXOo77HixdTIUEFb39BSE0_szy_9bn6i9y-uP5kFH5g/format:jpg/aHR0cHM6Ly90b2dldGhlci1haS1iZmwtaW1hZ2VzLXByb2QuczMudXMtd2VzdC0yLmFtYXpvbmF3cy5jb20vaW1hZ2VzLzk0OGRjMzBkYmM2MDBmNzRhZWZmMGU0ZmUwMDM1ZjhjNTFjNGRlYTNhNWY5MGFkNzM0NzBlNzQxZDIyOWYwNmQ_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ29udGVudC1TaGEyNTY9VU5TSUdORUQtUEFZTE9BRCZYLUFtei1DcmVkZW50aWFsPUFTSUFZV1pXNEhWQ0FUV1Q3SlJIJTJGMjAyNDEwMDglMkZ1cy13ZXN0LTIlMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMDA4VDE2MDAxOVomWC1BbXotRXhwaXJlcz0zNjAwJlgtQW16LVNlY3VyaXR5LVRva2VuPUlRb0piM0pwWjJsdVgyVmpFUEQlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkYlMkZ3RWFDWFZ6TFhkbGMzUXRNaUpHTUVRQ0lEd2dydUNUOVdZOFpSSUFHV2dSRXR4TFZrJTJCdWg4R3ZaUyUyQjVZczNDSUFZdUFpQnUxNWkzeWxmNzFFJTJGb0x6WFAlMkJRWkpaa0RldVhZQWI2QlJCJTJCMSUyRmtSUHczeXFRQlFoSkVBQWFERFU1T0RjeU5qRTJNemM0TUNJTXhBUiUyQlRhWUtPejlyMWxEYkt1MEUwJTJCbUM1UzNtQlY0Q0daeWowJTJGR0hUZ1J1cyUyRkVJYVk0UXh4c2V6dGwyNHBqeVlMZDhJWHZueGdVVVJuYnNFZ0lFaldac3ViZ1lONyUyQnl3TGV0MUJkcCUyQiUyQnNnTmZ3Y1pSOTkzN0NickRTbGVpODB0cDdyb3cwT2hTd2x1QTNIM3BpakFzRElkSzNqaWR2Z2hNWkFYUkolMkYyUndSUHZPaHlseEU2b2toS2IyMGRKekhEUzNRRlRVRG5jZGpNJTJGaWoyZmV1MFN6VDhBd1RZQWNBaFJGaEo3ViUyQnFvMElyZ2ZRRVV6RmNSSEhmVTlzb3hkUjZYQUUxdSUyQndBb3htOUVJNllqT2NNckVPNzFjSHRjd0IwV3FnJTJGNThlbnoyOEZMdlUlMkZYY3RSS2F6dm9zUHNMcGdHamJLeXc3b3hTJTJGSFAlMkZFb2haVTBzZUhGZVBRdXlKcTg5dHNHQnU5RmJpNUVyekg4amxHNGtMMmQ3RTJwNFFETm11RHNiR2tmTGRLY1EyZSUyQkUlMkZrR1M3MWNJVjNkU0FNRERmMmpPcUdUcUtVa3dCZVElMkJuNndnaWZ3cGEybnpvak5hcGFRbFhQNThUbkpBQSUyQk83U3QzU0dSYkdQQm1tZFRIJTJGenFRZ2tjTTBDRVNqMzNSTEZLTjJWOU1mTXFxakkzJTJCRGJtYm1SbVBSc0NoY2ZPNnNjaFJiNlJOdiUyQmZIczU2M0ZDZkgzNjNJeVNtNEx3Yk54TlFncENVMGdDeEI0dEFOMmo4ck9xemJSVmMyJTJCVVhqYW10VCUyQnF0SmtBOWxXaTNaUTZRazlXTU9hanJqdnQxSmhnY2VrQlN0TXklMkZUaGd5QjhaWUEyclBpczdKRk41ZVY1JTJCOUo4TmdGNGh3Z044U05jSTZtJTJGQXNhb1dvSUNPV1NSb1NsRHViQ0Z5UVVvSFlHMUwlMkJGNEpxczlKS1RrOE9JRDUlMkJlNDFSeDQ2TW9HY1k5ZHBwVmVUNVhtdkdlS2xoNGhKNG5LS0xzN3R0bGJFZFVnYjMlMkJMVGkzdmNEdXNRSmE5ZUxDJTJCczQlMkJNWXc2Tzg3NDZ6NktoSTRnb1hReUQxMHZEejFKYUFsdXdjWDdQJTJGdVBUSEdWd0pnV3hrQ0hhN2w5TUpPdWxiZ0dPcHdCQVhUVGZNRHVITDVtNU5nRVdtTmd4JTJCUmNic1hOcUMzUDFKdWZnOGVJT1lsU1lSVklVZFJLODlzVHJHa3dZU0JzNUJNSnlkalJTQnBJeUxjdnppVk1PWWFGZExiZVAlMkZJZmJZTXRFeno0STh0WnBycUpFeWJScDZ2R21vUTNIWSUyRlBoWlolMkZWR2lMQkY3NGYxV1hUYnBobnp1VjVRTXRkcTMzclNleWhwVHNlYjJwRHhKcSUyRnYwNDQ5T0N2dHo5NTZiMWlCejh5OGtLbDB4M3N3cDcmWC1BbXotU2lnbmF0dXJlPWViZDU4NDU1ODg0OTM0M2ZiNDdjMmMwMDg5MzU0ZjIxYjViYmVmOGY5NDhjOTI3ZjcyMDJjMmE4ODkzMzgxOGUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JngtaWQ9R2V0T2JqZWN0" />
+    <title>賽博八字算命</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/iztro/dist/iztro.min.js"></script>
     <style>
@@ -255,7 +285,10 @@
         <pre id="output">
             <button class="copy-btn" onclick="copyPrompt()">Copy</button>
         </pre>
+        <div>
+            <p>本工具使用 <a href="https://github.com/SylarLong/iztro" target="_blank">iztro</a> 作為天干地支的轉換工具</p>
 
+        </div>
     </div>
 
     <script>
@@ -314,12 +347,12 @@
 
                 prompt += `求测者的基本資訊如下：\n`;
                 prompt += `性别：${gender}\n`;
-                prompt += `出生年份：${year}年\n\n`;
+                prompt += `出生年份：${year}年\n`;
                 prompt += `生肖：${astrolabe.zodiac}\n`;
                 prompt += `星座：${astrolabe.sign}\n\n`;
 
 
-                prompt += `其八字命盘如下：\n`;
+                prompt += `其八字命盤如下：\n`;
                 prompt += `年柱：${chineseDate[0]}\n`;
                 prompt += `月柱：${chineseDate[1]}\n`;
                 prompt += `日柱：${chineseDate[2]}\n`;
@@ -398,16 +431,6 @@
 
             async function fetchResult(prompt) {
                 loadingOverlay.style.display = 'flex';
-
-                // const fakeResponse = {
-                //     "msg": "好的，我將按照您提供的框架，對這個八字命例進行深入分析，並提供有價值的建議。\n\n**1. 整體審視命局：**\n\n*   **五行：** 命局中，水（日元癸水）弱，木（甲木傷官）較弱，火（午火、巳火、丁火）旺，土（戊土、未土）中等。金缺。五行不均衡，缺金是最大的問題。\n*   **陰陽：** 陰陽相對平衡，但陽氣偏旺，略顯燥熱。\n*   **十神：** 傷官（甲木）透年，正官（戊土）透月，偏財（丁火）透時。傷官見官，但有財星化解，構成“傷官生財，財生官”的組合，但也暗藏官司是非的風險。\n*   **格局：** 正官格，但傷官透出，破格。需用財星化解，構成“傷官生財，財生官”的組合，格局層次有所提升，但也複雜。\n*   **日元：** 癸水日元生於午月，不得令。自坐未土，受克。年柱甲子，有子水幫扶，但力量有限。時支巳火耗洩。綜合來看，日元偏弱。\n\n**2. 分析日元強弱：**\n\n日元癸水，生於午月火旺之時，不得令；地支未土克身，巳火耗身。雖有年支子水幫扶，但遠水難救近火，且子水被年幹甲木洩氣。因此，綜合判斷，日元癸水偏弱。\n\n*   **喜：** 金、水。金能生水，增強日元力量；水能直接幫扶日元。\n*   **忌：** 木、火、土。木洩日元之氣，火耗日元之氣，土剋日元。\n\n**3. 剖析性格特徵：**\n\n*   **優點：**\n    *   **聰明有才華：** 傷官透出，代表聰明、才華、口才好，有藝術天賦，思維活躍，有創新精神。\n    *   **積極進取：** 正官代表責任心、上進心，有管理能力，渴望得到認可。\n    *   **人緣好：** 偏財透出，為人慷慨大方，善於交際，人緣較好。\n*   **缺點：**\n    *   **叛逆任性：** 傷官見官，容易恃才傲物，不服管束，挑戰權威，容易與領導、長輩發生衝突。\n    *   **情緒波動大：** 傷官也代表情緒不穩定，容易衝動，做事欠考慮。\n    *   **好面子：** 正官過於看重名譽，容易活在別人的評價裡，給自己造成壓力。\n*   **發展方向：**\n    *   適合從事具有創造性、挑戰性的工作，如藝術設計、廣告傳媒、市場營銷等。\n    *   也可以從事管理類工作，但要注意控制情緒，處理好人際關係。\n    *   不適合從事過於穩定、缺乏變化的工作。\n\n**4. 推斷事業發展：**\n\n*   **事業運勢：**\n    *   早年事業發展較為波折，容易遇到阻礙和挑戰。\n    *   中年事業運勢有所提升，但仍需注意人際關係。\n    *   晚年事業較為穩定。\n*   **適合的職業：**\n    *   藝術設計、廣告傳媒、市場營銷、自由職業、技術行業。\n*   **發展方向：**\n    *   可以考慮自己創業，但要謹慎選擇合作伙伴，避免因人際關係問題導致失敗。\n    *   也可以在企業中發展，但要注意處理好與領導、同事的關係，避免因傷官見官而影響事業。\n*   **注意事項：**\n    *   控制情緒，避免衝動行事。\n    *   虛心學習，不斷提升自身能力。\n    *   搞好人際關係，建立良好的人脈。\n    *   不要過於追求完美，學會接受不完美。\n\n**5. 預測財富運勢：**\n\n*   **財富狀況：**\n    *   命局中有偏財，說明有意外之財的機會，但偏財也代表不穩定，容易大起大落。\n    *   正財不顯，說明透過穩定工作獲得的收入相對有限。\n*   **財運走勢：**\n    *   早年財運一般，容易破財。\n    *   中年財運有所提升，但仍需謹慎理財。\n    *   晚年財運較為穩定。\n*   **理財建議：**\n    *   不要盲目投資，要做足功課，瞭解風險。\n    *   不要貪圖小便宜，避免上當受騙。\n    *   可以適當進行一些風險較低的投資，如房地產、基金等。\n    *   要注意節儉，避免過度消費。\n\n**6. 研判婚姻情感：**\n\n*   **婚姻運勢：**\n    *   男命以正財為妻星，命局中正財不顯，婚姻運勢較為波折。\n    *   日坐七殺，婚姻宮不穩，容易發生爭吵、矛盾。\n    *   傷官見官，也容易因性格不合而影響婚姻。\n*   **情感狀況：**\n    *   異性緣不錯，但容易遇到爛桃花。\n    *   在感情方面比較挑剔，不容易找到合適的伴侶。\n    *   婚後容易與配偶發生爭吵，需要互相理解、包容。\n*   **婚戀建議：**\n    *   晚婚為宜，30歲之後結婚較為合適。\n    *   選擇性格互補、成熟穩重的伴侶。\n    *   婚後要多溝通交流，互相理解、包容。\n    *   避免因小事爭吵，影響感情。\n\n**7. 關注健康狀況：**\n\n*   **健康狀況：**\n    *   五行缺金，需要注意呼吸系統、肺部、免疫力方面的問題。\n    *   火旺土燥，容易上火、便秘。\n    *   水弱，需要注意腎臟、泌尿系統方面的問題。\n*   **可能存在的健康隱患：**\n    *   呼吸道疾病、肺部疾病、腎臟疾病、泌尿系統疾病、便秘。\n*   **養生建議：**\n    *   多吃白色食物，如銀耳、百合、梨等，滋陰潤肺。\n    *   多喝水，保持身體水分充足。\n    *   適當進行體育鍛煉，增強體質。\n    *   保持心情舒暢，避免情緒波動。\n\n**8. 洞察六親關係：**\n\n*   **與父母的關係：**\n    *   與父親關係較為緊張，容易發生衝突。\n    *   與母親關係較為親密，能得到母親的幫助。\n*   **與配偶的關係：**\n    *   配偶性格較為強勢，容易與自己發生爭吵。\n    *   配偶對自己有一定的幫助，但也會給自己帶來壓力。\n*   **與子女的關係：**\n    *   子女較為孝順，能給自己帶來安慰。\n    *   但子女也可能比較叛逆，需要耐心引導。\n\n**9. 把握大運流年：**\n\n*   **1988-1997 己未大運：** 七殺運，壓力較大，身體不好，不利學業。\n*   **1998-2007 庚申大運：** 印綬運，運勢有所好轉，利於學業，但仍需努力。\n*   **2008-2017 辛酉大運：** 印綬運，事業發展較為順利，但容易遇到競爭對手。\n*   **2018-2027 壬戌大運：** 比劫運，運勢平平，容易破財，需要謹慎理財。\n*   **2028-2037 癸亥大運：** 比劫運，運勢平平，容易破財，需要謹慎理財。\n*   **2038-2047 甲子大運：** 傷官運，運勢較為動盪，容易發生變化。\n*   **2048-2057 乙丑大運：** 七殺運，壓力較大，身體不好，不利事業。\n*   **2058-2067 丙寅大運：** 正財運，晚年生活較為穩定，但容易因財生事。\n*   **2068-2077 丁卯大運：** 偏財運，晚年生活較為豐富，但容易大起大落。\n*   **2078-2087 戊辰大運：** 正官運，晚年生活較為平淡，但容易生病。\n\n**人生規劃建議：**\n\n1.  **提升自我：** 不斷學習，提升自身能力，尤其是在專業技能方面。\n2.  **改善人際關係：** 虛心待人，與人為善，建立良好的人脈關係。\n3.  **理財規劃：** 謹慎理財，避免盲目投資，做好風險管理。\n4.  **婚姻經營：** 互相理解，互相包容，共同經營幸福的婚姻。\n5.  **健康管理：** 注意飲食，適當鍛鍊，保持身心健康。\n\n現在請您指示是否需要更深入的分析，或者調整分析的側重點。\n```json\n{ \n\"svg\": \"<svg width=\\\"400\\\" height=\\\"600\\\" xmlns=\\\"http://www.w3.org/2000/svg\\\">\\n  <!-- Background -->\\n  <rect width=\\\"100%\\\" height=\\\"100%\\\" fill=\\\"#F0F0F0\\\"/>\\n\\n  <!-- Title -->\\n  <text x=\\\"50%\\\" y=\\\"50\\\" font-family=\\\"STKaiti\\\" font-size=\\\"24\\\" fill=\\\"#555\\\" text-anchor=\\\"middle\\\">賽博八字卡</text>\\n\\n  <!-- Separator Line -->\\n  <line x1=\\\"50\\\" y1=\\\"80\\\" x2=\\\"350\\\" y2=\\\"80\\\" stroke=\\\"#BBB\\\" stroke-width=\\\"1\\\"/>\\n\\n  <!-- User Input & Bazi -->\\n  <text x=\\\"50%\\\" y=\\\"120\\\" font-family=\\\"STKaiti\\\" font-size=\\\"16\\\" fill=\\\"#666\\\" text-anchor=\\\"middle\\\">男 1984 甲子 戊午 癸未 丁巳</text>\\n\\n  <!-- Separator Line -->\\n  <line x1=\\\"50\\\" y1=\\\"150\\\" x2=\\\"350\\\" y2=\\\"150\\\" stroke=\\\"#BBB\\\" stroke-width=\\\"1\\\"/>\\n\\n  <!-- Poem -->\\n  <text x=\\\"50%\\\" y=\\\"200\\\" font-family=\\\"STKaiti\\\" font-size=\\\"18\\\" fill=\\\"#777\\\" text-anchor=\\\"middle\\\">\\n    <tspan x=\\\"50%\\\" dy=\\\"0em\\\">傷官駕殺來</tspan>\\n    <tspan x=\\\"50%\\\" dy=\\\"1.2em\\\">午月火煉裁</tspan>\\n    <tspan x=\\\"50%\\\" dy=\\\"1.2em\\\">財星亦入局</tspan>\\n    <tspan x=\\\"50%\\\" dy=\\\"1.2em\\\">命運不由呆</tspan>\\n  </text>\\n\\n  <!-- Explanation -->\\n  <text x=\\\"50%\\\" y=\\\"300\\\" font-family=\\\"STKaiti\\\" font-size=\\\"14\\\" fill=\\\"#888\\\" text-anchor=\\\"middle\\\">才華橫溢，命途多舛</text>\\n\\n  <!-- Subtitle -->\\n  <text x=\\\"50%\\\" y=\\\"350\\\" font-family=\\\"STKaiti\\\" font-size=\\\"18\\\" fill=\\\"#555\\\" text-anchor=\\\"middle\\\">2025年流年</text>\\n\\n  <!-- 2025 Poem -->\\n  <text x=\\\"50%\\\" y=\\\"400\\\" font-family=\\\"STKaiti\\\" font-size=\\\"18\\\" fill=\\\"#777\\\" text-anchor=\\\"middle\\\">\\n    <tspan x=\\\"50%\\\" dy=\\\"0em\\\">乙巳入命宮</tspan>\\n    <tspan x=\\\"50%\\\" dy=\\\"1.2em\\\">財旺恐成空</tspan>\\n    <tspan x=\\\"50%\\\" dy=\\\"1.2em\\\">守成方為上</tspan>\\n    <tspan x=\\\"50%\\\" dy=\\\"1.2em\\\">妄動必遭兇</tspan>\\n  </text>\\n\\n  <!-- Summary -->\\n  <text x=\\\"50%\\\" y=\\\"500\\\" font-family=\\\"STKaiti\\\" font-size=\\\"16\\\" fill=\\\"#999\\\" text-anchor=\\\"middle\\\">財來財去，守靜常安。</text>\\n</svg>\",\n\"summary\": \"傷官駕殺，財旺身弱，守靜待時。\"\n}\n```",
-                //     "finishReason": "stop"
-                // }
-                // const svgMatch = fakeResponse.msg.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
-                // let result = svgMatch ? `<svg style="width:400px; height:600px">${svgMatch[1]}</svg>` : '';
-                // console.log(result);
-                // svgOutput.innerHTML = marked.parse(fakeResponse.msg.trim());
-                // loadingOverlay.style.display = 'none';
 
                 const apiBody = {
                     "userId": '0_cyber8',
