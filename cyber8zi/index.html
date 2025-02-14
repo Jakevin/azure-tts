@@ -144,9 +144,6 @@
         }
 
         .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
             padding: 5px 10px;
             background-color: #007bff;
             color: white;
@@ -284,14 +281,16 @@
         <button id="generate-btn">請幫我算一算！</button>
         <div id="error-message"></div>
         <h2>結果:</h2>
-        <div id="svgOutput"></div>
+        <div id="svgOutput">
+
+        </div>
+        <h2>Prompt:</h2>
 
         <pre id="output">
-            <button class="copy-btn" onclick="copyPrompt()">Copy</button>
+            <button class="copy-btn" onclick="copyPrompt()">複製</button>
         </pre>
         <div>
             <p>本工具使用 <a href="https://github.com/SylarLong/iztro" target="_blank">iztro</a> 作為天干地支的轉換工具</p>
-
         </div>
     </div>
 
@@ -477,10 +476,22 @@
             }
 
             window.copyPrompt = function () {
-                const promptText = outputDiv.textContent.replace('Copy', '').trim();
+                const promptText = outputDiv.textContent.replace('複製', '').trim();
                 navigator.clipboard.writeText(promptText)
                     .then(() => {
                         alert('Prompt 複製完成！');
+                    })
+                    .catch(err => {
+                        console.error('複製失敗:', err);
+                        alert('複製失敗，請手動複製。');
+                    });
+            };
+
+            window.copyResult = function () {
+                const resultText = svgOutput.textContent.replace('複製', '').trim();
+                navigator.clipboard.writeText(resultText)
+                    .then(() => {
+                        alert('複製完成！');
                     })
                     .catch(err => {
                         console.error('複製失敗:', err);
@@ -538,7 +549,7 @@
                     }
 
                     const data = await response.json();
-                    svgOutput.innerHTML = marked.parse(data.msg.trim());
+                    svgOutput.innerHTML = `<button class="copy-btn" onclick="copyResult()">複製</button></br>` + marked.parse(data.msg.trim());
 
                 } catch (error) {
                     console.error('API請求失敗:', error);
