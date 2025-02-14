@@ -960,7 +960,7 @@
             }
 
             function initializeSelectors() {
-                const now = new Date('1984-05-25T13:44:00');
+                const now = new Date('2000-01-01T13:44:00');
                 // 格式化當前時間為datetime-local接受的格式 (YYYY-MM-DDThh:mm:ss)
                 const year = now.getFullYear();
                 const month = (now.getMonth() + 1).toString().padStart(2, '0');
@@ -1218,8 +1218,6 @@
 
                     outputDiv.textContent = prompt;
                     outputDiv.innerHTML = `<button class="copy-btn" onclick="copyPrompt()">複製</button>` + `<br>` + prompt;
-
-                    return
 
                     fetchResult(prompt);
                 }
