@@ -960,7 +960,7 @@
             }
 
             function initializeSelectors() {
-                const now = new Date('2000-01-01T13:44:00');
+                const now = new Date('1984-05-25T13:44:00');
                 // 格式化當前時間為datetime-local接受的格式 (YYYY-MM-DDThh:mm:ss)
                 const year = now.getFullYear();
                 const month = (now.getMonth() + 1).toString().padStart(2, '0');
@@ -1001,24 +1001,46 @@
 
 
             function calculateDayun(year, month, day, hour, gender, chineseDate) {
-                console.log('calculateDayun', chineseDate);
-                const solarTerms = [
-                    [3, 5],
-                    [4, 4],
-                    [5, 5],
-                    [6, 5],
-                    [7, 7],
-                    [8, 7],
-                    [9, 7],
-                    [10, 8],
-                    [11, 7],
-                    [12, 7],
-                    [1, 5],
-                    [2, 4]
-                ];
-                let direction = ((gender === '男' && ["甲", "丙", "戊", "庚", "壬"].includes(chineseDate[0].substring(0, 1))) ||
-                    (gender === '女' && ["乙", "丁", "己", "辛", "癸"].includes(chineseDate[0].substring(0, 1)))) ? 1 : -1;
 
+                // 參數驗證
+                if (!chineseDate) {
+                    throw new Error('無效的農曆日期格式');
+                }
+
+                if (gender !== '男' && gender !== '女') {
+                    throw new Error('性別必須為"男"或"女"');
+                }
+
+                // 定義更精確的節氣日期
+                const solarTerms = [
+                    [3, 5],  // 驚蟄
+                    [4, 4],  // 清明
+                    [5, 5],  // 立夏
+                    [6, 5],  // 芒種
+                    [7, 7],  // 小暑
+                    [8, 7],  // 立秋
+                    [9, 7],  // 白露
+                    [10, 8], // 寒露
+                    [11, 7], // 立冬
+                    [12, 7], // 大雪
+                    [1, 5],  // 小寒
+                    [2, 4]   // 雨水
+                ];
+
+                // 計算大運方向
+                const yearStem = chineseDate[0];
+                const yangStems = ["甲", "丙", "戊", "庚", "壬"];
+                const yinStems = ["乙", "丁", "己", "辛", "癸"];
+
+                let direction;
+                if ((gender === '男' && yangStems.includes(yearStem)) ||
+                    (gender === '女' && yinStems.includes(yearStem))) {
+                    direction = 1; // 順行
+                } else {
+                    direction = -1; // 逆行
+                }
+
+                // 計算下一個節氣日期
                 let nextTermMonth = month % 12;
                 let nextTermYear = year;
                 if (direction === 1 && nextTermMonth === 11) nextTermYear++;
@@ -1026,27 +1048,37 @@
                 let nextTermDay = solarTerms[nextTermMonth][0];
                 let nextTermHour = solarTerms[nextTermMonth][1];
 
+                // 計算起運時間
                 let birthDate = new Date(year, month - 1, day, hour, 0, 0);
                 let termDate = new Date(nextTermYear, nextTermMonth, nextTermDay, nextTermHour, 0, 0);
 
                 let diff = termDate.getTime() - birthDate.getTime();
                 if (direction === -1) diff = birthDate.getTime() - termDate.getTime();
 
+                // 使用傳統的120天折算法計算起運年齄
                 let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                let dayunStartYears = Math.floor(days / 3);
-                let dayunStartYear = year + direction * dayunStartYears;
-                let dayunStartMonth = month;
+                let dayunStartYears = Math.floor(days / 120);
+                let dayunStartYear = year + dayunStartYears;
 
+                // 計算大運
                 const dayun = [];
-                let monthPillar = chineseDate[1];
+                let monthPillar = [chineseDate[3], chineseDate[4]];
+                // 確保月柱索引有效
                 let monthStemIndex = stems.indexOf(monthPillar[0]);
                 let monthBranchIndex = branches.indexOf(monthPillar[1]);
 
+                if (monthStemIndex === -1 || monthBranchIndex === -1) {
+                    throw new Error('無效的月柱');
+                }
+
+                // 計算十個大運
                 for (let i = 0; i < 10; i++) {
-                    monthStemIndex = (monthStemIndex + direction + 10) % 10;
-                    monthBranchIndex = (monthBranchIndex + direction + 12) % 12;
+                    // 確保索引在有效範圍內
+                    monthStemIndex = ((monthStemIndex + direction) % 10 + 10) % 10;
+                    monthBranchIndex = ((monthBranchIndex + direction) % 12 + 12) % 12;
                     dayun.push(stems[monthStemIndex] + branches[monthBranchIndex]);
                 }
+
                 return {
                     startYear: dayunStartYear,
                     dayun
@@ -1058,7 +1090,7 @@
 
                 const lun = lunisolar(`${year}/${month}/${day} ${hours}:${minutes}`)
                 const char8ex = lunisolar(`${year}/${month}/${day} ${hours}:${minutes}`).char8ex(gender ? 1 : 0)
-                const bigLuck = calculateDayun(year, month, day, hours, gender, `${char8ex.char8}`);
+                const bigLuck = calculateDayun(year, month, day, hours, gender ? '男' : "女", `${char8ex.char8}`);
 
                 const astrolabe = iztro.astro.bySolar(`${year}/${month}/${day}`, lun.lunar.hour, gender ? '男' : "女", true, 'zh-TW');
 
@@ -1186,6 +1218,8 @@
 
                     outputDiv.textContent = prompt;
                     outputDiv.innerHTML = `<button class="copy-btn" onclick="copyPrompt()">複製</button>` + `<br>` + prompt;
+
+                    return
 
                     fetchResult(prompt);
                 }
