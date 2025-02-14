@@ -339,7 +339,7 @@
             const branches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
             const zodiac = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
 
-            const elements = {
+            let elements = {
                 '金': 0,
                 '木': 0,
                 '水': 0,
@@ -409,6 +409,13 @@
 
                 const w = lun.char8.year.stem.e5.name + lun.char8.year.branch.e5.name + lun.char8.month.stem.e5.name + lun.char8.month.branch.e5.name + lun.char8.day.stem.e5.name + lun.char8.day.branch.e5.name + lun.char8.hour.stem.e5.name + lun.char8.hour.branch.e5.name;
 
+                elements = {
+                    '金': 0,
+                    '木': 0,
+                    '水': 0,
+                    '火': 0,
+                    '土': 0
+                };
 
                 for (let char of w) {
                     if (char in elements) {
