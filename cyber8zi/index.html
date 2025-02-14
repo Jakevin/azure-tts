@@ -275,6 +275,10 @@
                 <label><input type="radio" name="gender" value="男" required> 男</label>
                 <label><input type="radio" name="gender" value="女" required> 女</label>
             </div>
+            <p>
+                重要宣告：</br>
+                八字命理是一種複雜的學問僅供參考，不能作為決策的唯一依據。
+            </p>
         </div>
 
         <button id="generate-btn">請幫我算一算！</button>
@@ -331,6 +335,61 @@
                 return isValid;
             }
 
+            const stems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
+            const branches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+
+
+            function calculateDayun(year, month, day, hour, gender, chineseDate) {
+                const solarTerms = [
+                    [3, 5],
+                    [4, 4],
+                    [5, 5],
+                    [6, 5],
+                    [7, 7],
+                    [8, 7],
+                    [9, 7],
+                    [10, 8],
+                    [11, 7],
+                    [12, 7],
+                    [1, 5],
+                    [2, 4]
+                ];
+                let direction = ((gender === '男' && ["甲", "丙", "戊", "庚", "壬"].includes(chineseDate[0].substring(0, 1))) ||
+                    (gender === '女' && ["乙", "丁", "己", "辛", "癸"].includes(chineseDate[0].substring(0, 1)))) ? 1 : -1;
+
+                let nextTermMonth = month % 12;
+                let nextTermYear = year;
+                if (direction === 1 && nextTermMonth === 11) nextTermYear++;
+                if (direction === -1 && nextTermMonth === 0) nextTermYear--;
+                let nextTermDay = solarTerms[nextTermMonth][0];
+                let nextTermHour = solarTerms[nextTermMonth][1];
+
+                let birthDate = new Date(year, month - 1, day, hour, 0, 0);
+                let termDate = new Date(nextTermYear, nextTermMonth, nextTermDay, nextTermHour, 0, 0);
+
+                let diff = termDate.getTime() - birthDate.getTime();
+                if (direction === -1) diff = birthDate.getTime() - termDate.getTime();
+
+                let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                let dayunStartYears = Math.floor(days / 3);
+                let dayunStartYear = year + direction * dayunStartYears;
+                let dayunStartMonth = month;
+
+                const dayun = [];
+                let monthPillar = chineseDate[1];
+                let monthStemIndex = stems.indexOf(monthPillar[0]);
+                let monthBranchIndex = branches.indexOf(monthPillar[1]);
+
+                for (let i = 0; i < 10; i++) {
+                    monthStemIndex = (monthStemIndex + direction + 10) % 10;
+                    monthBranchIndex = (monthBranchIndex + direction + 12) % 12;
+                    dayun.push(stems[monthStemIndex] + branches[monthBranchIndex]);
+                }
+                return {
+                    startYear: dayunStartYear,
+                    dayun
+                };
+            }
 
 
             function generateBaziPrompt(year, month, day, hours, minutes, gender) {
@@ -340,6 +399,9 @@
                 console.log(astrolabe);
 
                 const chineseDate = astrolabe.chineseDate.split(' ');
+                console.log(chineseDate[0].substring(0, 1));
+
+                const bigLuck = calculateDayun(year, month, day, hours, gender, chineseDate);
 
                 let prompt = "";
                 prompt += `你是一位對中國傳統八字命理學有著深刻理解和豐富經驗的專家。你精通《滴天髓》、《子平真詮》、《窮通寶鑒》等經典著作，擅長運用五行生克、十神意象、格局喜忌等理論，對人生命運進行分析和解讀。\n\n`;
@@ -360,7 +422,7 @@
                 prompt += `五行局：${astrolabe.fiveElementsClass}\n\n`;
 
 
-                // prompt += `大运信息：从${bigLuck.startYear}年起运，运程顺序为：${bigLuck.dayun.join('、')}\n\n`;
+                prompt += `大運信息：從${bigLuck.startYear}年起運，運程順序為：${bigLuck.dayun.join('、')}\n\n`;
 
                 prompt += `請你從以下幾個方面入手，展開你的分析：\n\n`;
 
