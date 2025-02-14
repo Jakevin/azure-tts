@@ -960,7 +960,7 @@
             }
 
             function initializeSelectors() {
-                const now = new Date('2000-01-01T13:44:00');
+                const now = new Date('1984-05-25T13:44:00');
                 // 格式化當前時間為datetime-local接受的格式 (YYYY-MM-DDThh:mm:ss)
                 const year = now.getFullYear();
                 const month = (now.getMonth() + 1).toString().padStart(2, '0');
@@ -1001,86 +1001,130 @@
 
 
             function calculateDayun(year, month, day, hour, gender, chineseDate) {
-
                 // 參數驗證
-                if (!chineseDate) {
-                    throw new Error('無效的農曆日期格式');
+                if (!chineseDate || gender !== '男' && gender !== '女') {
+                    throw new Error('無效的參數');
                 }
 
-                if (gender !== '男' && gender !== '女') {
-                    throw new Error('性別必須為"男"或"女"');
-                }
-
-                // 定義更精確的節氣日期
-                const solarTerms = [
-                    [3, 5],  // 驚蟄
-                    [4, 4],  // 清明
-                    [5, 5],  // 立夏
-                    [6, 5],  // 芒種
-                    [7, 7],  // 小暑
-                    [8, 7],  // 立秋
-                    [9, 7],  // 白露
-                    [10, 8], // 寒露
-                    [11, 7], // 立冬
-                    [12, 7], // 大雪
-                    [1, 5],  // 小寒
-                    [2, 4]   // 雨水
-                ];
-
-                // 計算大運方向
+                // 判斷陽年陰年及順逆方向
                 const yearStem = chineseDate[0];
-                const yangStems = ["甲", "丙", "戊", "庚", "壬"];
-                const yinStems = ["乙", "丁", "己", "辛", "癸"];
+                const isYangYear = ["甲", "丙", "戊", "庚", "壬"].includes(yearStem);
+                const direction = ((gender === '男' && isYangYear) ||
+                    (gender === '女' && !isYangYear)) ? 1 : -1;
 
-                let direction;
-                if ((gender === '男' && yangStems.includes(yearStem)) ||
-                    (gender === '女' && yinStems.includes(yearStem))) {
-                    direction = 1; // 順行
-                } else {
-                    direction = -1; // 逆行
+                // 定義節氣日期
+                const solarTerms = {
+                    1: { day: 5, name: "小寒" },
+                    2: { day: 4, name: "立春" },
+                    3: { day: 5, name: "驚蟄" },
+                    4: { day: 4, name: "清明" },
+                    5: { day: 5, name: "立夏" },
+                    6: { day: 5, name: "芒種" },
+                    7: { day: 7, name: "小暑" },
+                    8: { day: 7, name: "立秋" },
+                    9: { day: 7, name: "白露" },
+                    10: { day: 8, name: "寒露" },
+                    11: { day: 7, name: "立冬" },
+                    12: { day: 7, name: "大雪" }
+                };
+
+                // 計算出生時刻和相鄰節氣的時間
+                const birthTime = new Date(year, month - 1, day, hour, 0, 0);
+                const currentMonth = month;
+                const prevMonth = ((currentMonth - 2 + 12) % 12) + 1;
+                const nextMonth = (currentMonth % 12) + 1;
+
+                const prevTerm = new Date(
+                    prevMonth === 12 && currentMonth === 1 ? year - 1 : year,
+                    prevMonth - 1,
+                    solarTerms[prevMonth].day
+                );
+                const nextTerm = new Date(
+                    nextMonth === 1 && currentMonth === 12 ? year + 1 : year,
+                    nextMonth - 1,
+                    solarTerms[nextMonth].day
+                );
+
+                console.log('prevTerm', prevTerm);
+                console.log('nextTerm', nextTerm);
+
+                // 計算到節氣的時間差（包括日數和時辰）
+                const timeDiff = direction === 1 ?
+                    nextTerm.getTime() - birthTime.getTime() :
+                    birthTime.getTime() - prevTerm.getTime();
+
+                // 計算天數和時辰（1時辰 = 2小時 = 10天）
+                const totalDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                console.log('totalDays', totalDays);
+
+                const y = Math.floor(totalDays / 3); // 整岁
+                const remainingDays = totalDays % 3;     // 剩余天数
+                const m = Math.floor(remainingDays * 4); // 折合月份
+                const startAge = y + m / 12;
+
+                /**
+                 * 根据起运年龄和出生日期，计算起运的具体年份和时间
+                 * @param {Date} birthday - 出生日期（包含时间）
+                 * @param {number} totalAge - 起运年龄（可能带有小数，表示月份）
+                 * @returns {Object} 起运年份和具体时间
+                 */
+                function calculateQiYunYear(birthday, totalAge) {
+                    const birthYear = birthday.getFullYear();
+                    const birthMonth = birthday.getMonth() + 1; // 注意：月份从0开始
+                    const birthDay = birthday.getDate();
+
+                    // 将起运年龄拆分为整岁和小数部分
+                    const years = Math.floor(totalAge); // 整岁
+                    const months = Math.round((totalAge - years) * 12); // 小数部分转换为月份
+
+                    // 计算起运年份
+                    let qiYunYear = birthYear + years;
+                    let qiYunMonth = birthMonth + months;
+
+                    // 如果月份超过12，则进位到下一年
+                    if (qiYunMonth > 12) {
+                        qiYunYear += Math.floor(qiYunMonth / 12);
+                        qiYunMonth = qiYunMonth % 12 || 12; // 确保月份在1-12之间
+                    }
+
+                    // 构造起运日期
+                    const qiYunDate = new Date(qiYunYear, qiYunMonth - 1, birthDay); // 注意：月份从0开始
+
+                    return {
+                        year: qiYunYear,
+                        month: qiYunMonth,
+                        date: qiYunDate,
+                    };
                 }
-
-                // 計算下一個節氣日期
-                let nextTermMonth = month % 12;
-                let nextTermYear = year;
-                if (direction === 1 && nextTermMonth === 11) nextTermYear++;
-                if (direction === -1 && nextTermMonth === 0) nextTermYear--;
-                let nextTermDay = solarTerms[nextTermMonth][0];
-                let nextTermHour = solarTerms[nextTermMonth][1];
-
-                // 計算起運時間
-                let birthDate = new Date(year, month - 1, day, hour, 0, 0);
-                let termDate = new Date(nextTermYear, nextTermMonth, nextTermDay, nextTermHour, 0, 0);
-
-                let diff = termDate.getTime() - birthDate.getTime();
-                if (direction === -1) diff = birthDate.getTime() - termDate.getTime();
-
-                // 使用傳統的120天折算法計算起運年齄
-                let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                let dayunStartYears = Math.floor(days / 120);
-                let dayunStartYear = year + dayunStartYears;
+                const qiYunYear = calculateQiYunYear(birthTime, startAge);
+                console.log('qiYunYear', qiYunYear);
+                const startYear = qiYunYear.year;
 
                 // 計算大運
                 const dayun = [];
-                let monthPillar = [chineseDate[3], chineseDate[4]];
-                // 確保月柱索引有效
-                let monthStemIndex = stems.indexOf(monthPillar[0]);
-                let monthBranchIndex = branches.indexOf(monthPillar[1]);
+                const monthPillar = [chineseDate[3], chineseDate[4]];
+                let stemIndex = stems.indexOf(monthPillar[0]);
+                let branchIndex = branches.indexOf(monthPillar[1]);
 
-                if (monthStemIndex === -1 || monthBranchIndex === -1) {
+                if (stemIndex === -1 || branchIndex === -1) {
                     throw new Error('無效的月柱');
                 }
 
                 // 計算十個大運
                 for (let i = 0; i < 10; i++) {
-                    // 確保索引在有效範圍內
-                    monthStemIndex = ((monthStemIndex + direction) % 10 + 10) % 10;
-                    monthBranchIndex = ((monthBranchIndex + direction) % 12 + 12) % 12;
-                    dayun.push(stems[monthStemIndex] + branches[monthBranchIndex]);
+                    stemIndex = ((stemIndex + direction) % 10 + 10) % 10;
+                    branchIndex = ((branchIndex + direction) % 12 + 12) % 12;
+                    const pillar = stems[stemIndex] + branches[branchIndex];
+                    const periodStartYear = startYear + (i * 10);
+
+                    dayun.push({
+                        pillar,
+                        period: `${pillar} (${periodStartYear}-${periodStartYear + 9}年)`
+                    });
                 }
 
                 return {
-                    startYear: dayunStartYear,
+                    startYear,
                     dayun
                 };
             }
@@ -1136,8 +1180,23 @@
                 // ziwei = ziwei.replaceAll('()', '')
 
                 let prompt = "";
-                prompt += `你是一位對中國傳統八字命理學有著深刻理解和豐富經驗的專家。你精通《滴天髓》、《子平真詮》、《窮通寶鑒》等經典著作，擅長運用五行生克、十神意象、格局喜忌、紫微斗數等理論，對人生命運進行分析和解讀。\n\n`;
+                prompt += `你是一位對中國傳統八字命理學有著深刻理解和豐富經驗的專家。你精通《滴天髓》、《子平真詮》、《窮通寶鑒》等經典著作，擅長運用五行生克、十神意象、格局喜忌等理論，對人生命運進行分析和解讀。\n\n`;
                 prompt += `現在你將面對一個八字命例，請你運用你的專業知識和經驗，對該命盤進行全面、深入的分析，並給出有價值的建議。請你務必逐步思考、推理，並清晰地展示你的思考過程。\n\n`;
+                prompt += `- *確保準確性*，使用正確的信息進行回應用戶的問題，切勿使用虛假的生日或其他信息。\n`;
+                prompt += `## 基礎命理規則\n`;
+                prompt += `- 五行生克：**生 (土生金，金生水，水生木，木生火，火生土). 克 (土克水，水克火，火克金，金克木，木克土)**\n`;
+                prompt += `- 天干生克關系：\n`;
+                prompt += `-- **生 甲木/乙木生丙火/丁火，丙火/丁火生戊土/己土，戊土/己土生庚金/辛金，庚金/辛金生壬水/癸水，壬水/癸水生甲木/乙木。**\n`;
+                prompt += `-- **克 甲木/乙木克戊土/己土，丙火/丁火克庚金/辛金，戊土/己土克壬水/癸水，庚金/辛金克甲木/乙木，壬水/癸水克丙火/丁火。**\n`;
+                prompt += `- 十神簡稱/別稱：\n`;
+                prompt += `正官：官、七殺：殺，偏官、正印：印、偏印：梟、比肩：比、劫財：劫、食神：食、傷官：傷。正財：財、偏財：才\n`;
+                prompt += `- 十神生克: **生 印生比劫， 比劫生食傷，食傷生財，財生官殺，官殺生印。 克 印克食傷，食傷克官殺，財克（破）印，官殺克比劫，比劫克（奪）財。**\n`;
+                prompt += `- 透出指的是**天干**有某個五行或十神，如果地支有某個五行或十神，一般叫**藏**或**得地**\n`;
+                prompt += `- **用神**：定格局的十神。比如正官格，用神就為正官。\n`;
+                prompt += `- **相神**：原局中和用神搭配形成細分格局的十神，輔佐用神提升格局檔次。比如”殺印相生“，用神是七殺，相神就是印（正印或偏印）。\n`;
+                prompt += `- **喜神（喜用神）**：八字格局喜歡的十神，可以輔助相神或用神提升命運檔次，同時可以克制傷害格局或命運的忌神。\n`;
+                prompt += `- **忌神（忌用神）**：八字格局忌諱的十神，容易破壞（克或沖）用神或相神\n\n`;
+
 
                 prompt += `求測者的基本資訊如下：\n`;
                 prompt += `性别：${gender}\n`;
@@ -1146,19 +1205,23 @@
                 prompt += `星座：${astrolabe.sign}\n\n`;
 
                 prompt += `其八字命盤如下：\n`;
-                prompt += `年柱：${char8ex.char8.year.toString()}(${char8ex.year.stemTenGod.name}) 柱纳音：${char8ex.year.takeSound} 五行：${char8ex.char8.year.stem.e5.name + char8ex.char8.year.branch.e5.name}\n`;
-                prompt += `月柱：${char8ex.char8.month.toString()}(${char8ex.month.stemTenGod.name}) 柱纳音：${char8ex.month.takeSound} 五行：${char8ex.char8.month.stem.e5.name + char8ex.char8.month.branch.e5.name}\n`;
-                prompt += `日柱：${char8ex.char8.day.toString()}(${char8ex.day.stemTenGod.name}) 柱纳音：${char8ex.day.takeSound} 五行：${char8ex.char8.day.stem.e5.name + char8ex.char8.day.branch.e5.name}\n`;
-                prompt += `時柱：${char8ex.char8.hour.toString()}(${char8ex.hour.stemTenGod.name}) 柱纳音：${char8ex.hour.takeSound} 五行：${char8ex.char8.hour.stem.e5.name + char8ex.char8.hour.branch.e5.name}\n`;
+                prompt += `年柱：${char8ex.char8.year.toString()}(${char8ex.year.stemTenGod.name}) 柱納音：${char8ex.year.takeSound} 五行：${char8ex.char8.year.stem.e5.name + char8ex.char8.year.branch.e5.name}\n`;
+                prompt += `月柱：${char8ex.char8.month.toString()}(${char8ex.month.stemTenGod.name}) 柱納音：${char8ex.month.takeSound} 五行：${char8ex.char8.month.stem.e5.name + char8ex.char8.month.branch.e5.name}\n`;
+                prompt += `日柱：${char8ex.char8.day.toString()}(${char8ex.day.stemTenGod.name}) 柱納音：${char8ex.day.takeSound} 五行：${char8ex.char8.day.stem.e5.name + char8ex.char8.day.branch.e5.name}\n`;
+                prompt += `時柱：${char8ex.char8.hour.toString()}(${char8ex.hour.stemTenGod.name}) 柱納音：${char8ex.hour.takeSound} 五行：${char8ex.char8.hour.stem.e5.name + char8ex.char8.hour.branch.e5.name}\n`;
                 prompt += `五行：金(${elements['金']})、木(${elements['木']})、水(${elements['水']})、火(${elements['火']})、土(${elements['土']})\n\n`;
 
-                prompt += `大運信息：從${bigLuck.startYear}年起運，運程順序為：${bigLuck.dayun.join('、')}\n\n`;
+                prompt += `大運信息：從${bigLuck.startYear}年起運，運程順序為：\n`;
+                bigLuck.dayun.forEach(dayun => {
+                    prompt += `${dayun.period}\n`;
+                });
+                prompt += '\n';
 
                 prompt += `請你從以下幾個方面入手，展開你的分析：\n\n`;
 
                 prompt += `1.整體審視命局：首先，請你對整個八字命例進行審視，從五行、陰陽、十神、格局等多個角度入手，對命局的整體特點進行概括性的描述。例如，五行是否均衡？陰陽是否協調？是否存在某種特殊的格局？日元得令、得地、得助嗎？\n\n`;
 
-                prompt += `2.分析日元強弱：日元代表命主自身，其強弱直接關系到命主的運勢。請你結合月令、地支、天幹等因素，綜合判斷日元的強弱，並說明判斷的依據。如果日元偏強，喜什麽？忌什麽？如果日元偏弱，又該如何取用神？\n\n`;
+                prompt += `2.分析日元強弱：日元代表命主自身，其強弱直接關系到命主的運勢。請你結合月令、地支、天干等因素，綜合判斷日元的強弱，並說明判斷的依據。如果日元偏強，喜什麽？忌什麽？如果日元偏弱，又該如何取用神？\n\n`;
 
                 prompt += `3.剖析性格特征：性格決定命運。請你結合八字命例，分析命主的性格特點、優缺點，以及可能的發展方向。例如，是積極進取還是保守穩重？是善於交際還是喜歡獨處？是理性思維還是感性思維？這些性格特點對命主的人生有何影響？\n\n`;
 
