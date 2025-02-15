@@ -746,11 +746,11 @@
 
 
             function generateBaziPrompt(year, month, day, hours, minutes, gender, includeZiwei) {
-
-                const lun = lunisolar(`${year}/${month}/${day} ${hours}:${minutes}+08:00`)
+                console.log(year, month, day, hours, minutes)
+                const lun = lunisolar(`${year}/${month}/${day} ${hours}:${minutes}`)
                 console.log(lun)
 
-                const char8ex = lunisolar(`${year}/${month}/${day} ${hours}:${minutes}+08:00`).char8ex(gender ? 1 : 0)
+                const char8ex = lunisolar(`${year}/${month}/${day} ${hours}:${minutes}`).char8ex(gender ? 1 : 0)
                 const bigLuck = calculateDayun(year, month, day, hours, gender ? '男' : "女", `${char8ex.char8}`);
 
                 const astrolabe = iztro.astro.bySolar(`${year}/${month}/${day}`, lun.lunar.hour, gender ? '男' : "女", true, 'zh-TW');
