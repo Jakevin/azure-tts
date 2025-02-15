@@ -252,18 +252,41 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 31, 63, 0.9);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .loading-text {
+            color: #ffd700;
+            font-size: 24px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .loading-dots {
+            animation: dots 1.5s infinite;
+            width: 30px;
         }
 
         .progress-bar {
             width: 80%;
-            max-width: 500px;
-            height: 20px;
-            background-color: #f0f0f0;
+            max-width: 300px;
+            height: 10px;
+            background-color: rgba(255, 69, 0, 0.3);
             border-radius: 10px;
             overflow: hidden;
             position: relative;
@@ -272,9 +295,38 @@
         .progress-bar-inner {
             width: 100%;
             height: 100%;
-            background-color: #4CAF50;
-            animation: progress 2s infinite linear;
+            background-color: #ffd700;
+            transform: scaleX(0);
             transform-origin: left;
+            transition: transform 1s linear;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes dots {
+
+            0%,
+            20% {
+                content: '.';
+            }
+
+            40%,
+            60% {
+                content: '..';
+            }
+
+            80%,
+            100% {
+                content: '...';
+            }
         }
 
         a:link {
@@ -319,8 +371,13 @@
 
 <body>
     <div class="loading-overlay">
-        <div class="progress-bar">
-            <div class="progress-bar-inner"></div>
+        <div class="loading-content">
+            <div class="loading-text">
+                <div class="loading-message"></div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-inner"></div>
+            </div>
         </div>
     </div>
     <div class="container">
@@ -394,7 +451,7 @@
         </div>
         <div>
             <p>本工具使用 <a href="https://lunisolar.js.org/" style="color: ffd700;" target="_blank">lunisolar</a> 作為天干地支的轉換工具</p>
-            <p>本工具使用 <a href="https://lunisolar.js.org/" target="_blank">iztro</a> 作為紫微斗數的轉換工具</p>
+            <p>本工具使用 <a href="https://iztro.com/" target="_blank">iztro</a> 作為紫微斗數的轉換工具</p>
         </div>
     </div>
 
@@ -943,7 +1000,47 @@
             const loadingOverlay = document.querySelector('.loading-overlay');
 
             async function fetchResult(prompt) {
+                const messages = [
+                    "調整坐姿...",
+                    "點香祈禱...",
+                    "冥想靜心...",
+                    "翻閱萬年歷...",
+                    "計算五行生克...",
+                    "分析大運流年...",
+                    "推演吉凶福禍...",
+                    "生成解盤資訊..."
+                ];
+                let currentProgress = 0;
+                let messageIndex = 0;
+
                 loadingOverlay.style.display = 'flex';
+                const progressBar = document.querySelector('.progress-bar-inner');
+                const messageElement = document.querySelector('.loading-message');
+
+                // 設置初始消息
+                messageElement.textContent = messages[0];
+
+                // 更新進度和消息的函數
+                const updateProgress = () => {
+                    if (currentProgress < 90) {
+                        currentProgress += 90 / messages.length;
+                        progressBar.style.transform = `scaleX(${currentProgress / 100})`;
+                        progressBar.style.transition = 'transform 1s linear';
+                    }
+                };
+
+                // 更新消息的函數
+                const updateMessage = () => {
+                    if (messageIndex < messages.length - 1) {
+                        messageIndex++;
+                        messageElement.textContent = messages[messageIndex];
+                    }
+                };
+
+                // 設置定時器，每2秒更新一次消息
+                const messageInterval = setInterval(updateMessage, 2000);
+                // 設置定時器，每2秒更新一次進度
+                const progressInterval = setInterval(updateProgress, 2000);
 
                 const apiBody = {
                     "userId": '0_cyber8',
@@ -972,8 +1069,24 @@
 
                 } catch (error) {
                     console.error('API請求失敗:', error);
+                    confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
+
                 } finally {
-                    loadingOverlay.style.display = 'none';
+                    // 清理定時器
+                    await clearInterval(messageInterval);
+                    await clearInterval(progressInterval);
+
+
+                    setTimeout(() => {
+                        progressBar.style.transform = 'scaleX(0)';
+                        messageElement.textContent = messages[0];
+
+                        // 重置進度條和消息
+                        currentProgress = 0;
+                        messageIndex = 0;
+
+                        loadingOverlay.style.display = 'none';
+                    }, 500);
                 }
             }
 
