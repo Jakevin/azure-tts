@@ -382,10 +382,11 @@
                 <button class="tab-button active" onclick="switchTab('prompt')">Prompt</button>
             </div>
             <div id="result-tab" class="tab-content " style="background-color: #002f5f;color: white;">
-                <div id="svgOutput">12345</div>
+                <div id="svgOutput"></div>
             </div>
             <div id="prompt-tab" class="tab-content active" style="background-color: #002f5f">
-                <div style="margin-top: 10px; padding: 10px; background-color: #e8f5e9; border-radius: 4px; color: #000;">請把內容複製後，貼給ChatGPT</div>
+                <div style="margin-top: 10px; padding: 10px; background-color: #e8f5e9; border-radius: 4px; color: #000;">請把內容複製後，貼給ChatGPT。就能夠無時無刻的與AI老師商談了！
+                </div>
                 <pre id="output" style="background-color: #002f5f; color:#fff">
                     <button class="copy-btn" onclick="copyPrompt()">複製</button>
                 </pre>
@@ -819,57 +820,60 @@
                 prompt += `- 喜神（喜用神）：八字格局喜歡的十神，可以輔助相神或用神提升命運檔次，同時可以克制傷害格局或命運的忌神。\n`;
                 prompt += `- 忌神（忌用神）：八字格局忌諱的十神，容易破壞（克或沖）用神或相神\n\n`;
 
+                let requestPrompt = '';
+                requestPrompt += `### 求測者的基本資訊如下：\n`;
+                requestPrompt += `性别：${gender}\n`;
+                requestPrompt += `出生年份：${year}年\n`;
+                requestPrompt += `生肖：${zodiac[char8ex.char8.year.branch.value]}\n`;
+                requestPrompt += `星座：${astrolabe.sign}\n\n`;
 
-                prompt += `### 求測者的基本資訊如下：\n`;
-                prompt += `性别：${gender}\n`;
-                prompt += `出生年份：${year}年\n`;
-                prompt += `生肖：${zodiac[char8ex.char8.year.branch.value]}\n`;
-                prompt += `星座：${astrolabe.sign}\n\n`;
+                requestPrompt += `### 其八字命盤如下：\n`;
+                requestPrompt += `年柱：${char8ex.char8.year.toString()}(${char8ex.year.stemTenGod.name}) 柱納音：${char8ex.year.takeSound} 五行：${char8ex.char8.year.stem.e5.name + char8ex.char8.year.branch.e5.name}\n`;
+                requestPrompt += `月柱：${char8ex.char8.month.toString()}(${char8ex.month.stemTenGod.name}) 柱納音：${char8ex.month.takeSound} 五行：${char8ex.char8.month.stem.e5.name + char8ex.char8.month.branch.e5.name}\n`;
+                requestPrompt += `日柱：${char8ex.char8.day.toString()}(${char8ex.day.stemTenGod.name}) 柱納音：${char8ex.day.takeSound} 五行：${char8ex.char8.day.stem.e5.name + char8ex.char8.day.branch.e5.name}\n`;
+                requestPrompt += `時柱：${char8ex.char8.hour.toString()}(${char8ex.hour.stemTenGod.name}) 柱納音：${char8ex.hour.takeSound} 五行：${char8ex.char8.hour.stem.e5.name + char8ex.char8.hour.branch.e5.name}\n`;
+                requestPrompt += `五行：金(${elements['金']})、木(${elements['木']})、水(${elements['水']})、火(${elements['火']})、土(${elements['土']})\n\n`;
 
-                prompt += `### 其八字命盤如下：\n`;
-                prompt += `年柱：${char8ex.char8.year.toString()}(${char8ex.year.stemTenGod.name}) 柱納音：${char8ex.year.takeSound} 五行：${char8ex.char8.year.stem.e5.name + char8ex.char8.year.branch.e5.name}\n`;
-                prompt += `月柱：${char8ex.char8.month.toString()}(${char8ex.month.stemTenGod.name}) 柱納音：${char8ex.month.takeSound} 五行：${char8ex.char8.month.stem.e5.name + char8ex.char8.month.branch.e5.name}\n`;
-                prompt += `日柱：${char8ex.char8.day.toString()}(${char8ex.day.stemTenGod.name}) 柱納音：${char8ex.day.takeSound} 五行：${char8ex.char8.day.stem.e5.name + char8ex.char8.day.branch.e5.name}\n`;
-                prompt += `時柱：${char8ex.char8.hour.toString()}(${char8ex.hour.stemTenGod.name}) 柱納音：${char8ex.hour.takeSound} 五行：${char8ex.char8.hour.stem.e5.name + char8ex.char8.hour.branch.e5.name}\n`;
-                prompt += `五行：金(${elements['金']})、木(${elements['木']})、水(${elements['水']})、火(${elements['火']})、土(${elements['土']})\n\n`;
-
-                prompt += `### 大運信息：\n從${bigLuck.startYear}年起運，運程順序為：\n`;
+                requestPrompt += `### 大運信息：\n從${bigLuck.startYear}年起運，運程順序為：\n`;
                 bigLuck.dayun.forEach(dayun => {
-                    prompt += `${dayun.period}\n`;
+                    requestPrompt += `${dayun.period}\n`;
                 });
-                prompt += '\n';
+                requestPrompt += '\n';
 
                 if (includeZiwei) {
-                    prompt += `### 其紫微斗數命盤如下：\n`;
-                    prompt += `${ziwei}\n\n`;
+                    requestPrompt += `### 其紫微斗數命盤如下：\n`;
+                    requestPrompt += `${ziwei}\n\n`;
                 }
 
-                prompt += `### 你的分析任務：\n`;
-                prompt += `請你從以下幾個方面入手，展開你的分析：\n`;
+                requestPrompt += `### 你的分析任務：\n`;
+                requestPrompt += `請你從以下幾個方面入手，展開你的分析：\n`;
 
-                prompt += `1.整體審視命局：首先，請你對整個八字命例${ziweiPrompt}進行審視，從五行、陰陽、十神、格局等多個角度入手，對命局的整體特點進行概括性的描述。例如，五行是否均衡？陰陽是否協調？是否存在某種特殊的格局？日元得令、得地、得助嗎？\n\n`;
+                requestPrompt += `1.整體審視命局：首先，請你對整個八字命例${ziweiPrompt}進行審視，從五行、陰陽、十神、格局等多個角度入手，對命局的整體特點進行概括性的描述。例如，五行是否均衡？陰陽是否協調？是否存在某種特殊的格局？日元得令、得地、得助嗎？\n\n`;
 
-                prompt += `2.分析日元強弱：日元代表命主自身，其強弱直接關系到命主的運勢。請你結合月令、地支、天干等因素，綜合判斷日元的強弱，並說明判斷的依據。如果日元偏強，喜什麽？忌什麽？如果日元偏弱，又該如何取用神？\n\n`;
+                requestPrompt += `2.分析日元強弱：日元代表命主自身，其強弱直接關系到命主的運勢。請你結合月令、地支、天干等因素，綜合判斷日元的強弱，並說明判斷的依據。如果日元偏強，喜什麽？忌什麽？如果日元偏弱，又該如何取用神？\n\n`;
 
-                prompt += `3.剖析性格特征：性格決定命運。請你結合八字命例${ziweiPrompt}，分析命主的性格特點、優缺點，以及可能的發展方向。例如，是積極進取還是保守穩重？是善於交際還是喜歡獨處？是理性思維還是感性思維？這些性格特點對命主的人生有何影響？\n\n`;
+                requestPrompt += `3.剖析性格特征：性格決定命運。請你結合八字命例${ziweiPrompt}，分析命主的性格特點、優缺點，以及可能的發展方向。例如，是積極進取還是保守穩重？是善於交際還是喜歡獨處？是理性思維還是感性思維？這些性格特點對命主的人生有何影響？\n\n`;
 
-                prompt += `4.推斷事業發展：事業是人生價值的重要體現。請你結合八字命例${ziweiPrompt}，分析命主的事業運勢、適合的職業、發展方向等。例如，適合從事穩定的工作還是具有挑戰性的工作？適合自己創業還是在企業中發展？在事業發展過程中需要注意哪些問題？\n\n`;
+                requestPrompt += `4.推斷事業發展：事業是人生價值的重要體現。請你結合八字命例${ziweiPrompt}，分析命主的事業運勢、適合的職業、發展方向等。例如，適合從事穩定的工作還是具有挑戰性的工作？適合自己創業還是在企業中發展？在事業發展過程中需要注意哪些問題？\n\n`;
 
-                prompt += `5.預測財富運勢：財富是人生幸福的重要保障。請你結合八字命例${ziweiPrompt}，分析命主的財富狀況、財運走勢、理財建議等。例如，是正財運旺盛還是偏財運旺盛？適合從事哪些行業的投資？在理財方面需要注意哪些問題？\n\n`;
+                requestPrompt += `5.預測財富運勢：財富是人生幸福的重要保障。請你結合八字命例${ziweiPrompt}，分析命主的財富狀況、財運走勢、理財建議等。例如，是正財運旺盛還是偏財運旺盛？適合從事哪些行業的投資？在理財方面需要注意哪些問題？\n\n`;
 
-                prompt += `6.研判婚姻情感：婚姻是人生重要的組成部分。請你結合八字命例${ziweiPrompt}，分析命主的婚姻運勢、情感狀況、婚戀建議等。例如，是早婚好還是晚婚好？適合找什麽樣的伴侶？在婚姻中需要注意哪些問題？\n\n`;
+                requestPrompt += `6.研判婚姻情感：婚姻是人生重要的組成部分。請你結合八字命例${ziweiPrompt}，分析命主的婚姻運勢、情感狀況、婚戀建議等。例如，是早婚好還是晚婚好？適合找什麽樣的伴侶？在婚姻中需要注意哪些問題？\n\n`;
 
-                prompt += `7.關注健康狀況：健康是幸福人生的基石。請你結合八字命例${ziweiPrompt}，分析命主的健康狀況、可能存在的健康隱患、養生建議等。例如，五行失衡可能導致哪些疾病？需要注意哪些方面的保健？\n\n`;
+                requestPrompt += `7.關注健康狀況：健康是幸福人生的基石。請你結合八字命例${ziweiPrompt}，分析命主的健康狀況、可能存在的健康隱患、養生建議等。例如，五行失衡可能導致哪些疾病？需要注意哪些方面的保健？\n\n`;
 
-                prompt += `8.洞察六親關系：六親是與命主關系最為密切的人。請你結合八字命例${ziweiPrompt}，分析命主與父母、配偶、子女等六親的關系，以及六親對命主的影響。例如，與父母的關系如何？配偶對自己有幫助嗎？子女是否孝順？\n\n`;
+                requestPrompt += `8.洞察六親關系：六親是與命主關系最為密切的人。請你結合八字命例${ziweiPrompt}，分析命主與父母、配偶、子女等六親的關系，以及六親對命主的影響。例如，與父母的關系如何？配偶對自己有幫助嗎？子女是否孝順？\n\n`;
 
-                prompt += `9.把握大運流年：大運和流年是影響命主運勢的重要因素。請你結合大運和流年，分析命主在不同人生階段的運勢變化，為命主提供人生規劃建議。例如，哪些年份是機遇期？哪些年份是挑戰期？應該如何把握機遇、應對挑戰？\n\n`;
+                requestPrompt += `9.把握大運流年：大運和流年是影響命主運勢的重要因素。請你結合大運和流年，分析命主在不同人生階段的運勢變化，為命主提供人生規劃建議。例如，哪些年份是機遇期？哪些年份是挑戰期？應該如何把握機遇、應對挑戰？\n\n`;
 
-                prompt += `在分析過程中，請你充分發揮你的聰明才智，運用你所掌握的命理學知識，結合實際情況，對命盤進行深入的剖析和解讀，並給出有價值的建議。\n\n`;
-                prompt += `請記住，你的目標是幫助求測者更好地了解自己，把握命運，創造幸福的人生。\n\n`;
-                prompt += `請開始你的分析吧！`;
+                requestPrompt += `在分析過程中，請你充分發揮你的聰明才智，運用你所掌握的命理學知識，結合實際情況，對命盤進行深入的剖析和解讀，並給出有價值的建議。\n\n`;
+                requestPrompt += `請記住，你的目標是幫助求測者更好地了解自己，把握命運，創造幸福的人生。\n\n`;
+                requestPrompt += `請開始你的分析吧！`;
 
-                return prompt;
+                return {
+                    prompt,
+                    requestPrompt,
+                };
             }
 
             window.copyPrompt = function () {
@@ -904,10 +908,13 @@
                     const gender = document.querySelector('input[name="gender"]:checked').value;
                     const includeZiwei = ziweiCheckbox.checked;
                     let prompt = '';
+                    let requestPrompt = '';
+                    let baziPromptObj = {};
                     if (trueSolarTimeCheckbox.checked) {
                         const { year, month, day, hours, minutes } = updateTrueSolarTime();
                         console.log(year, month, day, hours, minutes);
-                        prompt = generateBaziPrompt(year, month, day, hours, minutes, gender, includeZiwei);
+                        baziPromptObj = generateBaziPrompt(year, month, day, hours, minutes, gender, includeZiwei);
+
                     } else {
                         const birthDay = new Date(datetimeInput.value + '+08:00')
                         const year = birthDay.getFullYear();
@@ -916,19 +923,22 @@
                         const hours = birthDay.getHours().toString().padStart(2, '0');
                         const minutes = birthDay.getMinutes().toString().padStart(2, '0');
                         console.log(year, month, day, hours, minutes);
-
-                        prompt = generateBaziPrompt(year, month, day, hours, minutes, gender, includeZiwei)
+                        baziPromptObj = generateBaziPrompt(year, month, day, hours, minutes, gender, includeZiwei)
                     }
 
-                    outputDiv.textContent = prompt;
-                    outputDiv.innerHTML = `<button class="copy-btn" onclick="copyPrompt()">複製</button>` + `<br>` + prompt;
+                    prompt = baziPromptObj.prompt;
+                    requestPrompt = baziPromptObj.requestPrompt;
+
+                    outputDiv.textContent = prompt + requestPrompt;
+                    outputDiv.innerHTML = `<button class="copy-btn" onclick="copyPrompt()">複製</button>` + `<br>` + prompt + requestPrompt;
 
                     // return
-                    fetchResult(prompt);
+                    fetchResult(requestPrompt);
                 }
             });
 
             const apiUrl = "https://europe-west3-durable-pulsar-384402.cloudfunctions.net/ai"
+            // const apiUrl = "http://localhost:3000/ai"
 
             const loadingOverlay = document.querySelector('.loading-overlay');
 
@@ -954,7 +964,11 @@
                     }
 
                     const data = await response.json();
-                    svgOutput.innerHTML = `<button class="copy-btn" onclick="copyResult()">複製</button></br>` + marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
+                    if (data.error) {
+                        confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
+                    } else {
+                        svgOutput.innerHTML = `<button class="copy-btn" onclick="copyResult()">複製</button></br>` + marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
+                    }
 
                 } catch (error) {
                     console.error('API請求失敗:', error);
