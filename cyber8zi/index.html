@@ -803,7 +803,7 @@
 
                 let ziwei = ''
                 if (includeZiwei) {
-
+                    ziwei += `- 命主：${astrolabe.soul}(${astrolabe.earthlyBranchOfSoulPalace})、身主：${astrolabe.body}(${astrolabe.earthlyBranchOfBodyPalace})、五行局：${astrolabe.fiveElementsClass}\n`
                     for (let palace of astrolabe.palaces) {
                         ziwei += `- 宮位：${palace.heavenlyStem + palace.earthlyBranch} ${palace.name}\n    - 主星：`
                         if (palace.majorStars.length === 0) {
