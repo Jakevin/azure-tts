@@ -58,9 +58,44 @@
             color: #ffd700;
         }
 
-        h1 {
+        .header {
             text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 20px 0;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin: 0;
             color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .subtitle {
+            color: #ffd700;
+            font-size: 1.2em;
+            margin-top: 10px;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        .social-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link img {
+            width: 30px;
+            height: 30px;
+            filter: hue-rotate(358deg) brightness(101%) contrast(107%);
+        }
+
+        .social-link:hover {
+            transform: scale(1.1);
         }
 
         .container {
@@ -390,8 +425,13 @@
         </div>
     </div>
     <div class="container">
-        <h1>量子天樞 Prompt生成器</h1>
-
+        <div class="header">
+            <h1>量子天樞</h1>
+            <div class="subtitle">AI解命與Prompt生成器</div>
+            <a class="social-link" href="https://www.facebook.com/groups/803891804583814" target="_blank">
+                <img src="https://jakevin.github.io/azure-tts/tanslator/assets/facebook-2dd3dce1.svg" alt="facebook" />
+            </a>
+        </div>
         <div class="form-section">
             <label>性別:</label>
             <div class="radio-group">
