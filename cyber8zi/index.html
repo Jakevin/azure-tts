@@ -630,7 +630,7 @@
             }
 
             function initializeSelectors() {
-                const now = new Date('2000-01-25T13:44:00+08:00');
+                const now = new Date('1999-01-25T13:44:00+08:00');
                 // const now = new Date('1984-05-25T13:44:00');
 
                 // 格式化當前時間為datetime-local接受的格式 (YYYY-MM-DDThh:mm:ss)
@@ -737,50 +737,12 @@
 
                 // 計算天數和時辰（1時辰 = 2小時 = 10天）
                 const totalDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-                console.log('totalDays', totalDays);
+                console.log('totalDays', totalDays); // 时间差（天）：从出生日期到目标节气的天数。
                 const y = Math.floor(totalDays / 3); // 整岁
-                const remainingDays = totalDays % 3;     // 剩余天数
+                const remainingDays = totalDays % 3;     // 剩余天数：时间差除以3后的余数。
                 const m = Math.floor(remainingDays * 4); // 折合月份
-                console.log('y', y, 'm', m);
-                const startAge = y + m / 12;
-
-                /**
-                 * 根据起运年龄和出生日期，计算起运的具体年份和时间
-                 * @param {Date} birthday - 出生日期（包含时间）
-                 * @param {number} totalAge - 起运年龄（可能带有小数，表示月份）
-                 * @returns {Object} 起运年份和具体时间
-                 */
-                function calculateQiYunYear(birthday, totalAge) {
-                    const birthYear = birthday.getFullYear();
-                    const birthMonth = birthday.getMonth() + 1; // 注意：月份从0开始
-                    const birthDay = birthday.getDate();
-
-                    // 将起运年龄拆分为整岁和小数部分
-                    const years = Math.floor(totalAge); // 整岁
-                    const months = Math.round((totalAge - years) * 12); // 小数部分转换为月份
-
-                    // 计算起运年份
-                    let qiYunYear = birthYear + years;
-                    let qiYunMonth = birthMonth + months;
-
-                    // 如果月份超过12，则进位到下一年
-                    if (qiYunMonth > 12) {
-                        qiYunYear += Math.floor(qiYunMonth / 12);
-                        qiYunMonth = qiYunMonth % 12 || 12; // 确保月份在1-12之间
-                    }
-
-                    // 构造起运日期
-                    const qiYunDate = new Date(qiYunYear, qiYunMonth - 1, birthDay); // 注意：月份从0开始
-
-                    return {
-                        year: qiYunYear,
-                        month: qiYunMonth,
-                        date: qiYunDate,
-                    };
-                }
-                const qiYunYear = calculateQiYunYear(birthTime, startAge);
-                console.log('qiYunYear', qiYunYear);
-                const startYear = qiYunYear.year;
+                const startAge = Math.ceil(y + (m / 12)) + 1; // 虛歲
+                console.log('y', y, 'm', m, 'startAge', startAge);
 
                 // 計算大運
                 const dayun = [];
@@ -797,16 +759,17 @@
                     stemIndex = ((stemIndex + direction) % 10 + 10) % 10;
                     branchIndex = ((branchIndex + direction) % 12 + 12) % 12;
                     const pillar = stems[stemIndex] + branches[branchIndex];
-                    const periodStartYear = startYear + (i * 10);
 
+                    const startAgeDate = startAge + i * 10;
+                    const periodYear = birthTime.getFullYear() + (startAgeDate - 1) //扣虛歲
                     dayun.push({
                         pillar,
-                        period: `${pillar} (${periodStartYear}-${periodStartYear + 9}年)`
+                        period: `${pillar} (${periodYear}-${periodYear + 9} ${startAgeDate}歲)`
                     });
                 }
 
                 return {
-                    startYear,
+                    startAge: startAge,
                     dayun
                 };
             }
@@ -821,7 +784,7 @@
                 const bigLuck = calculateDayun(year, month, day, hours, gender ? '男' : "女", `${char8ex.char8}`);
 
                 const astrolabe = iztro.astro.bySolar(`${year}/${month}/${day}`, lun.lunar.hour, gender ? '男' : "女", true, 'zh-TW');
-
+                console.log(astrolabe)
                 const wuxing = char8ex.char8.year.stem.e5.name + char8ex.char8.year.branch.e5.name + char8ex.char8.month.stem.e5.name + char8ex.char8.month.branch.e5.name + char8ex.char8.day.stem.e5.name + char8ex.char8.day.branch.e5.name + char8ex.char8.hour.stem.e5.name + char8ex.char8.hour.branch.e5.name;
 
                 elements = {
@@ -842,7 +805,7 @@
                 if (includeZiwei) {
 
                     for (let palace of astrolabe.palaces) {
-                        ziwei += `宮位：${palace.heavenlyStem + palace.earthlyBranch} ${palace.name}，主星：`
+                        ziwei += `- 宮位：${palace.heavenlyStem + palace.earthlyBranch} ${palace.name}\n    - 主星：`
                         if (palace.majorStars.length === 0) {
                             ziwei += '無 ';
                         } else {
@@ -851,8 +814,7 @@
                             }
                         }
 
-
-                        ziwei += `，副星：`
+                        ziwei += `\n    - 副星：`
                         if (palace.minorStars.length === 0) {
                             ziwei += '無 ';
                         } else {
@@ -860,6 +822,23 @@
                                 ziwei += `${star.name}(${star.brightness}) `;
                             }
                         }
+
+                        ziwei += `\n    - 雜耀：`
+                        if (palace.adjectiveStars.length === 0) {
+                            ziwei += '無 ';
+                        } else {
+                            for (let star of palace.adjectiveStars) {
+                                ziwei += `${star.name}(${starType[star.type]}) `;
+                            }
+                        }
+
+                        ziwei += `\n    - 長生：${palace.changsheng12}`
+                        ziwei += `\n    - 博士：${palace.boshi12}`
+                        ziwei += `\n    - 將前：${palace.jiangqian12}`
+                        ziwei += `\n    - 歲前：${palace.suiqian12}`
+                        ziwei += `\n    - 大限：${palace.decadal.earthlyBranch + palace.decadal.heavenlyStem} (${palace.decadal.range[0]}-${palace.decadal.range[1]})`
+                        ziwei += `\n    - 小限：${palace.ages}`
+
                         ziwei += '\n';
 
                     }
@@ -875,8 +854,8 @@
                 prompt += `### 基礎八字命理規則\n`;
                 prompt += `- 五行生克：生 (土生金，金生水，水生木，木生火，火生土). 克 (土克水，水克火，火克金，金克木，木克土)\n`;
                 prompt += `- 天干生克關系：\n`;
-                prompt += `-- 生 甲木/乙木生丙火/丁火，丙火/丁火生戊土/己土，戊土/己土生庚金/辛金，庚金/辛金生壬水/癸水，壬水/癸水生甲木/乙木。\n`;
-                prompt += `-- 克 甲木/乙木克戊土/己土，丙火/丁火克庚金/辛金，戊土/己土克壬水/癸水，庚金/辛金克甲木/乙木，壬水/癸水克丙火/丁火。\n`;
+                prompt += `     - 生 甲木/乙木生丙火/丁火，丙火/丁火生戊土/己土，戊土/己土生庚金/辛金，庚金/辛金生壬水/癸水，壬水/癸水生甲木/乙木。\n`;
+                prompt += `     - 克 甲木/乙木克戊土/己土，丙火/丁火克庚金/辛金，戊土/己土克壬水/癸水，庚金/辛金克甲木/乙木，壬水/癸水克丙火/丁火。\n`;
                 prompt += `- 十神簡稱/別稱：\n`;
                 prompt += `正官：官、七殺：殺，偏官、正印：印、偏印：梟、比肩：比、劫財：劫、食神：食、傷官：傷。正財：財、偏財：才\n`;
                 prompt += `- 十神生克: 生 印生比劫， 比劫生食傷，食傷生財，財生官殺，官殺生印。 克 印克食傷，食傷克官殺，財克（破）印，官殺克比劫，比劫克（奪）財。\n`;
@@ -900,9 +879,9 @@
                 requestPrompt += `時柱：${char8ex.char8.hour.toString()}(${char8ex.hour.stemTenGod.name}) 柱納音：${char8ex.hour.takeSound} 五行：${char8ex.char8.hour.stem.e5.name + char8ex.char8.hour.branch.e5.name}\n`;
                 requestPrompt += `五行：金(${elements['金']})、木(${elements['木']})、水(${elements['水']})、火(${elements['火']})、土(${elements['土']})\n\n`;
 
-                requestPrompt += `### 大運信息：\n從${bigLuck.startYear}年起運，運程順序為：\n`;
+                requestPrompt += `### 大運信息：\n從${bigLuck.startAge}歲起運，運程順序為：\n`;
                 bigLuck.dayun.forEach(dayun => {
-                    requestPrompt += `${dayun.period}\n`;
+                    requestPrompt += `${dayun.period}、`;
                 });
                 requestPrompt += '\n';
 
@@ -996,7 +975,7 @@
                     requestPrompt = baziPromptObj.requestPrompt;
 
                     outputDiv.textContent = prompt + requestPrompt;
-                    outputDiv.innerHTML = `<button class="copy-btn" onclick="copyPrompt()">複製</button>` + `<br>` + prompt + requestPrompt;
+                    outputDiv.innerHTML = `<button class="copy-btn" onclick="copyPrompt()">複製</button>` + `<br>` + marked.parse(prompt + requestPrompt);
 
                     // return
                     fetchResult(requestPrompt);

@@ -444,3 +444,14 @@ const locationData = {
 const stems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
 const branches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
 const zodiac = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
+
+const starType = {
+    "major": "主星",
+    "soft": "吉星",
+    "tough": "煞星",
+    "adjective": "雜耀",
+    "flower": "桃花",
+    "helper": "解神",
+    "lucun": "祿存",
+    "tianma": "天馬",
+}
