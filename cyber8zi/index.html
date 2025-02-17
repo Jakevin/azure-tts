@@ -288,6 +288,12 @@
             padding-left: 20px;
         }
 
+        .ask-content {
+            border: 1px solid #ddd;
+            padding: 15px;
+            line-height: 1.6;
+        }
+
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -408,6 +414,70 @@
                 transform: scaleX(0);
             }
         }
+
+        /* 問事對話框樣式 */
+        .dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .dialog-content {
+            display: block;
+            text-align: center;
+            background-color: #002f5f;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .dialog-content h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .dialog-content textarea {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ffd700;
+            border-radius: 4px;
+            resize: vertical;
+            background-color: #001f3f;
+            color: #fff;
+            min-height: 100px;
+        }
+
+        .dialog-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .dialog-buttons button {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #ff4500;
+            color: white;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dialog-buttons button:hover {
+            background-color: #ff6347;
+        }
     </style>
 </head>
 
@@ -481,6 +551,7 @@
         <button id="generate-btn">請幫我算一算！</button>
         <div id="error-message"></div>
         <div id="result-layout" class="tab-container" style="display: none;">
+            <button id="generate-btn" style="margin-bottom: 10px;">我要問事</button>
             <div class="tab-buttons">
                 <button class="tab-button " onclick="switchTab('result')">AI解盤</button>
                 <button class="tab-button active" onclick="switchTab('prompt')">Prompt</button>
@@ -520,6 +591,64 @@
             const resultLayout = document.getElementById('result-layout');
             const outputDiv = document.getElementById('output');
             const svgOutput = document.getElementById('svgOutput');
+            const askDialog = document.getElementById('ask-dialog');
+            const askButton = document.querySelector('#result-layout button#generate-btn');
+            const questionInput = document.getElementById('question-input');
+
+            // 添加「我要問事」按鈕點擊事件
+            askButton.addEventListener('click', () => {
+                askDialog.style.display = 'flex';
+            });
+
+            // 關閉對話框
+            window.closeDialog = function () {
+                askDialog.style.display = 'none';
+                questionInput.value = '';
+            };
+
+            // 提交問題
+            window.submitQuestion = async function () {
+                const question = questionInput.value.trim();
+                if (!question) {
+                    alert('請輸入您想問的問題');
+                    return;
+                }
+
+                // 生成唯一的標籤ID
+                const tabId = 'ask-' + Date.now();
+
+                // 添加新的標籤按鈕
+                const tabButton = document.createElement('button');
+                tabButton.className = 'tab-button';
+                const buttonText = '問事: ' + (question.length > 10 ? question.substring(0, 10) + '...' : question);
+                tabButton.setAttribute('onclick', `switchTab('${tabId}')`);
+                tabButton.textContent = buttonText;
+                document.querySelector('.tab-buttons').appendChild(tabButton);
+
+                // 添加新的內容區域
+                const tabContent = document.createElement('div');
+                tabContent.id = `${tabId}-tab`;
+                tabContent.className = 'tab-content';
+                tabContent.style.backgroundColor = '#002f5f';
+                tabContent.style.color = 'white';
+                tabContent.innerHTML = `<div id="${tabId}-content" class="ask-content"></div>`;
+                document.querySelector('#result-layout').insertBefore(
+                    tabContent,
+                    document.querySelector('#prompt-tab')
+                );
+
+                // 修改 requestPrompt，加入用戶的問題
+                const newPrompt = requestPrompt.trim() + '\n\n關於以下問題，請為我分析：\n' + question;
+
+                // 關閉對話框
+                closeDialog();
+
+                // 開始分析
+                const result = await fetchAsk(question, `${tabId}-content`);
+
+                // 切換到新的問事標籤
+                switchTab(tabId);
+            };
 
             function populateProvinces() {
                 for (const province in locationData) {
@@ -595,8 +724,11 @@
             };
 
 
-            window.copyResult = function () {
-                const resultText = svgOutput.textContent.replace('複製', '').trim();
+            window.copyResult = function (elementId) {
+                const element = document.getElementById(elementId);
+                if (!element) return;
+
+                const resultText = element.textContent.replace('複製', '').trim();
                 navigator.clipboard.writeText(resultText)
                     .then(() => {
                         alert('複製完成！');
@@ -779,7 +911,9 @@
                     if (data.error) {
                         confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
                     } else {
-                        svgOutput.innerHTML = `<button class="copy-btn" onclick="copyResult()">複製</button></br>` + marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
+                        svgOutput.textContent = data.msg.trim().replaceAll('鬥數', '斗數');
+                        svgOutput.innerHTML = `<button class="copy-btn" onclick="copyResult('svgOutput')">複製</button></br>` +
+                            marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
                     }
 
                 } catch (error) {
@@ -804,6 +938,74 @@
                 }
             }
 
+            async function fetchAsk(ask, targetId) {
+                const messages = [
+                    "調整坐姿...",
+                    "點香祈禱...",
+                    "冥想靜心...",
+                    "翻閱萬年歷...",
+                    "計算五行生克...",
+                    "分析大運流年...",
+                    "推演吉凶福禍...",
+                    "生成解盤資訊..."
+                ];
+                const { messageInterval } = setLoadingOverlay(messages);
+
+                const apiBody = {
+                    "userId": '0_cyber8',
+                    "prompt": outputDiv.textContent.replace('複製', '').trim(),
+                    "allLife": svgOutput.textContent.replace('複製', '').trim(),
+                    "ask": ask,
+                    "type": "text",
+                }
+                try {
+                    const response = await fetch(`${apiUrl}?type=ask`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(apiBody)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    if (data.error) {
+                        confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
+                    } else {
+                        const targetElement = targetId ? document.getElementById(targetId) : svgOutput;
+                        if (targetElement) {
+                            targetElement.textContent = data.msg.trim().replaceAll('鬥數', '斗數');
+                            targetElement.innerHTML = `<button class="copy-btn" onclick="copyResult('${targetId || 'svgOutput'}')">複製</button></br>` +
+                                marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
+                        }
+                    }
+
+                } catch (error) {
+                    console.error('API請求失敗:', error);
+                    confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
+
+                } finally {
+                    // 清理定時器
+                    await clearInterval(messageInterval);
+
+
+                    setTimeout(() => {
+                        progressBar.style.transform = 'scaleX(0)';
+                        messageElement.textContent = '';
+
+                        // 重置進度條和消息
+                        currentProgress = 0;
+                        messageIndex = 0;
+
+                        loadingOverlay.style.display = 'none';
+                    }, 500);
+                }
+            }
+
+
             initializeSelectors();
             populateProvinces();
             populateCities('台灣');
@@ -816,7 +1018,7 @@
 
 
         function switchTab(tabName) {
-
+            // 移除所有標籤和內容的active類
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.classList.remove('active');
             });
@@ -824,8 +1026,25 @@
                 content.classList.remove('active');
             });
 
-            document.querySelector(`.tab-button[onclick*="${tabName}"]`).classList.add('active');
-            document.getElementById(`${tabName}-tab`).classList.add('active');
+            // 為新的問事標籤或原有標籤添加active類
+            let targetButton;
+            if (tabName.startsWith('ask-')) {
+                // 對於動態創建的問事標籤
+                targetButton = document.querySelector(`.tab-button[onclick*="${tabName}"]`);
+            } else {
+                // 對於原有的標籤（result和prompt）
+                targetButton = document.querySelector(`.tab-button[onclick*="switchTab('${tabName}')"]`);
+            }
+
+            if (targetButton) {
+                targetButton.classList.add('active');
+            }
+
+            // 顯示對應的內容
+            const targetContent = document.getElementById(`${tabName}-tab`);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
         }
 
     </script>
@@ -838,6 +1057,18 @@
             }
         }
     </script>
+
+    <!-- 問事對話框 -->
+    <div id="ask-dialog" class="dialog" style="display: none;">
+        <div class="dialog-content">
+            <h2>請輸入您想問的事情</h2>
+            <textarea id="question-input" rows="4" placeholder="請輸入您的問題..."></textarea>
+            <div class="dialog-buttons">
+                <button onclick="submitQuestion()">確定</button>
+                <button onclick="closeDialog()">取消</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
