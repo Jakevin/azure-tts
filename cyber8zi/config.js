@@ -501,5 +501,6 @@ const locationData = {
     },
     "香港特别行政区": { "香港": { longitude: 114.1 } },
     "澳门特别行政区": { "澳门": { longitude: 113.5 } },
+    "其他地區": { "其他地區": { longitude: 0 } },
 
 };
