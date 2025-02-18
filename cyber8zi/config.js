@@ -21,6 +21,69 @@ const locationData = {
         "金門": { longitude: 118.6 },
         "連江": { longitude: 120.0 }
     },
+    "日本": {
+        "東京都": { longitude: 139.7 },
+        "橫濱市": { longitude: 139.6 },
+        "大阪市": { longitude: 135.5 },
+        "名古屋市": { longitude: 136.9 },
+        "札幌市": { longitude: 141.2 },
+        "福岡市": { longitude: 130.4 },
+        "川崎市": { longitude: 139.7 },
+        "神戸市": { longitude: 135.1 },
+        "京都市": { longitude: 135.7 },
+        "埼玉市": { longitude: 139.6 },
+        "廣島市": { longitude: 132.4 },
+        "仙台市": { longitude: 140.8 },
+        "千葉市	": { longitude: 140.1 },
+
+        //東北
+        "青森-青森市": { longitude: 140.7 },
+        "秋田-秋田市": { longitude: 140.1 },
+        "岩手-盛岡市": { longitude: 141.1 },
+        "山形-山形市": { longitude: 140.3 },
+        "福島-福島市": { longitude: 140.4 },
+
+        //關東
+        "栃木-宇都宮": { longitude: 139.8 },
+        "茨城-水戸市": { longitude: 140.4 },
+        "群馬-高崎市": { longitude: 139.0 },
+        //北陸
+        "石川-金沢市": { longitude: 136.6 },
+        "福井-福井市": { longitude: 136.2 },
+        "富山-富山市": { longitude: 137.2 },
+        //甲信越地方
+        "山梨-甲府市": { longitude: 138.5 },
+        "長野-長野市": { longitude: 138.1 },
+        "新潟-新潟市": { longitude: 139.9 },
+        //東海
+        "靜岡-靜岡市": { longitude: 138.3 },
+        "靜岡-濱松市": { longitude: 137.7 },
+        "岐阜-岐阜市": { longitude: 136.7 },
+        //近畿
+        "滋賀-大津市": { longitude: 135.8 },
+        "和歌山市": { longitude: 135.1 },
+        "奈良市": { longitude: 135.8 },
+        "三重-四日市市": { longitude: 136.6 },
+        //中國地方
+        "鳥取-鳥取市": { longitude: 134.2 },
+        "島根-松江市": { longitude: 133.0 },
+        "山口-下関市": { longitude: 130.9 },
+        "岡山-岡山市": { longitude: 133.9 },
+        //四國
+        "徳島-徳島市": { longitude: 134.5 },
+        "香川-高松市": { longitude: 134.0 },
+        "愛媛-松山市": { longitude: 132.7 },
+        "高知縣-高知市": { longitude: 133.5 },
+        //九州  
+        "佐賀-佐賀市": { longitude: 130.3 },
+        "長崎市": { longitude: 129.8 },
+        "大分市": { longitude: 131.6 },
+        "宮崎市": { longitude: 131.4 },
+        "熊本市": { longitude: 130.7 },
+        "鹿兒島市": { longitude: 130.5 },
+        "沖繩-那覇市": { longitude: 127.6 },
+
+    },
     "北京市": { "北京市": { longitude: 116.4 } },
     "天津市": { "天津市": { longitude: 117.2 } },
     "河北省": {
