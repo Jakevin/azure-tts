@@ -192,10 +192,12 @@
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
+            border-bottom: 1px solid #fff;
+            padding-bottom: 0px;
         }
 
         .tab-button {
-            padding: 10px 20px;
+            padding: 5px 10px;
             border: none;
             background-color: #f0f0f0;
             cursor: pointer;
@@ -588,20 +590,20 @@
         </checkbox>
         <checkbox style="display: flex;">
             <label>加入紫微斗數：</label>
-            <input type="checkbox" id="ziwei-checkbox">
+            <input type="checkbox" id="ziwei-checkbox" checked>
         </checkbox>
         <button id="generate-btn">請幫我算一算！</button>
         <div id="error-message"></div>
         <div id="result-layout" class="tab-container" style="display: none;">
             <button id="generate-btn" style="margin-bottom: 10px;">我要問事</button>
             <div class="tab-buttons">
-                <button class="tab-button " onclick="switchTab('result')">AI解盤</button>
-                <button class="tab-button active" onclick="switchTab('prompt')">Prompt</button>
+                <button class="tab-button active" onclick="switchTab('result')">AI解盤</button>
+                <button class="tab-button " onclick="switchTab('prompt')">盤面資料</button>
             </div>
-            <div id="result-tab" class="tab-content " style="background-color: #002f5f;color: white;">
+            <div id="result-tab" class="tab-content active" style="background-color: #002f5f;color: white;">
                 <div id="svgOutput"></div>
             </div>
-            <div id="prompt-tab" class="tab-content active" style="background-color: #002f5f">
+            <div id="prompt-tab" class="tab-content " style="background-color: #002f5f">
                 <div style="margin-top: 10px; padding: 10px; background-color: #e8f5e9; border-radius: 4px; color: #000;">請把內容複製後，貼給ChatGPT。就能夠無時無刻的與AI老師商談了！
                 </div>
                 <pre id="output" style="background-color: #002f5f; color:#fff">
@@ -617,6 +619,7 @@
 
     <script>
         const DEBUG = false;
+        const FETCH_RESULT = true
 
         let apiUrl = "https://asia-east1-durable-pulsar-384402.cloudfunctions.net/Char8Ex"
         if (DEBUG) {
@@ -636,6 +639,7 @@
             const datetimeInput = document.getElementById('datetime');
             const provinceSelect = document.getElementById('province');
             const citySelect = document.getElementById('city');
+            const customLongitude = document.getElementById('custom-longitude');
             const genderRadios = document.getElementsByName('gender');
             const trueSolarTimeCheckbox = document.getElementById('true-solar-time-checkbox');
             const ziweiCheckbox = document.getElementById('ziwei-checkbox');
@@ -673,7 +677,7 @@
                 // 添加新的標籤按鈕
                 const tabButton = document.createElement('button');
                 tabButton.className = 'tab-button';
-                const buttonText = '問事: ' + (question.length > 10 ? question.substring(0, 10) + '...' : question);
+                const buttonText = '問事';
                 tabButton.setAttribute('onclick', `switchTab('${tabId}')`);
                 tabButton.textContent = buttonText;
                 document.querySelector('.tab-buttons').appendChild(tabButton);
@@ -723,16 +727,79 @@
 
 
             function initializeSelectors() {
-                const now = new Date('1999-01-25T13:44:00+08:00');
+                // 嘗試從 localStorage 恢復數據
+                const savedRequestPrompt = localStorage.getItem('savedRequestPrompt');
+                const savedSvgOutput = localStorage.getItem('savedSvgOutput');
 
-                // 格式化當前時間為datetime-local接受的格式 (YYYY-MM-DDThh:mm:ss)
-                const year = now.getFullYear();
-                const month = (now.getMonth() + 1).toString().padStart(2, '0');
-                const day = now.getDate().toString().padStart(2, '0');
-                const hours = now.getHours().toString().padStart(2, '0');
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const seconds = now.getSeconds().toString().padStart(2, '0');
-                datetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+                if (savedRequestPrompt) {
+                    requestPrompt = savedRequestPrompt;
+                    outputDiv.textContent = savedRequestPrompt;
+                    outputDiv.innerHTML = `<button class="copy-btn" onclick="copyPrompt()">複製</button>` + `<br>` + marked.parse(savedRequestPrompt);
+                }
+
+                if (savedSvgOutput) {
+                    svgOutput.textContent = savedSvgOutput;
+                    svgOutput.innerHTML = `<button class="copy-btn" onclick="copyResult('svgOutput')">複製</button></br>` +
+                        marked.parse(savedSvgOutput);
+                    resultLayout.style.display = 'block';
+                }
+
+                // 恢復表單數據
+                const savedFormData = localStorage.getItem('savedFormData');
+                if (savedFormData) {
+                    const formData = JSON.parse(savedFormData);
+
+                    // 設置日期時間
+                    if (formData.birthDay) {
+                        const dt = formData.birthDay;
+                        const dateStr = `${dt.year}-${dt.month}-${dt.day}T${dt.hours}:${dt.minutes}:00`;
+                        datetimeInput.value = dateStr;
+                    } else {
+                        const now = new Date('1999-01-25T13:44:00+08:00');
+                        const year = now.getFullYear();
+                        const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                        const day = now.getDate().toString().padStart(2, '0');
+                        const hours = now.getHours().toString().padStart(2, '0');
+                        const minutes = now.getMinutes().toString().padStart(2, '0');
+                        const seconds = now.getSeconds().toString().padStart(2, '0');
+                        datetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+                    }
+
+                    // 設置性別
+                    if (formData.gender) {
+                        const genderInput = document.querySelector(`input[name="gender"][value="${formData.gender}"]`);
+                        if (genderInput) genderInput.checked = true;
+                    }
+
+                    // 設置省份和城市
+                    if (formData.province) {
+                        provinceSelect.value = formData.province;
+                        populateCities(formData.province);
+                        if (formData.city) {
+                            citySelect.value = formData.city;
+                        }
+                    }
+
+                    // 設置自訂經度
+                    if (formData.customLongitude) {
+                        customLongitude.value = formData.customLongitude;
+                    }
+
+                    // 設置真太陽時和紫微斗數選項
+                    trueSolarTimeCheckbox.checked = formData.usingTrueSolarTime;
+                    ziweiCheckbox.checked = formData.includeZiwei;
+                } else {
+                    const now = new Date('1999-01-25T13:44:00+08:00');
+                    const year = now.getFullYear();
+                    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                    const day = now.getDate().toString().padStart(2, '0');
+                    const hours = now.getHours().toString().padStart(2, '0');
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    const seconds = now.getSeconds().toString().padStart(2, '0');
+                    datetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+                }
+
+
             }
 
             function validateForm() {
@@ -749,7 +816,7 @@
                     errorMessage.textContent += "請選擇出生地";
                     isValid = false;
                 }
-                if (!citySelect.value && !document.getElementById('custom-longitude').value) {
+                if (!citySelect.value && !customLongitude.value) {
                     errorMessage.textContent += "請選擇出生城市或填寫自訂經度";
                     isValid = false;
                 }
@@ -790,6 +857,10 @@
 
             generateBtn.addEventListener('click', async function () {
                 if (validateForm()) {
+                    // 清除之前儲存的數據
+                    localStorage.removeItem('savedRequestPrompt');
+                    localStorage.removeItem('savedSvgOutput');
+
                     resultLayout.style.display = 'block';
 
                     const gender = document.querySelector('input[name="gender"]:checked').value;
@@ -807,12 +878,12 @@
                     // 獲取出生地經度
                     const birthProvince = provinceSelect.value;
                     const birthCity = citySelect.value;
-                    const customLongitude = document.getElementById('custom-longitude').value;
-                    const longitude = customLongitude ? parseFloat(customLongitude) : locationData[birthProvince][birthCity].longitude;
+                    const customLongitudeValue = customLongitude.value;
+                    const longitude = customLongitudeValue ? parseFloat(customLongitudeValue) : locationData[birthProvince][birthCity].longitude;
 
                     await fetchPrompt(birthDay, gender, usingTrueSolarTime, includeZiwei, longitude);
 
-                    if (DEBUG) {
+                    if (DEBUG && !FETCH_RESULT) {
                         //for test prompt
                         setTimeout(() => {
                             progressBar.style.transform = 'scaleX(0)';
@@ -870,6 +941,16 @@
                 ];
                 const { messageInterval } = setLoadingOverlay(messages);
 
+                // 保存表單數據
+                const formData = {
+                    birthDay,
+                    gender,
+                    usingTrueSolarTime,
+                    includeZiwei,
+                    customLongitude: customLongitude.value
+                };
+                localStorage.setItem('savedFormData', JSON.stringify(formData));
+
                 const apiBody = {
                     "userId": '0_cyber8',
                     "birthDay": birthDay,
@@ -900,6 +981,10 @@
                         const prompt = data.prompt.prompt.replaceAll('鬥數', '斗數');
                         requestPrompt = data.prompt.requestPrompt.replaceAll('鬥數', '斗數');
                         outputDiv.textContent = prompt + requestPrompt;
+
+                        // 保存 requestPrompt 到 localStorage
+                        localStorage.setItem('savedRequestPrompt', prompt + requestPrompt);
+
                         outputDiv.innerHTML = `<button class="copy-btn" onclick="copyPrompt()">複製</button>` + `<br>` + marked.parse(prompt + requestPrompt);
                     }
 
@@ -927,6 +1012,7 @@
             }
 
             async function fetchResult(requestPrompt) {
+
                 const messages = [
                     "調整坐姿...",
                     "點香祈禱...",
@@ -962,9 +1048,13 @@
                     if (data.error) {
                         confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
                     } else {
-                        svgOutput.textContent = data.msg.trim().replaceAll('鬥數', '斗數');
+                        const processedMsg = data.msg.trim().replaceAll('鬥數', '斗數');
+                        svgOutput.textContent = processedMsg;
                         svgOutput.innerHTML = `<button class="copy-btn" onclick="copyResult('svgOutput')">複製</button></br>` +
-                            marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
+                            marked.parse(processedMsg);
+
+                        // 保存解盤結果到 localStorage
+                        localStorage.setItem('savedSvgOutput', processedMsg);
                     }
 
                 } catch (error) {
@@ -994,11 +1084,10 @@
                     "調整坐姿...",
                     "點香祈禱...",
                     "冥想靜心...",
-                    "翻閱萬年歷...",
-                    "計算五行生克...",
-                    "分析大運流年...",
-                    "推演吉凶福禍...",
-                    "生成解盤資訊..."
+                    "分析問題...",
+                    "掐指計算...",
+                    "推演吉凶...",
+                    "生成解惑..."
                 ];
                 const { messageInterval } = setLoadingOverlay(messages);
 
@@ -1064,6 +1153,10 @@
             provinceSelect.addEventListener('change', function () {
                 const selectedProvince = this.value;
                 populateCities(selectedProvince);
+            });
+
+            citySelect.addEventListener('change', function () {
+                customLongitude.value = locationData[provinceSelect.value][this.value].longitude;
             });
         });
 
