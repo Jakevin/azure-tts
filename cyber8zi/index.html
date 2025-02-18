@@ -620,11 +620,17 @@
     <script>
         const DEBUG = false;
         const SKIP_FETCH_RESULT = false
+        const VERSION = '1';
+        const OLD_VERSION = '';
 
         let apiUrl = "https://asia-east1-durable-pulsar-384402.cloudfunctions.net/Char8Ex"
         if (DEBUG) {
             apiUrl = "http://localhost:3000/ai"
         }
+
+        localStorage.removeItem('savedRequestPrompt' + OLD_VERSION);
+        localStorage.removeItem('savedSvgOutput' + OLD_VERSION);
+
 
         let requestPrompt = '';
 
@@ -728,8 +734,8 @@
 
             function initializeSelectors() {
                 // 嘗試從 localStorage 恢復數據
-                const savedRequestPrompt = localStorage.getItem('savedRequestPrompt');
-                const savedSvgOutput = localStorage.getItem('savedSvgOutput');
+                const savedRequestPrompt = localStorage.getItem('savedRequestPrompt' + VERSION);
+                const savedSvgOutput = localStorage.getItem('savedSvgOutput' + VERSION);
 
                 if (savedRequestPrompt) {
                     requestPrompt = savedRequestPrompt;
@@ -745,7 +751,7 @@
                 }
 
                 // 恢復表單數據
-                const savedFormData = localStorage.getItem('savedFormData');
+                const savedFormData = localStorage.getItem('savedFormData' + VERSION);
                 if (savedFormData) {
                     const formData = JSON.parse(savedFormData);
 
@@ -858,8 +864,8 @@
             generateBtn.addEventListener('click', async function () {
                 if (validateForm()) {
                     // 清除之前儲存的數據
-                    localStorage.removeItem('savedRequestPrompt');
-                    localStorage.removeItem('savedSvgOutput');
+                    localStorage.removeItem('savedRequestPrompt' + VERSION);
+                    localStorage.removeItem('savedSvgOutput' + VERSION);
 
                     resultLayout.style.display = 'block';
 
@@ -949,7 +955,7 @@
                     includeZiwei,
                     customLongitude: customLongitude.value
                 };
-                localStorage.setItem('savedFormData', JSON.stringify(formData));
+                localStorage.setItem('savedFormData' + VERSION, JSON.stringify(formData));
 
                 const apiBody = {
                     "userId": '0_cyber8',
@@ -983,7 +989,7 @@
                         outputDiv.textContent = prompt + requestPrompt;
 
                         // 保存 requestPrompt 到 localStorage
-                        localStorage.setItem('savedRequestPrompt', prompt + requestPrompt);
+                        localStorage.setItem('savedRequestPrompt' + VERSION, prompt + requestPrompt);
 
                         outputDiv.innerHTML = `<button class="copy-btn" onclick="copyPrompt()">複製</button>` + `<br>` + marked.parse(prompt + requestPrompt);
                     }
@@ -1054,7 +1060,7 @@
                             marked.parse(processedMsg);
 
                         // 保存解盤結果到 localStorage
-                        localStorage.setItem('savedSvgOutput', processedMsg);
+                        localStorage.setItem('savedSvgOutput' + VERSION, processedMsg);
                     }
 
                 } catch (error) {
