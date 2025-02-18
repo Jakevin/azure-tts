@@ -619,7 +619,7 @@
 
     <script>
         const DEBUG = false;
-        const FETCH_RESULT = true
+        const SKIP_FETCH_RESULT = false
 
         let apiUrl = "https://asia-east1-durable-pulsar-384402.cloudfunctions.net/Char8Ex"
         if (DEBUG) {
@@ -883,7 +883,7 @@
 
                     await fetchPrompt(birthDay, gender, usingTrueSolarTime, includeZiwei, longitude);
 
-                    if (DEBUG && !FETCH_RESULT) {
+                    if (DEBUG && SKIP_FETCH_RESULT) {
                         //for test prompt
                         setTimeout(() => {
                             progressBar.style.transform = 'scaleX(0)';
@@ -1117,9 +1117,13 @@
                         confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
                     } else {
                         const targetElement = targetId ? document.getElementById(targetId) : svgOutput;
+                        const resultDraw = data.draw;
                         if (targetElement) {
                             targetElement.textContent = data.msg.trim().replaceAll('鬥數', '斗數');
                             targetElement.innerHTML = `<button class="copy-btn" onclick="copyResult('${targetId || 'svgOutput'}')">複製</button></br>` +
+                                `問事內容：${ask}</br>` +
+                                `雷雨百詩：</br>` +
+                                `${resultDraw.drawList} ${resultDraw.fate}</br>【${resultDraw.poem}】</br>` +
                                 marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
                         }
                     }
