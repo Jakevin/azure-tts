@@ -1294,7 +1294,7 @@
                         if (targetElement) {
                             targetElement.textContent = data.msg.trim().replaceAll('鬥數', '斗數');
                             targetElement.innerHTML = `<button class="copy-btn" onclick="copyResult('${tabId || 'svgOutput'}')">複製</button></br>` +
-                                `問人內容：${targetInfo.year}/${targetInfo.month}/${targetInfo.day}生${targetInfo.gender}。</br>${question}</br>` +
+                                `問人內容：生日${targetInfo.year}/${targetInfo.month}/${targetInfo.day} ${targetInfo.gender}。</br>${question}</br>` +
                                 `雷雨百詩：</br>` +
                                 `${resultDraw.drawList} ${resultDraw.fate}</br>【${resultDraw.poem}】</br>` +
                                 marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
