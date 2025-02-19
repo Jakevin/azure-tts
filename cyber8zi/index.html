@@ -1,5 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html>
+<script type="module">
+    import langManager from './lang/langManager.js';
+    import { createLanguageSwitcher } from './components/languageSwitcher.js';
+
+    // 初始化語言管理器
+    document.addEventListener('DOMContentLoaded', () => {
+        langManager.init();
+
+        // 添加語言切換器
+        const switcher = createLanguageSwitcher(langManager);
+        document.body.appendChild(switcher);
+    });
+</script>
 
 <head>
     <meta charset="UTF-8">
@@ -509,8 +522,8 @@
     </div>
     <div class="container">
         <div class="header">
-            <h1>量子天樞</h1>
-            <div class="subtitle">AI解命與Prompt生成器</div>
+            <h1 data-i18n="title">量子天樞</h1>
+            <div class="subtitle" data-i18n="subtitle">AI解命與Prompt生成器</div>
             <a class="social-link" href="https://www.facebook.com/groups/803891804583814" target="_blank">
                 <img src="https://jakevin.github.io/azure-tts/tanslator/assets/facebook-2dd3dce1.svg" alt="facebook" />
             </a>
@@ -545,64 +558,64 @@
 
         <!-- AddToAny END -->
         <div class="form-section">
-            <label>性別:</label>
+            <label data-i18n="gender">性別:</label>
             <div class="radio-group">
-                <label><input type="radio" name="gender" value="男" required> 男</label>
-                <label><input type="radio" name="gender" value="女" required> 女</label>
+                <label><input type="radio" name="gender" value="男" required> <span data-i18n="male">男</span></label>
+                <label><input type="radio" name="gender" value="女" required> <span data-i18n="female">女</span></label>
             </div>
 
         </div>
         <div class="form-section">
-            <label>陽曆出生年月日時分 | 請用+8時區:</label>
+            <label data-i18n="birthDateTime">陽曆出生年月日時分 | 請用+8時區:</label>
             <div class="date-group">
                 <input type="datetime-local" id="datetime" style="width: 300px" step="1">
             </div>
             <div id="true-solar-time" style="margin-top: 10px; padding: 10px; background-color: #e8f5e9; border-radius: 4px; display: none; color:red">
-                <strong>真太陽時：</strong> <span id="solar-time-result"></span>
+                <strong data-i18n="trueSolarTime">真太陽時：</strong> <span id="solar-time-result"></span>
             </div>
         </div>
         <div class="form-section">
-            <label for="province">出生地:</label>
+            <label for="province" data-i18n="birthPlace">出生地:</label>
             <select id="province" required>
                 <option value="台灣">台灣</option>
             </select>
 
-            <label for="city">出生城市:</label>
+            <label for="city" data-i18n="birthCity">出生城市:</label>
             <select id="city" required>
-                <option value="">-- 請選擇 --</option>
+                <option value="" data-i18n="pleaseSelect">-- 請選擇 --</option>
             </select>
 
             <div style="margin-top: 10px;">
-                <label for="custom-longitude">自訂經度（選填）:</label>
+                <label for="custom-longitude" data-i18n="customLongitude">自訂經度（選填）:</label>
                 <input type="number" id="custom-longitude" step="0.1" min="-180" max="180" placeholder="例如：121.5">
-                <div style="color: #ffd700; font-size: 0.9em;">若填寫此欄位將優先使用自訂經度（有效範圍：-180 到 180，東經為正值）</div>
+                <div style="color: #ffd700; font-size: 0.9em;" data-i18n="longitudeHint">若填寫此欄位將優先使用自訂經度（有效範圍：-180 到 180，東經為正值）</div>
             </div>
 
             <p style="margin-top: 10px; padding: 10px; background-color: #f5dddd; border-radius: 4px; color: #000;">
-                重要宣告：</br>
-                命理學是一種複雜的學問僅供參考，不能作為決策的唯一依據。
+                <span data-i18n="important">重要宣告：</span></br>
+                <span data-i18n="disclaimer">命理學是一種複雜的學問僅供參考，不能作為決策的唯一依據。</span>
             </p>
         </div>
 
         <checkbox style="display: flex;">
-            <label>使用真太陽時：</label>
+            <label data-i18n="useTrueSolarTime">使用真太陽時：</label>
             <input type="checkbox" id="true-solar-time-checkbox" checked>
         </checkbox>
         <checkbox style="display: flex;">
-            <label>加入紫微斗數：</label>
+            <label data-i18n="includeZiwei">加入紫微斗數：</label>
             <input type="checkbox" id="ziwei-checkbox" checked>
         </checkbox>
-        <button class="orange-red-btn" id="generate-btn">請幫我算一算！</button>
+        <button class="orange-red-btn" id="generate-btn" data-i18n="calculateButton">請幫我算一算！</button>
         <div id="error-message"></div>
         <div id="result-layout" class="tab-container" style="display: none;">
             <div style="display: flex; margin-bottom: 10px;">
-                <button class="orange-red-btn" style="margin-right: 5px;" id="ask-things-btn" style="margin-bottom: 10px;">我要問事</button>
-                <button class="orange-red-btn" style="margin-left: 5px;" id="match-btn" style="margin-bottom: 10px;">我要問人</button>
+                <button class="orange-red-btn" style="margin-right: 5px;" id="ask-things-btn" data-i18n="askThings">我要問事</button>
+                <button class="orange-red-btn" style="margin-left: 5px;" id="match-btn" data-i18n="askPeople">我要問人</button>
             </div>
 
             <div class="tab-buttons">
-                <button class="tab-button active" onclick="switchTab('result')">AI解盤</button>
-                <button class="tab-button " onclick="switchTab('prompt')">盤面提示詞</button>
+                <button class="tab-button active" onclick="switchTab('result')" data-i18n="aiAnalysis">AI解盤</button>
+                <button class="tab-button" onclick="switchTab('prompt')" data-i18n="chartPrompt">盤面提示詞</button>
             </div>
             <div id="result-tab" class="tab-content active" style="background-color: #002f5f;color: white;">
                 <p style="margin-top: 10px; padding: 10px; background-color: #e8f5e9; border-radius: 4px; color: #000;">
@@ -905,16 +918,16 @@
                 let isValid = true;
 
                 if (!Array.from(genderRadios).some(radio => radio.checked)) {
-                    errorMessage.textContent += "請選擇性別。";
+                    errorMessage.textContent += langManager.getText('errorPleaseSelectGender');
                     isValid = false;
                 }
 
                 if (!provinceSelect.value) {
-                    errorMessage.textContent += "請選擇出生地";
+                    errorMessage.textContent += langManager.getText('errorPleaseSelectBirthPlace');
                     isValid = false;
                 }
                 if (!citySelect.value && !customLongitude.value) {
-                    errorMessage.textContent += "請選擇出生城市或填寫自訂經度";
+                    errorMessage.textContent += langManager.getText('errorPleaseSelectCityOrLongitude');
                     isValid = false;
                 }
 
@@ -928,11 +941,11 @@
                 const promptText = outputDiv.textContent.replace('複製', '').trim();
                 navigator.clipboard.writeText(promptText)
                     .then(() => {
-                        alert('Prompt 複製完成！');
+                        alert(langManager.getText('copySuccess'));
                     })
                     .catch(err => {
-                        console.error('複製失敗:', err);
-                        alert('複製失敗，請手動複製。');
+                        console.error('Copy failed:', err);
+                        alert(langManager.getText('copyFailed'));
                     });
             };
 
@@ -1385,12 +1398,12 @@
     <!-- 問事對話框 -->
     <div id="ask-dialog" class="dialog" style="display: none;">
         <div class="dialog-content">
-            <h2>請輸入您想問的事情</h2>
-            <label>有時間相關問題，請說明清楚</br>如：2025年2月23日當周運勢</label>
-            <textarea id="question-input" rows="4" placeholder="請輸入您的問題..."></textarea>
+            <h2 data-i18n="askDialogTitle">請輸入您想問的事情</h2>
+            <label data-i18n="timeRelatedNote">有時間相關問題，請說明清楚</br>如：2025年2月23日當周運勢</label>
+            <textarea id="question-input" rows="4" data-i18n="questionPlaceholder" placeholder="請輸入您的問題..."></textarea>
             <div class="dialog-buttons">
-                <button onclick="closeDialog()">取消</button>
-                <button onclick="submitQuestion()">確定</button>
+                <button onclick="closeDialog()" data-i18n="cancel">取消</button>
+                <button onclick="submitQuestion()" data-i18n="confirm">確定</button>
             </div>
         </div>
     </div>
@@ -1398,13 +1411,13 @@
     <!-- 問人對話框 -->
     <div id="match-dialog" class="dialog" style="display: none;">
         <div class="dialog-content">
-            <h2>請輸入您想問的事情</h2>
-            <label>有時間相關問題，請說明清楚</br>如：2025年2月23日當周運勢</label>
+            <h2 data-i18n="matchDialogTitle">請輸入您想問的事情</h2>
+            <label data-i18n="timeRelatedNote">有時間相關問題，請說明清楚</br>如：2025年2月23日當周運勢</label>
             <div class="form-section" style="text-align: start;">
-                <label>對方性別:</label>
+                <label data-i18n="targetGender">對方性別:</label>
                 <div class="radio-group">
-                    <label><input type="radio" name="target-gender" value="男" required> 男</label>
-                    <label><input type="radio" name="target-gender" value="女" required> 女</label>
+                    <label><input type="radio" name="target-gender" value="男" required> <span data-i18n="male">男</span></label>
+                    <label><input type="radio" name="target-gender" value="女" required> <span data-i18n="female">女</span></label>
                 </div>
                 <label>對方陽曆出生年月日時 | 請用+8時區:</label>
                 <div class="date-group">
