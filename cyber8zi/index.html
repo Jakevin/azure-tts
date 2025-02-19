@@ -163,7 +163,7 @@
             margin: 0;
         }
 
-        #generate-btn {
+        .orange-red-btn {
             width: 100%;
             padding: 12px;
             background-color: #ff4500;
@@ -174,7 +174,7 @@
             font-size: 18px;
         }
 
-        #generate-btn:hover {
+        #orange-red-btn:hover {
             background-color: #ff6347;
         }
 
@@ -592,10 +592,14 @@
             <label>加入紫微斗數：</label>
             <input type="checkbox" id="ziwei-checkbox" checked>
         </checkbox>
-        <button id="generate-btn">請幫我算一算！</button>
+        <button class="orange-red-btn" id="generate-btn">請幫我算一算！</button>
         <div id="error-message"></div>
         <div id="result-layout" class="tab-container" style="display: none;">
-            <button id="generate-btn" style="margin-bottom: 10px;">我要問事</button>
+            <div style="display: flex; margin-bottom: 10px;">
+                <button class="orange-red-btn" style="margin-right: 5px;" id="ask-things-btn" style="margin-bottom: 10px;">我要問事</button>
+                <button class="orange-red-btn" style="margin-left: 5px;" id="match-btn" style="margin-bottom: 10px;">我要問人</button>
+            </div>
+
             <div class="tab-buttons">
                 <button class="tab-button active" onclick="switchTab('result')">AI解盤</button>
                 <button class="tab-button " onclick="switchTab('prompt')">盤面資料</button>
@@ -618,7 +622,7 @@
     </div>
 
     <script>
-        const DEBUG = false;
+        const DEBUG = true;
         const SKIP_FETCH_RESULT = false;
         const VERSION = '2';
         const OLD_VERSION = '1';
@@ -655,8 +659,14 @@
             const outputDiv = document.getElementById('output');
             const svgOutput = document.getElementById('svgOutput');
             const askDialog = document.getElementById('ask-dialog');
-            const askButton = document.querySelector('#result-layout button#generate-btn');
+            const askButton = document.getElementById('ask-things-btn');
+            const matchDialog = document.getElementById('match-dialog');
+            const matchButton = document.getElementById('match-btn');
             const questionInput = document.getElementById('question-input');
+            const targetDate = document.getElementById('target-date');
+            const targetTime = document.getElementById('target-time');
+            const targetGenderRadios = document.getElementsByName('target-gender');
+            const matchQuestionInput = document.getElementById('match-question-input');
 
             // 添加「我要問事」按鈕點擊事件
             askButton.addEventListener('click', () => {
@@ -666,8 +676,14 @@
             // 關閉對話框
             window.closeDialog = function () {
                 askDialog.style.display = 'none';
+                matchDialog.style.display = 'none';
                 questionInput.value = '';
             };
+
+            // 添加「我要問人」按鈕點擊事件
+            matchButton.addEventListener('click', () => {
+                matchDialog.style.display = 'flex';
+            });
 
             // 提交問題
             window.submitQuestion = async function () {
@@ -705,6 +721,78 @@
 
                 // 開始分析
                 const result = await fetchAsk(question, `${tabId}-content`);
+
+                // 切換到新的問事標籤
+                switchTab(tabId);
+            };
+
+            window.submitMatch = async function () {
+                const question = matchQuestionInput.value.trim();
+                if (!question) {
+                    alert('請輸入您想問的問題');
+                    return;
+                }
+
+                // 生成唯一的標籤ID
+                const tabId = 'match-' + Date.now();
+
+                // 添加新的標籤按鈕
+                const tabButton = document.createElement('button');
+                tabButton.className = 'tab-button';
+                const buttonText = '問人';
+                tabButton.setAttribute('onclick', `switchTab('${tabId}')`);
+                tabButton.textContent = buttonText;
+                document.querySelector('.tab-buttons').appendChild(tabButton);
+
+                // 添加新的內容區域
+                const tabContent = document.createElement('div');
+                tabContent.id = `${tabId}-tab`;
+                tabContent.className = 'tab-content';
+                tabContent.style.backgroundColor = '#002f5f';
+                tabContent.style.color = 'white';
+                tabContent.innerHTML = `<div id="${tabId}-content" class="ask-content"></div>`;
+                document.querySelector('#result-layout').insertBefore(
+                    tabContent,
+                    document.querySelector('#prompt-tab')
+                );
+
+                const birthDay = {
+                    year: (targetDate.value.slice(0, 4)),
+                    month: (targetDate.value.slice(5, 7)),
+                    day: (targetDate.value.slice(8, 10)),
+                    hours: targetTime.value,
+                    minutes: "00"
+                }
+
+                let targetInfo = {
+                    year: (targetDate.value.slice(0, 4)),
+                    month: (targetDate.value.slice(5, 7)),
+                    day: (targetDate.value.slice(8, 10)),
+                    hours: targetTime.value,
+                    minutes: "00",
+                    gender: targetGenderRadios[0].checked ? '男' : '女',
+                }
+                console.log('targetInfo', targetInfo)
+                // 關閉對話框
+                closeDialog();
+
+                if (DEBUG && SKIP_FETCH_RESULT) {
+                    //for test prompt
+                    setTimeout(() => {
+                        progressBar.style.transform = 'scaleX(0)';
+                        messageElement.textContent = '';
+
+                        // 重置進度條和消息
+                        currentProgress = 0;
+                        messageIndex = 0;
+
+                        loadingOverlay.style.display = 'none';
+                    }, 500);
+                    return
+                }
+
+                // 開始分析
+                const result = await fetchMatch(targetInfo, question, `${tabId}-content`);
 
                 // 切換到新的問事標籤
                 switchTab(tabId);
@@ -1085,7 +1173,7 @@
                 }
             }
 
-            async function fetchAsk(ask, targetId) {
+            async function fetchAsk(ask, tabId) {
                 const messages = [
                     "調整坐姿...",
                     "點香祈禱...",
@@ -1122,11 +1210,11 @@
                     if (data.error) {
                         confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
                     } else {
-                        const targetElement = targetId ? document.getElementById(targetId) : svgOutput;
+                        const targetElement = tabId ? document.getElementById(tabId) : svgOutput;
                         const resultDraw = data.draw;
                         if (targetElement) {
                             targetElement.textContent = data.msg.trim().replaceAll('鬥數', '斗數');
-                            targetElement.innerHTML = `<button class="copy-btn" onclick="copyResult('${targetId || 'svgOutput'}')">複製</button></br>` +
+                            targetElement.innerHTML = `<button class="copy-btn" onclick="copyResult('${tabId || 'svgOutput'}')">複製</button></br>` +
                                 `問事內容：${ask}</br>` +
                                 `雷雨百詩：</br>` +
                                 `${resultDraw.drawList} ${resultDraw.fate}</br>【${resultDraw.poem}】</br>` +
@@ -1156,6 +1244,84 @@
                 }
             }
 
+            async function fetchMatch(targetInfo, question, tabId) {
+                const messages = [
+                    "調整坐姿...",
+                    "點香祈禱...",
+                    "冥想靜心...",
+                    "分析問題...",
+                    "掐指計算...",
+                    "推演吉凶...",
+                    "生成解惑..."
+                ];
+                const { messageInterval } = setLoadingOverlay(messages);
+
+                const apiBody = {
+                    "userId": '0_cyber8',
+                    "prompt": requestPrompt,
+                    "allLife": svgOutput.textContent.replace('複製', '').trim(),
+                    "targetInfo": {
+                        "year": targetInfo.year,
+                        "month": targetInfo.month,
+                        "day": targetInfo.day,
+                        "hours": targetInfo.hours,
+                        "minutes": 0,
+                        "gender": targetInfo.gender
+                    },
+                    "ask": question,
+                    "lang": lang,
+                    "type": "text",
+                }
+                try {
+                    const response = await fetch(`${apiUrl}?type=match`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(apiBody)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    if (data.error) {
+                        confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
+                    } else {
+                        const targetElement = tabId ? document.getElementById(tabId) : svgOutput;
+                        const resultDraw = data.draw;
+                        if (targetElement) {
+                            targetElement.textContent = data.msg.trim().replaceAll('鬥數', '斗數');
+                            targetElement.innerHTML = `<button class="copy-btn" onclick="copyResult('${tabId || 'svgOutput'}')">複製</button></br>` +
+                                `問人內容：${targetInfo.year}/${targetInfo.month}/${targetInfo.day}生${targetInfo.gender}。</br>${question}</br>` +
+                                `雷雨百詩：</br>` +
+                                `${resultDraw.drawList} ${resultDraw.fate}</br>【${resultDraw.poem}】</br>` +
+                                marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
+                        }
+                    }
+
+                } catch (error) {
+                    console.error('API請求失敗:', error);
+                    confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
+
+                } finally {
+                    // 清理定時器
+                    await clearInterval(messageInterval);
+
+
+                    setTimeout(() => {
+                        progressBar.style.transform = 'scaleX(0)';
+                        messageElement.textContent = '';
+
+                        // 重置進度條和消息
+                        currentProgress = 0;
+                        messageIndex = 0;
+
+                        loadingOverlay.style.display = 'none';
+                    }, 500);
+                }
+            }
 
             initializeSelectors();
             populateProvinces();
@@ -1217,11 +1383,61 @@
     <div id="ask-dialog" class="dialog" style="display: none;">
         <div class="dialog-content">
             <h2>請輸入您想問的事情</h2>
-            <h5>如有時間上相關的問題，請說明時間，如：2025年2月23日當周運勢</h5>
+            <label>有時間相關問題，請說明清楚</br>如：2025年2月23日當周運勢</label>
             <textarea id="question-input" rows="4" placeholder="請輸入您的問題..."></textarea>
             <div class="dialog-buttons">
-                <button onclick="submitQuestion()">確定</button>
                 <button onclick="closeDialog()">取消</button>
+                <button onclick="submitQuestion()">確定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 問人對話框 -->
+    <div id="match-dialog" class="dialog" style="display: none;">
+        <div class="dialog-content">
+            <h2>請輸入您想問的事情</h2>
+            <label>有時間相關問題，請說明清楚</br>如：2025年2月23日當周運勢</label>
+            <div class="form-section" style="text-align: start;">
+                <label>對方性別:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="target-gender" value="男" required> 男</label>
+                    <label><input type="radio" name="target-gender" value="女" required> 女</label>
+                </div>
+                <label>對方陽曆出生年月日時 | 請用+8時區:</label>
+                <div class="date-group">
+                    <input type="date" id="target-date" style="width: 100%;" step="1">
+                    <select id="target-time" style="width: 100%;">
+                        <option value="00">00:00~00:59</option>
+                        <option value="01">01:00~01:59</option>
+                        <option value="02">02:00~02:59</option>
+                        <option value="03">03:00~03:59</option>
+                        <option value="04">04:00~04:59</option>
+                        <option value="05">05:00~05:59</option>
+                        <option value="06">06:00~06:59</option>
+                        <option value="07">07:00~07:59</option>
+                        <option value="08">08:00~08:59</option>
+                        <option value="09">09:00~09:59</option>
+                        <option value="10">10:00~10:59</option>
+                        <option value="11">11:00~11:59</option>
+                        <option value="12">12:00~12:59</option>
+                        <option value="13">13:00~13:59</option>
+                        <option value="14">14:00~14:59</option>
+                        <option value="15">15:00~15:59</option>
+                        <option value="16">16:00~16:59</option>
+                        <option value="17">17:00~17:59</option>
+                        <option value="18">18:00~18:59</option>
+                        <option value="19">19:00~19:59</option>
+                        <option value="20">20:00~20:59</option>
+                        <option value="21">21:00~21:59</option>
+                        <option value="22">22:00~22:59</option>
+                        <option value="23">23:00~23:59</option>
+                    </select>
+                </div>
+            </div>
+            <textarea id="match-question-input" rows="4" placeholder="請輸入您與對方的問題..."></textarea>
+            <div class="dialog-buttons">
+                <button onclick="closeDialog()">取消</button>
+                <button onclick="submitMatch()">確定</button>
             </div>
         </div>
     </div>
