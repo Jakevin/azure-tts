@@ -553,6 +553,8 @@
                 <a class="share-link" href="https://www.addtoany.com/share#url=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;title="
                     target="_blank"><img src="https://static.addtoany.com/buttons/a2a.svg" style="background-color:royalblue"></a>
             </div>
+            <div id="visitor-count" style="color: #ffd700; font-size: 0.5em; margin-top: 5px;">AI已算：<span id="count">-</span>次</div>
+
         </div>
         <!-- AddToAny BEGIN -->
 
@@ -788,6 +790,8 @@
             const targetTime = document.getElementById('target-time');
             const targetGenderRadios = document.getElementsByName('target-gender');
             const matchQuestionInput = document.getElementById('match-question-input');
+
+            fetchCount()
 
             // 添加「我要問事」按鈕點擊事件
             askButton.addEventListener('click', () => {
@@ -1451,6 +1455,18 @@
 
                         loadingOverlay.style.display = 'none';
                     }, 500);
+                }
+            }
+
+            async function fetchCount() {
+                try {
+                    const response = await fetch(`${apiUrl}?type=count`);
+                    const data = await response.json();
+                    if (data && data.count) {
+                        document.getElementById('count').textContent = data.count.toLocaleString();
+                    }
+                } catch (error) {
+                    console.error('獲取使用人次失敗:', error);
                 }
             }
 
