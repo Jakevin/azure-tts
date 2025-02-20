@@ -1,6 +1,6 @@
 const zhTW = {
     // 標題和副標題
-    'title': '量子天樞',
+    'title': '天樞命理Agent',
     'subtitle': 'AI解命與Prompt生成器',
 
     // 表單標籤

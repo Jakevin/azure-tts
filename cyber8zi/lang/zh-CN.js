@@ -1,6 +1,6 @@
 const zhCN = {
     // 标题和副标题
-    'title': '量子天枢',
+    'title': '量子天枢命理Agent',
     'subtitle': 'AI解命与Prompt生成器',
 
     // 表单标签
