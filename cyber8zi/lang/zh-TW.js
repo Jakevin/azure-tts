@@ -4,6 +4,8 @@ const zhTW = {
     'subtitle': 'AI解命與Prompt生成器',
 
     // 表單標籤
+    'lastName': '姓氏:',
+    'firstName': '名字:',
     'gender': '性別:',
     'male': '男',
     'female': '女',
@@ -40,7 +42,8 @@ const zhTW = {
     'timeRelatedNote': '有時間相關問題，請說明清楚\n如：2025年2月23日當周運勢',
     'questionPlaceholder': '請輸入您的問題...',
     'targetGender': '對方性別:',
-
+    'targetFamilyName': '對方姓氏:',
+    'targetGivenName': '對方名字:',
     // 其他
     'copy': '複製',
     'loading': '載入中...',

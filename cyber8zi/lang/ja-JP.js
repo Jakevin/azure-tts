@@ -4,6 +4,8 @@ const jaJP = {
     'subtitle': 'AI運命占い＆プロンプトジェネレーター',
 
     // フォームラベル
+    'lastName': '姓:',
+    'firstName': '名:',
     'gender': '性別:',
     'male': '男性',
     'female': '女性',
@@ -39,7 +41,9 @@ const jaJP = {
     'matchDialogTitle': '質問を入力してください',
     'timeRelatedNote': '時間に関する質問は具体的にお願いします\n例：2025年2月23日の週運',
     'questionPlaceholder': '質問を入力...',
-    'targetGender': '対象者の性別:',
+    'targetGender': '相手の性別:',
+    'targetFamilyName': '相手の名前:',
+    'targetGivenName': '相手の苗字:',
 
     // その他
     'copy': 'コピー',

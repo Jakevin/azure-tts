@@ -4,6 +4,8 @@ const enUS = {
     'subtitle': 'AI Fortune Telling & Prompt Generator',
 
     // Form labels
+    'lastName': 'Last Name:',
+    'firstName': 'First Name:',
     'gender': 'Gender:',
     'male': 'Male',
     'female': 'Female',
@@ -40,6 +42,8 @@ const enUS = {
     'timeRelatedNote': 'For time-related questions, please be specific\nExample: Weekly fortune for February 23, 2025',
     'questionPlaceholder': 'Enter your question...',
     'targetGender': 'Target Gender:',
+    'targetFamilyName': 'Target Family Name:',
+    'targetGivenName': 'Target Given Name:',
 
     // Others
     'copy': 'Copy',

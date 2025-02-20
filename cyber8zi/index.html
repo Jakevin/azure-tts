@@ -558,6 +558,12 @@
 
         <!-- AddToAny END -->
         <div class="form-section">
+            <label data-i18n="lastName">姓氏:</label>
+            <input type="text" id="familyName" style="margin-bottom: 10px;">
+
+            <label data-i18n="firstName">名字:</label>
+            <input type="text" id="giveName" style="margin-bottom: 15px;">
+
             <label data-i18n="gender">性別:</label>
             <div class="radio-group">
                 <label><input type="radio" name="gender" value="男" required> <span data-i18n="male">男</span></label>
@@ -638,7 +644,7 @@
     </div>
 
     <script>
-        const DEBUG = false;
+        const DEBUG = true;
         const SKIP_FETCH_RESULT = false;
         const VERSION = '2';
         const OLD_VERSION = '1';
@@ -666,7 +672,11 @@
             const provinceSelect = document.getElementById('province');
             const citySelect = document.getElementById('city');
             const customLongitude = document.getElementById('custom-longitude');
+
+            const familyNameInput = document.getElementById('familyName');
+            const giveNameInput = document.getElementById('giveName');
             const genderRadios = document.getElementsByName('gender');
+
             const trueSolarTimeCheckbox = document.getElementById('true-solar-time-checkbox');
             const ziweiCheckbox = document.getElementById('ziwei-checkbox');
             const generateBtn = document.getElementById('generate-btn');
@@ -679,6 +689,8 @@
             const matchDialog = document.getElementById('match-dialog');
             const matchButton = document.getElementById('match-btn');
             const questionInput = document.getElementById('question-input');
+            const targetFamilyNameInput = document.getElementById('target-familyName');
+            const targetGiveNameInput = document.getElementById('target-giveName');
             const targetDate = document.getElementById('target-date');
             const targetTime = document.getElementById('target-time');
             const targetGenderRadios = document.getElementsByName('target-gender');
@@ -781,6 +793,8 @@
                 }
 
                 let targetInfo = {
+                    familyName: targetFamilyNameInput.value,
+                    giveName: targetGiveNameInput.value,
                     year: (targetDate.value.slice(0, 4)),
                     month: (targetDate.value.slice(5, 7)),
                     day: (targetDate.value.slice(8, 10)),
@@ -895,6 +909,14 @@
                         customLongitude.value = formData.customLongitude;
                     }
 
+                    if (formData.familyName) {
+                        familyNameInput.value = formData.familyName;
+                    }
+
+                    if (formData.giveName) {
+                        giveNameInput.value = formData.giveName;
+                    }
+
                     // 設置真太陽時和紫微斗數選項
                     trueSolarTimeCheckbox.checked = formData.usingTrueSolarTime;
                     ziweiCheckbox.checked = formData.includeZiwei;
@@ -972,7 +994,8 @@
                     localStorage.removeItem('savedSvgOutput' + VERSION);
 
                     resultLayout.style.display = 'block';
-
+                    const familyName = familyNameInput.value;
+                    const giveName = giveNameInput.value;
                     const gender = document.querySelector('input[name="gender"]:checked').value;
                     const includeZiwei = ziweiCheckbox.checked;
                     const usingTrueSolarTime = trueSolarTimeCheckbox.checked;
@@ -991,7 +1014,7 @@
                     const customLongitudeValue = customLongitude.value;
                     const longitude = customLongitudeValue ? parseFloat(customLongitudeValue) : locationData[birthProvince][birthCity].longitude;
 
-                    await fetchPrompt(birthDay, gender, usingTrueSolarTime, includeZiwei, longitude);
+                    await fetchPrompt(familyName, giveName, birthDay, gender, usingTrueSolarTime, includeZiwei, longitude);
 
                     if (DEBUG && SKIP_FETCH_RESULT) {
                         //for test prompt
@@ -1044,7 +1067,7 @@
                 return { messageInterval }
             }
 
-            async function fetchPrompt(birthDay, gender, usingTrueSolarTime, includeZiwei = false, longitude) {
+            async function fetchPrompt(familyName, giveName, birthDay, gender, usingTrueSolarTime, includeZiwei = false, longitude) {
                 const messages = [
                     "翻閱萬年歷...",
                     "計算五行生克..."
@@ -1053,6 +1076,8 @@
 
                 // 保存表單數據
                 const formData = {
+                    familyName,
+                    giveName,
                     birthDay,
                     gender,
                     usingTrueSolarTime,
@@ -1069,6 +1094,8 @@
                     "includeZiwei": includeZiwei,
                     "longitude": longitude,
                     "lang": lang,
+                    "familyName": familyName,
+                    "giveName": giveName,
                     "type": "text",
                 }
                 try {
@@ -1277,6 +1304,8 @@
                     "prompt": requestPrompt,
                     "allLife": svgOutput.textContent.replace('複製', '').trim(),
                     "targetInfo": {
+                        "familyName": targetInfo.familyName,
+                        "giveName": targetInfo.giveName,
                         "year": targetInfo.year,
                         "month": targetInfo.month,
                         "day": targetInfo.day,
@@ -1310,7 +1339,7 @@
                         if (targetElement) {
                             targetElement.textContent = data.msg.trim().replaceAll('鬥數', '斗數');
                             targetElement.innerHTML = `<button class="copy-btn" onclick="copyResult('${tabId || 'svgOutput'}')">複製</button></br>` +
-                                `問人內容：生日${targetInfo.year}/${targetInfo.month}/${targetInfo.day} ${targetInfo.gender}。</br>${question}</br>` +
+                                `問人內容：生日${targetInfo.year}/${targetInfo.month}/${targetInfo.day} ${targetInfo.familyName}${targetInfo.giveName} ${targetInfo.gender}。</br>${question}</br>` +
                                 `雷雨百詩：</br>` +
                                 `${resultDraw.drawList} ${resultDraw.fate}</br>【${resultDraw.poem}】</br>` +
                                 marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
@@ -1414,12 +1443,18 @@
             <h2 data-i18n="matchDialogTitle">請輸入您想問的事情</h2>
             <label data-i18n="timeRelatedNote">有時間相關問題，請說明清楚</br>如：2025年2月23日當周運勢</label>
             <div class="form-section" style="text-align: start;">
+                <label data-i18n="targetFamilyName">對方姓氏:</label>
+                <input type="text" id="target-familyName" style="margin-bottom: 10px;">
+
+                <label data-i18n="targetGivenName">對方名字:</label>
+                <input type="text" id="target-giveName" style="margin-bottom: 15px;">
+
                 <label data-i18n="targetGender">對方性別:</label>
                 <div class="radio-group">
                     <label><input type="radio" name="target-gender" value="男" required> <span data-i18n="male">男</span></label>
                     <label><input type="radio" name="target-gender" value="女" required> <span data-i18n="female">女</span></label>
                 </div>
-                <label>對方陽曆出生年月日時 | 請用+8時區:</label>
+                <label>對方陽曆出生年月日時(請用+8時區) 可不填</label>
                 <div class="date-group">
                     <input type="date" id="target-date" style="width: 100%;" step="1">
                     <select id="target-time" style="width: 100%;">
