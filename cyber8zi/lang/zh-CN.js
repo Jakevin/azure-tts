@@ -4,8 +4,8 @@ const zhCN = {
     'subtitle': 'AI解命与Prompt生成器',
 
     // 表单标签
-    'lastName': '姓氏:',
-    'firstName': '名字:',
+    'lastName': '姓氏(建议使用繁体字):',
+    'firstName': '名字(建议使用繁体字):',
     'gender': '性别:',
     'male': '男',
     'female': '女',
@@ -42,8 +42,8 @@ const zhCN = {
     'timeRelatedNote': '有时间相关问题，请说明清楚\n如：2025年2月23日当周运势',
     'questionPlaceholder': '请输入您的问题...',
     'targetGender': '对方性别:',
-    'targetFamilyName': '对方姓氏:',
-    'targetGivenName': '对方名字:',
+    'targetFamilyName': '对方姓氏(建议使用繁体字):',
+    'targetGivenName': '对方名字(建议使用繁体字):',
 
     // 其他
     'copy': '复制',
