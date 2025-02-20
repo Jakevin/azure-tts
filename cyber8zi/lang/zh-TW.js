@@ -4,8 +4,8 @@ const zhTW = {
     'subtitle': 'AI解命與Prompt生成器',
 
     // 表單標籤
-    'lastName': '姓氏:',
-    'firstName': '名字:',
+    'lastName': '姓氏:(選填)',
+    'firstName': '名字:(選填)',
     'gender': '性別:',
     'male': '男',
     'female': '女',

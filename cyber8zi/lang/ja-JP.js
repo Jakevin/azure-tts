@@ -4,8 +4,8 @@ const jaJP = {
     'subtitle': 'AI運命占い＆プロンプトジェネレーター',
 
     // フォームラベル
-    'lastName': '姓:',
-    'firstName': '名:',
+    'lastName': '姓:(任意)',
+    'firstName': '名:(任意)',
     'gender': '性別:',
     'male': '男性',
     'female': '女性',

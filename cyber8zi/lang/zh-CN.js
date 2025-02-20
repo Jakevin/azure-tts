@@ -4,8 +4,8 @@ const zhCN = {
     'subtitle': 'AI解命与Prompt生成器',
 
     // 表单标签
-    'lastName': '姓氏(建议使用繁体字):',
-    'firstName': '名字(建议使用繁体字):',
+    'lastName': '姓氏(建议使用繁体字):(选填)',
+    'firstName': '名字(建议使用繁体字):(选填)',
     'gender': '性别:',
     'male': '男',
     'female': '女',

@@ -4,8 +4,8 @@ const enUS = {
     'subtitle': 'AI Fortune Telling & Prompt Generator',
 
     // Form labels
-    'lastName': 'Last Name:',
-    'firstName': 'First Name:',
+    'lastName': 'Last Name: (Optional)',
+    'firstName': 'First Name: (Optional)',
     'gender': 'Gender:',
     'male': 'Male',
     'female': 'Female',
