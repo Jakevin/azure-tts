@@ -692,6 +692,13 @@
                 <span data-i18n="disclaimer">命理學是一種複雜的學問僅供參考，不能作為決策的唯一依據。</span>
             </p>
         </div>
+        <div style="display: flex;">
+            <label for="teacher">AI老師：</label>
+            <select id="teacher" style="width: 250px">
+                <option value="google">谷哥大神（Google）</option>
+                <option value="deepseek">深度精靈（DeepSeek）</option>
+            </select>
+        </div>
 
         <checkbox style="display: flex;">
             <label data-i18n="useTrueSolarTime">使用真太陽時：</label>
@@ -772,8 +779,10 @@
             const giveNameInput = document.getElementById('giveName');
             const genderRadios = document.getElementsByName('gender');
 
+            const teacherSelect = document.getElementById('teacher');
             const trueSolarTimeCheckbox = document.getElementById('true-solar-time-checkbox');
             const ziweiCheckbox = document.getElementById('ziwei-checkbox');
+
             const generateBtn = document.getElementById('generate-btn');
             const errorMessage = document.getElementById('error-message');
             const resultLayout = document.getElementById('result-layout');
@@ -1178,6 +1187,7 @@
 
                 const apiBody = {
                     "userId": '0_cyber8',
+                    "teacher": teacherSelect.value,
                     "birthDay": birthDay,
                     "gender": gender,
                     "usingTrueSolarTime": usingTrueSolarTime,
@@ -1254,6 +1264,7 @@
 
                 const apiBody = {
                     "userId": '0_cyber8',
+                    "teacher": teacherSelect.value,
                     "requestPrompt": requestPrompt,
                     "lang": lang,
                     "type": "text",
@@ -1320,6 +1331,7 @@
 
                 const apiBody = {
                     "userId": '0_cyber8',
+                    "teacher": teacherSelect.value,
                     "prompt": requestPrompt,
                     "allLife": svgOutput.textContent.replace('複製', '').trim(),
                     "ask": ask,
@@ -1391,6 +1403,7 @@
 
                 const apiBody = {
                     "userId": '0_cyber8',
+                    "teacher": teacherSelect.value,
                     "prompt": requestPrompt,
                     "allLife": svgOutput.textContent.replace('複製', '').trim(),
                     "targetInfo": {
