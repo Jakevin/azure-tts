@@ -762,8 +762,6 @@
 
         document.addEventListener('DOMContentLoaded', function () {
 
-            const lang = navigator.language
-
             const loadingOverlay = document.querySelector('.loading-overlay');
             const progressBar = document.querySelector('.progress-bar-inner');
             const messageElement = document.querySelector('.loading-message');
@@ -1193,7 +1191,7 @@
                     "usingTrueSolarTime": usingTrueSolarTime,
                     "includeZiwei": includeZiwei,
                     "longitude": longitude,
-                    "lang": lang,
+                    "lang": localStorage.getItem('preferred_language') || 'zh-TW',
                     "familyName": familyName,
                     "giveName": giveName,
                     "type": "text",
@@ -1266,7 +1264,7 @@
                     "userId": '0_cyber8',
                     "teacher": teacherSelect.value,
                     "requestPrompt": requestPrompt,
-                    "lang": lang,
+                    "lang": localStorage.getItem('preferred_language') || 'zh-TW',
                     "type": "text",
                 }
                 try {
@@ -1335,7 +1333,7 @@
                     "prompt": requestPrompt,
                     "allLife": svgOutput.textContent.replace('複製', '').trim(),
                     "ask": ask,
-                    "lang": lang,
+                    "lang": localStorage.getItem('preferred_language') || 'zh-TW',
                     "type": "text",
                 }
                 try {
@@ -1417,7 +1415,7 @@
                         "gender": targetInfo.gender
                     },
                     "ask": question,
-                    "lang": lang,
+                    "lang": localStorage.getItem('preferred_language') || 'zh-TW',
                     "type": "text",
                 }
                 try {
