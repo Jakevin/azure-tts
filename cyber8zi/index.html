@@ -524,10 +524,7 @@
         <div class="header">
             <h1 data-i18n="title">天樞命理Agent</h1>
             <div class="subtitle" data-i18n="subtitle">AI解命與Prompt生成器</div>
-            <a class="social-link" href="https://www.facebook.com/groups/803891804583814" target="_blank">
-                <img src="https://jakevin.github.io/azure-tts/tanslator/assets/facebook-2dd3dce1.svg" alt="facebook" />
-            </a>
-            <div style="display: flex; justify-self:center; align-items: center; margin-top: 5px;">
+            <div style="display: flex; justify-self:center; align-items: center; margin-top: 2px;">
                 <span>分享：</span>
                 <a class="share-link"
                     href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;linkname="
@@ -560,126 +557,153 @@
 
         <!-- AddToAny END -->
         <div class="form-section">
-            <label data-i18n="lastName">姓氏:</label>
-            <input type="text" id="familyName" style="margin-bottom: 10px;">
-
-            <label data-i18n="firstName">名字:</label>
-            <input type="text" id="giveName" style="margin-bottom: 15px;">
-
-            <label data-i18n="gender">性別:</label>
-            <div class="radio-group">
-                <label><input type="radio" name="gender" value="男" required> <span data-i18n="male">男</span></label>
-                <label><input type="radio" name="gender" value="女" required> <span data-i18n="female">女</span></label>
+            <div style="display: flex; margin-bottom: 10px;">
+                <div>
+                    <label data-i18n="lastName">姓氏:</label>
+                    <input type="text" id="familyName">
+                </div>
+                <div style="margin-left: 10px;">
+                    <label data-i18n="firstName">名字:</label>
+                    <input type="text" id="giveName">
+                </div>
+                <div style="margin-left: 10px;">
+                    <label data-i18n="gender">性別:</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="gender" value="男" required> <span data-i18n="male">男</span></label>
+                        <label><input type="radio" name="gender" value="女" required> <span data-i18n="female">女</span></label>
+                    </div>
+                </div>
             </div>
+
+
 
         </div>
         <div class="form-section">
             <label data-i18n="birthDateTime">陽曆出生年月日時分 | 請用+8時區:</label>
             <div class="date-group">
                 <input type="date" id="birth-date" style="width: 200px">
-                <select id="birth-hour" style="width: 120px">
-                    <option value="00">00時</option>
-                    <option value="01">01時</option>
-                    <option value="02">02時</option>
-                    <option value="03">03時</option>
-                    <option value="04">04時</option>
-                    <option value="05">05時</option>
-                    <option value="06">06時</option>
-                    <option value="07">07時</option>
-                    <option value="08">08時</option>
-                    <option value="09">09時</option>
-                    <option value="10">10時</option>
-                    <option value="11">11時</option>
-                    <option value="12">12時</option>
-                    <option value="13">13時</option>
-                    <option value="14">14時</option>
-                    <option value="15">15時</option>
-                    <option value="16">16時</option>
-                    <option value="17">17時</option>
-                    <option value="18">18時</option>
-                    <option value="19">19時</option>
-                    <option value="20">20時</option>
-                    <option value="21">21時</option>
-                    <option value="22">22時</option>
-                    <option value="23">23時</option>
-                </select>
-                <select id="birth-minute" style="width: 120px">
-                    <option value="00">00分</option>
-                    <option value="01">01分</option>
-                    <option value="02">02分</option>
-                    <option value="03">03分</option>
-                    <option value="04">04分</option>
-                    <option value="05">05分</option>
-                    <option value="06">06分</option>
-                    <option value="07">07分</option>
-                    <option value="08">08分</option>
-                    <option value="09">09分</option>
-                    <option value="10">10分</option>
-                    <option value="11">11分</option>
-                    <option value="12">12分</option>
-                    <option value="13">13分</option>
-                    <option value="14">14分</option>
-                    <option value="15">15分</option>
-                    <option value="16">16分</option>
-                    <option value="17">17分</option>
-                    <option value="18">18分</option>
-                    <option value="19">19分</option>
-                    <option value="20">20分</option>
-                    <option value="21">21分</option>
-                    <option value="22">22分</option>
-                    <option value="23">23分</option>
-                    <option value="24">24分</option>
-                    <option value="25">25分</option>
-                    <option value="26">26分</option>
-                    <option value="27">27分</option>
-                    <option value="28">28分</option>
-                    <option value="29">29分</option>
-                    <option value="30">30分</option>
-                    <option value="31">31分</option>
-                    <option value="32">32分</option>
-                    <option value="33">33分</option>
-                    <option value="34">34分</option>
-                    <option value="35">35分</option>
-                    <option value="36">36分</option>
-                    <option value="37">37分</option>
-                    <option value="38">38分</option>
-                    <option value="39">39分</option>
-                    <option value="40">40分</option>
-                    <option value="41">41分</option>
-                    <option value="42">42分</option>
-                    <option value="43">43分</option>
-                    <option value="44">44分</option>
-                    <option value="45">45分</option>
-                    <option value="46">46分</option>
-                    <option value="47">47分</option>
-                    <option value="48">48分</option>
-                    <option value="49">49分</option>
-                    <option value="50">50分</option>
-                    <option value="51">51分</option>
-                    <option value="52">52分</option>
-                    <option value="53">53分</option>
-                    <option value="54">54分</option>
-                    <option value="55">55分</option>
-                    <option value="56">56分</option>
-                    <option value="57">57分</option>
-                    <option value="58">58分</option>
-                    <option value="59">59分</option>
-                </select>
+                <div style="display:block;">
+                    <checkbox style="display: flex;">
+                        <label>不知道詳細時間</label>
+                        <input type="checkbox" id="unknow-hours">
+                    </checkbox>
+                    <div style="display: flex;">
+                        <select id="birth-hour" style="width: 100px">
+                            <option value="--">--</option>
+                            <option value="00">00時</option>
+                            <option value="01">01時</option>
+                            <option value="02">02時</option>
+                            <option value="03">03時</option>
+                            <option value="04">04時</option>
+                            <option value="05">05時</option>
+                            <option value="06">06時</option>
+                            <option value="07">07時</option>
+                            <option value="08">08時</option>
+                            <option value="09">09時</option>
+                            <option value="10">10時</option>
+                            <option value="11">11時</option>
+                            <option value="12">12時</option>
+                            <option value="13">13時</option>
+                            <option value="14">14時</option>
+                            <option value="15">15時</option>
+                            <option value="16">16時</option>
+                            <option value="17">17時</option>
+                            <option value="18">18時</option>
+                            <option value="19">19時</option>
+                            <option value="20">20時</option>
+                            <option value="21">21時</option>
+                            <option value="22">22時</option>
+                            <option value="23">23時</option>
+                        </select>
+                        <select id="birth-minute" style="width: 100px; margin-left: 5px;">
+                            <option value="--">--</option>
+                            <option value="00">00分</option>
+                            <option value="01">01分</option>
+                            <option value="02">02分</option>
+                            <option value="03">03分</option>
+                            <option value="04">04分</option>
+                            <option value="05">05分</option>
+                            <option value="06">06分</option>
+                            <option value="07">07分</option>
+                            <option value="08">08分</option>
+                            <option value="09">09分</option>
+                            <option value="10">10分</option>
+                            <option value="11">11分</option>
+                            <option value="12">12分</option>
+                            <option value="13">13分</option>
+                            <option value="14">14分</option>
+                            <option value="15">15分</option>
+                            <option value="16">16分</option>
+                            <option value="17">17分</option>
+                            <option value="18">18分</option>
+                            <option value="19">19分</option>
+                            <option value="20">20分</option>
+                            <option value="21">21分</option>
+                            <option value="22">22分</option>
+                            <option value="23">23分</option>
+                            <option value="24">24分</option>
+                            <option value="25">25分</option>
+                            <option value="26">26分</option>
+                            <option value="27">27分</option>
+                            <option value="28">28分</option>
+                            <option value="29">29分</option>
+                            <option value="30">30分</option>
+                            <option value="31">31分</option>
+                            <option value="32">32分</option>
+                            <option value="33">33分</option>
+                            <option value="34">34分</option>
+                            <option value="35">35分</option>
+                            <option value="36">36分</option>
+                            <option value="37">37分</option>
+                            <option value="38">38分</option>
+                            <option value="39">39分</option>
+                            <option value="40">40分</option>
+                            <option value="41">41分</option>
+                            <option value="42">42分</option>
+                            <option value="43">43分</option>
+                            <option value="44">44分</option>
+                            <option value="45">45分</option>
+                            <option value="46">46分</option>
+                            <option value="47">47分</option>
+                            <option value="48">48分</option>
+                            <option value="49">49分</option>
+                            <option value="50">50分</option>
+                            <option value="51">51分</option>
+                            <option value="52">52分</option>
+                            <option value="53">53分</option>
+                            <option value="54">54分</option>
+                            <option value="55">55分</option>
+                            <option value="56">56分</option>
+                            <option value="57">57分</option>
+                            <option value="58">58分</option>
+                            <option value="59">59分</option>
+                        </select>
+                    </div>
+                </div>
+
             </div>
             <div id="true-solar-time" style="margin-top: 10px; padding: 10px; background-color: #e8f5e9; border-radius: 4px; display: none; color:red">
                 <strong data-i18n="trueSolarTime">真太陽時：</strong> <span id="solar-time-result"></span>
             </div>
         </div>
         <div class="form-section">
-            <label for="province" data-i18n="birthPlace">出生地:</label>
-            <select id="province" required>
-                <option value="台灣">台灣</option>
-            </select>
+            <div style="display: flex;">
+                <div>
+                    <label for="province" data-i18n="birthPlace">出生地:</label>
+                    <select id="province" required>
+                        <option value="台灣">台灣</option>
+                    </select>
+                </div>
+                <div style="margin-left: 10px;">
+                    <label for="city" data-i18n="birthCity">出生城市:</label>
+                    <select id="city" required>
+                        <option value="" data-i18n="pleaseSelect">-- 請選擇 --</option>
+                    </select>
+                </div>
+            </div>
 
-            <label for="city" data-i18n="birthCity">出生城市:</label>
-            <select id="city" required>
-                <option value="" data-i18n="pleaseSelect">-- 請選擇 --</option>
-            </select>
+
+
 
             <div style="margin-top: 10px;">
                 <label for="custom-longitude" data-i18n="customLongitude">自訂經度（選填）:</label>
@@ -687,10 +711,7 @@
                 <div style="color: #ffd700; font-size: 0.9em;" data-i18n="longitudeHint">若填寫此欄位將優先使用自訂經度（有效範圍：-180 到 180，東經為正值）</div>
             </div>
 
-            <p style="margin-top: 10px; padding: 10px; background-color: #f5dddd; border-radius: 4px; color: #000;">
-                <span data-i18n="important">重要宣告：</span></br>
-                <span data-i18n="disclaimer">命理學是一種複雜的學問僅供參考，不能作為決策的唯一依據。</span>
-            </p>
+
         </div>
         <div style="display: flex;">
             <label for="teacher">AI老師：</label>
@@ -715,7 +736,10 @@
                 <button class="orange-red-btn" style="margin-right: 5px;" id="ask-things-btn" data-i18n="askThings">我要問事</button>
                 <button class="orange-red-btn" style="margin-left: 5px;" id="match-btn" data-i18n="askPeople">我要問人</button>
             </div>
-
+            <p style="margin-top: 10px; padding: 10px; background-color: #f5dddd; border-radius: 4px; color: #000;">
+                <span data-i18n="important">重要宣告：</span></br>
+                <span data-i18n="disclaimer">命理學是一種複雜的學問僅供參考，不能作為決策的唯一依據。</span>
+            </p>
             <div class="tab-buttons">
                 <button class="tab-button active" onclick="switchTab('result')" data-i18n="aiAnalysis">AI解盤</button>
                 <button class="tab-button" onclick="switchTab('prompt')" data-i18n="chartPrompt">盤面提示詞</button>
@@ -769,6 +793,7 @@
             const birthDateInput = document.getElementById('birth-date');
             const birthHourSelect = document.getElementById('birth-hour');
             const birthMinuteSelect = document.getElementById('birth-minute');
+            const unknowHoursCheckbox = document.getElementById('unknow-hours');
             const provinceSelect = document.getElementById('province');
             const citySelect = document.getElementById('city');
             const customLongitude = document.getElementById('custom-longitude');
@@ -794,6 +819,7 @@
             const targetFamilyNameInput = document.getElementById('target-familyName');
             const targetGiveNameInput = document.getElementById('target-giveName');
             const targetDate = document.getElementById('target-date');
+            const targetUnknowHoursCheckbox = document.getElementById('target-unknow-hours');
             const targetTime = document.getElementById('target-time');
             const targetGenderRadios = document.getElementsByName('target-gender');
             const matchQuestionInput = document.getElementById('match-question-input');
@@ -888,22 +914,15 @@
                     document.querySelector('#prompt-tab')
                 );
 
-                const birthDay = {
-                    year: (targetDate.value.slice(0, 4)),
-                    month: (targetDate.value.slice(5, 7)),
-                    day: (targetDate.value.slice(8, 10)),
-                    hours: targetTime.value,
-                    minutes: "00"
-                }
-
                 let targetInfo = {
                     familyName: targetFamilyNameInput.value,
                     giveName: targetGiveNameInput.value,
                     year: (targetDate.value.slice(0, 4)),
                     month: (targetDate.value.slice(5, 7)),
                     day: (targetDate.value.slice(8, 10)),
-                    hours: targetTime.value,
-                    minutes: "00",
+                    unknowHours: targetUnknowHoursCheckbox.checked,
+                    hours: targetUnknowHoursCheckbox.checked ? "--" : targetTime.value,
+                    minutes: targetUnknowHoursCheckbox.checked ? "--" : "00",
                     gender: targetGenderRadios[0].checked ? '男' : '女',
                 }
                 console.log('targetInfo', targetInfo)
@@ -1024,13 +1043,13 @@
                     // 設置真太陽時和紫微斗數選項
                     trueSolarTimeCheckbox.checked = formData.usingTrueSolarTime;
                     ziweiCheckbox.checked = formData.includeZiwei;
+                    unknowHoursCheckbox.checked = formData.unknowHours;
+
                 } else {
                     birthDateInput.value = '1999-01-25';
                     birthHourSelect.value = '13';
                     birthMinuteSelect.value = '44';
                 }
-
-
             }
 
             function validateForm() {
@@ -1096,8 +1115,9 @@
                     const familyName = familyNameInput.value;
                     const giveName = giveNameInput.value;
                     const gender = document.querySelector('input[name="gender"]:checked').value;
-                    const includeZiwei = ziweiCheckbox.checked;
+                    const includeZiwei = unknowHoursCheckbox.checked == false ? ziweiCheckbox.checked : false;
                     const usingTrueSolarTime = trueSolarTimeCheckbox.checked;
+
                     const birthDay = {
                         year: birthDateInput.value.split('-')[0],
                         month: birthDateInput.value.split('-')[1],
@@ -1105,13 +1125,15 @@
                         hours: birthHourSelect.value,
                         minutes: birthMinuteSelect.value
                     }
+                    const unknowHours = unknowHoursCheckbox.checked;
+
                     // 獲取出生地經度
                     const birthProvince = provinceSelect.value;
                     const birthCity = citySelect.value;
                     const customLongitudeValue = customLongitude.value;
                     const longitude = customLongitudeValue ? parseFloat(customLongitudeValue) : locationData[birthProvince][birthCity].longitude;
 
-                    await fetchPrompt(familyName, giveName, birthDay, gender, usingTrueSolarTime, includeZiwei, longitude);
+                    await fetchPrompt(familyName, giveName, unknowHours, birthDay, gender, usingTrueSolarTime, includeZiwei, longitude);
 
                     if (DEBUG && SKIP_FETCH_RESULT) {
                         //for test prompt
@@ -1164,7 +1186,7 @@
                 return { messageInterval }
             }
 
-            async function fetchPrompt(familyName, giveName, birthDay, gender, usingTrueSolarTime, includeZiwei = false, longitude) {
+            async function fetchPrompt(familyName, giveName, unknowHours, birthDay, gender, usingTrueSolarTime, includeZiwei = false, longitude) {
                 const messages = [
                     "翻閱萬年歷...",
                     "計算五行生克..."
@@ -1178,6 +1200,7 @@
                     birthDay,
                     gender,
                     usingTrueSolarTime,
+                    unknowHours,
                     includeZiwei,
                     customLongitude: customLongitude.value
                 };
@@ -1188,6 +1211,7 @@
                     "teacher": teacherSelect.value,
                     "birthDay": birthDay,
                     "gender": gender,
+                    "unknowHours": unknowHours,
                     "usingTrueSolarTime": usingTrueSolarTime,
                     "includeZiwei": includeZiwei,
                     "longitude": longitude,
@@ -1263,6 +1287,7 @@
                 const apiBody = {
                     "userId": '0_cyber8',
                     "teacher": teacherSelect.value,
+                    "includeZiwei": unknowHoursCheckbox.checked == false ? ziweiCheckbox.checked : false,
                     "requestPrompt": requestPrompt,
                     "lang": localStorage.getItem('preferred_language') || 'zh-TW',
                     "type": "text",
@@ -1332,6 +1357,7 @@
                     "teacher": teacherSelect.value,
                     "prompt": requestPrompt,
                     "allLife": svgOutput.textContent.replace('複製', '').trim(),
+                    "includeZiwei": unknowHoursCheckbox.checked == false ? ziweiCheckbox.checked : false,
                     "ask": ask,
                     "lang": localStorage.getItem('preferred_language') || 'zh-TW',
                     "type": "text",
@@ -1405,6 +1431,7 @@
                     "teacher": teacherSelect.value,
                     "prompt": requestPrompt,
                     "allLife": svgOutput.textContent.replace('複製', '').trim(),
+                    "includeZiwei": unknowHoursCheckbox.checked == false ? ziweiCheckbox.checked : false,
                     "targetInfo": {
                         "familyName": targetInfo.familyName,
                         "giveName": targetInfo.giveName,
@@ -1413,7 +1440,8 @@
                         "day": targetInfo.day,
                         "hours": targetInfo.hours,
                         "minutes": 0,
-                        "gender": targetInfo.gender
+                        "gender": targetInfo.gender,
+                        "unknowHours": targetInfo.unknowHours
                     },
                     "ask": question,
                     "lang": localStorage.getItem('preferred_language') || 'zh-TW',
@@ -1489,6 +1517,16 @@
             provinceSelect.addEventListener('change', function () {
                 const selectedProvince = this.value;
                 populateCities(selectedProvince);
+            });
+
+            // 監聽不知道詳細時間的勾選
+            unknowHoursCheckbox.addEventListener('change', function () {
+                if (this.checked) {
+                    birthHourSelect.value = "--";
+                    birthMinuteSelect.value = "--";
+                    trueSolarTimeCheckbox.checked = false;
+                    trueSolarTimeCheckbox.checked = false;
+                }
             });
 
             citySelect.addEventListener('change', function () {
@@ -1572,6 +1610,13 @@
                 <label>對方陽曆出生年月日時(請用+8時區) 可不填</label>
                 <div class="date-group">
                     <input type="date" id="target-date" style="width: 100%;" step="1">
+
+                </div>
+                <div style="margin-top: 10px;">
+                    <checkbox style="display: flex;">
+                        <label>不知道詳細時間</label>
+                        <input type="checkbox" id="target-unknow-hours">
+                    </checkbox>
                     <select id="target-time" style="width: 100%;">
                         <option value="00">00:00~00:59</option>
                         <option value="01">01:00~01:59</option>
