@@ -716,6 +716,7 @@
         <div style="display: flex;">
             <label for="teacher">AI老師：</label>
             <select id="teacher" style="width: 250px">
+                <option value="openai">OpenAI</option>
                 <option value="google">谷哥大神（Google）</option>
                 <option value="deepseek">深度精靈（DeepSeek）</option>
             </select>
@@ -768,7 +769,7 @@
     </div>
 
     <script>
-        const DEBUG = false;
+        const DEBUG = true;
         const SKIP_FETCH_RESULT = false;
         const VERSION = '2';
         const OLD_VERSION = '1';
@@ -1470,8 +1471,8 @@
                             targetElement.textContent = data.msg.trim().replaceAll('鬥數', '斗數');
                             targetElement.innerHTML = `<button class="copy-btn" onclick="copyResult('${tabId || 'svgOutput'}')">複製</button></br>` +
                                 `問人內容：生日${targetInfo.year}/${targetInfo.month}/${targetInfo.day} ${targetInfo.familyName}${targetInfo.giveName} ${targetInfo.gender}。</br>${question}</br>` +
-                                `雷雨百詩：</br>` +
-                                `${resultDraw.drawList} ${resultDraw.fate}</br>【${resultDraw.poem}】</br>` +
+                                `雷雨百詩：${resultDraw.drawList} ${resultDraw.fate}</br>` +
+                                `【${resultDraw.poem}】</br>` +
                                 `<img src="https://image.pollinations.ai/prompt/${resultDraw.poem}" style="max-width: 90%;"></br>` +
                                 marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
                         }
