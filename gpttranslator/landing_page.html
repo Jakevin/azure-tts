@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT Translator | Hybrid Dual-Faced AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Outfit"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            400: '#38bdf8', // Cyan (Online)
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        },
+                        local: {
+                            400: '#34d399', // Emerald (Offline)
+                            500: '#10b981',
+                        },
+                        dark: {
+                            bg: '#050505',
+                            card: '#0F0F0F',
+                            border: '#1F1F1F',
+                            surface: '#121212'
+                        }
+                    },
+                    backgroundImage: {
+                        'hybrid-gradient': 'linear-gradient(135deg, #0ea5e9 0%, #10b981 100%)',
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-up': 'slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: '0.3', transform: 'scale(1)' },
+                            '50%': { opacity: '0.6', transform: 'scale(1.1)' },
+                        },
+                        'slide-up': {
+                            '0%': { transform: 'translateY(40px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050505;
+            color: #e5e5e5;
+            overflow-x: hidden;
+        }
+
+        .text-gradient-hybrid {
+            background: linear-gradient(135deg, #38bdf8 0%, #34d399 50%, #facc15 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            background: rgba(30, 30, 30, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .hero-mesh {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .grid-bg {
+            background-size: 60px 60px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .feature-icon-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-icon-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .glass-panel:hover .feature-icon-wrapper::after {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-brand-500/30 selection:text-white">
+
+    <div class="fixed inset-0 grid-bg z-[-1]"></div>
+    <div class="fixed top-0 left-0 w-full h-full hero-mesh"></div>
+
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent" id="navbar">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-xl -z-10"></div>
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-local-500 flex items-center justify-center shadow-lg shadow-brand-500/20">
+                    <i data-lucide="zap" class="text-white w-5 h-5"></i>
+                </div>
+                <span class="font-display font-bold text-xl tracking-tight text-white">GPT Translator</span>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="relative group">
+                    <button
+                        class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors text-sm font-medium text-gray-300">
+                        <i data-lucide="globe" class="w-4 h-4"></i>
+                        <span id="current-lang">English</span>
+                        <i data-lucide="chevron-down" class="w-3 h-3 opacity-50"></i>
+                    </button>
+                    <!-- Dropdown -->
+                    <div
+                        class="absolute right-0 top-full mt-2 w-48 py-2 bg-dark-card border border-dark-border rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right">
+                        <div class="flex flex-col max-h-[300px] overflow-y-auto" id="lang-menu">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+                <a href="https://apps.apple.com/us/app/gpt%E6%97%85%E8%A1%8C%E7%BF%BB%E8%AD%AF%E7%A5%9E%E5%99%A8/id6599854780"
+                    target="_blank"
+                    class="hidden md:flex bg-white text-black px-6 py-2.5 rounded-full font-bold text-sm hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.15)]">
+                    <span data-key="nav_download">Get App</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-40 pb-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+
+            <div class="text-center lg:text-left z-10 animate-slide-up" style="animation-delay: 0.1s;">
+                <div
+                    class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md">
+                    <div class="flex gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+                        <span class="w-2 h-2 rounded-full bg-local-400 animate-pulse"
+                            style="animation-delay: 0.5s;"></span>
+                    </div>
+                    <span class="text-xs font-semibold text-gray-300 tracking-wide uppercase"
+                        data-key="hero_badge">Dual-Faced Hybrid AI</span>
+                </div>
+
+                <h1 class="font-display font-bold text-5xl lg:text-7xl leading-[1.05] mb-6 tracking-tight">
+                    <span data-key="hero_title_1">Face-to-Face.</span><br>
+                    <span class="text-gradient-hybrid" data-key="hero_title_2">Naturally Fluent.</span>
+                </h1>
+
+                <p class="text-lg text-gray-400 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+                    data-key="hero_subtitle">
+                    The screen rotates to face the speaker automatically. Powered by Hybrid AI: GPT precision online,
+                    TranslateGemma 4B privacy offline.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="https://apps.apple.com/us/app/gpt%E6%97%85%E8%A1%8C%E7%BF%BB%E8%AD%AF%E7%A5%9E%E5%99%A8/id6599854780"
+                        target="_blank"
+                        class="w-full sm:w-auto px-8 py-4 bg-brand-500 hover:bg-brand-400 text-white rounded-2xl font-semibold transition-all shadow-[0_10px_40px_-10px_rgba(14,165,233,0.5)] flex items-center justify-center gap-2">
+                        <i data-lucide="apple" class="w-5 h-5"></i>
+                        <span data-key="btn_ios">App Store</span>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.jakevin.gpttranslator" target="_blank"
+                        class="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 backdrop-blur-md">
+                        <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                        <span data-key="btn_android">Google Play</span>
+                    </a>
+                </div>
+
+                <div class="mt-12 flex flex-col gap-4 border-l-2 border-white/10 pl-6">
+                    <div class="flex items-center gap-3 text-sm text-gray-400">
+                        <i data-lucide="refresh-cw" class="w-4 h-4 text-brand-400"></i>
+                        <span data-key="status_rotate">Auto-Rotation for Face-to-Face</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-gray-400">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-local-400"></i>
+                        <span data-key="status_offline">Offline: TranslateGemma 4B + SenseVoice</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image: Auto-Rotating -->
+            <div class="relative lg:h-[700px] flex items-center justify-center animate-slide-up"
+                style="animation-delay: 0.3s;">
+                <!-- Decorative Glows -->
+                <div
+                    class="absolute w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-[100px] top-0 right-0 animate-pulse-glow">
+                </div>
+                <div class="absolute w-[400px] h-[400px] bg-local-500/10 rounded-full blur-[80px] bottom-0 left-0 animate-pulse-glow"
+                    style="animation-delay: 2s;"></div>
+
+                <div
+                    class="relative w-[320px] h-[650px] bg-[#050505] border-[6px] border-[#202020] rounded-[3.5rem] shadow-2xl z-10 animate-float overflow-hidden ring-1 ring-white/10">
+                    <img src="screen/auto-rotating.png" alt="Auto-Rotating Interface"
+                        class="w-full h-full object-cover">
+
+                    <!-- Dynamic Overlay -->
+                    <div
+                        class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full border border-white/10">
+                        <div class="w-2 h-2 rounded-full bg-brand-400 shadow-[0_0_10px_#38bdf8]"></div>
+                        <div class="w-2 h-2 rounded-full bg-local-400 shadow-[0_0_10px_#34d399]"></div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-white/80">Hybrid AI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Pillars Section -->
+    <section class="py-32 bg-dark-bg relative border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="font-display font-bold text-3xl md:text-5xl mb-6 text-white">
+                    <span data-key="section_features_title">Power in Every Pixel</span>
+                </h2>
+                <p class="text-gray-400 text-lg" data-key="section_features_subtitle">
+                    Designed for travel, engineered for connection.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-24">
+
+                <!-- Feature 1: Intelligence (Gemma 4B) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1 relative group">
+                        <div
+                            class="absolute -inset-1 bg-gradient-to-r from-local-500 to-brand-500 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000">
+                        </div>
+                        <div class="glass-panel rounded-[2.5rem] p-4 relative">
+                            <img src="screen/tanslatergamma.png" alt="Gemma 4B Translation"
+                                class="w-full rounded-[2rem] shadow-2xl">
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="w-12 h-12 rounded-2xl bg-local-500/10 flex items-center justify-center mb-6">
+                            <i data-lucide="brain-circuit" class="w-6 h-6 text-local-400"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-3xl text-white mb-4" data-key="feat_intelligence_title">
+                            On-Device Intelligence</h3>
+                        <p class="text-gray-400 leading-relaxed mb-6" data-key="feat_intelligence_desc">
+                            Powered by Google's TranslateGemma 4B model. Experience server-grade translation quality
+                            right on your device, even without an internet connection.
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 text-sm text-gray-300">
+                                <i data-lucide="check" class="w-4 h-4 text-local-400"></i>
+                                <span data-key="feat_intelligence_point_1">TranslateGemma 4B</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-sm text-gray-300">
+                                <i data-lucide="check" class="w-4 h-4 text-local-400"></i>
+                                <span data-key="feat_intelligence_point_2">Private & Secure</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature 2: Multi-modal (Voice/TTS) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="lg:pl-10">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-500/10 flex items-center justify-center mb-6">
+                            <i data-lucide="mic" class="w-6 h-6 text-brand-400"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-3xl text-white mb-4" data-key="feat_voice_title">Natural
+                            Voice Interaction</h3>
+                        <p class="text-gray-400 leading-relaxed mb-6" data-key="feat_voice_desc">
+                            Advanced Text-to-Speech (TTS) and Speech-to-Text (STT) ensure you can speak naturally.
+                            SenseVoice technology captures every nuance.
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 text-sm text-gray-300">
+                                <i data-lucide="check" class="w-4 h-4 text-brand-400"></i>
+                                <span data-key="feat_voice_point_1">High-Fidelity TTS</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-sm text-gray-300">
+                                <i data-lucide="check" class="w-4 h-4 text-brand-400"></i>
+                                <span data-key="feat_voice_point_2">SenseVoice Recognition</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="relative group">
+                        <div
+                            class="absolute -inset-1 bg-gradient-to-r from-brand-500 to-purple-500 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000">
+                        </div>
+                        <div class="glass-panel rounded-[2.5rem] p-4 relative">
+                            <img src="screen/TTSandSTT.png" alt="Voice Features"
+                                class="w-full rounded-[2rem] shadow-2xl">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3: History (Tracking) -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1 relative group">
+                        <div
+                            class="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000">
+                        </div>
+                        <div class="glass-panel rounded-[2.5rem] p-4 relative">
+                            <img src="screen/history.png" alt="Translation History"
+                                class="w-full rounded-[2rem] shadow-2xl">
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-6">
+                            <i data-lucide="history" class="w-6 h-6 text-purple-400"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-3xl text-white mb-4" data-key="feat_history_title">
+                            Seamless Tracking</h3>
+                        <p class="text-gray-400 leading-relaxed mb-6" data-key="feat_history_desc">
+                            Never lose a conversation. Your translation history is saved locally, allowing you to review
+                            past interactions and ensure no context is lost during your travels.
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 text-sm text-gray-300">
+                                <i data-lucide="check" class="w-4 h-4 text-purple-400"></i>
+                                <span data-key="feat_history_point_1">Local Storage</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-sm text-gray-300">
+                                <i data-lucide="check" class="w-4 h-4 text-purple-400"></i>
+                                <span data-key="feat_history_point_2">Instant Retrieval</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-16 bg-black relative">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <i data-lucide="zap" class="text-white w-4 h-4"></i>
+                </div>
+                <span class="font-display font-bold text-lg text-white">GPT Translator</span>
+            </div>
+
+            <div class="flex gap-8 text-sm text-gray-500 font-medium">
+                <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms</a>
+                <a href="#" class="hover:text-white transition-colors">Contact</a>
+            </div>
+
+            <div class="text-gray-600 text-sm">
+                &copy; 2026 JakeVin.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('bg-black/80', 'shadow-lg', 'border-white/10', 'backdrop-blur-md');
+                nav.classList.remove('border-transparent');
+            } else {
+                nav.classList.remove('bg-black/80', 'shadow-lg', 'border-white/10', 'backdrop-blur-md');
+                nav.classList.add('border-transparent');
+            }
+        });
+
+        // Localization Data
+        const translations = {
+            'en-US': {
+                name: 'English',
+                nav_download: 'Get App',
+                hero_badge: 'Dual-Faced Hybrid AI',
+                hero_title_1: 'Face-to-Face.',
+                hero_title_2: 'Naturally Fluent.',
+                hero_subtitle: 'The screen rotates to face the speaker automatically. Powered by Hybrid AI: GPT precision online, TranslateGemma 4B privacy offline.',
+                btn_ios: 'App Store',
+                btn_android: 'Google Play',
+                status_rotate: 'Auto-Rotation for Face-to-Face',
+                status_offline: 'Offline: TranslateGemma 4B + SenseVoice',
+                section_features_title: 'Power in Every Pixel',
+                section_features_subtitle: 'Designed for travel, engineered for connection.',
+                feat_intelligence_title: 'On-Device Intelligence',
+                feat_intelligence_desc: 'Powered by Google\'s TranslateGemma 4B model. Experience server-grade translation quality right on your device, even without an internet connection.',
+                feat_intelligence_point_1: 'TranslateGemma 4B',
+                feat_intelligence_point_2: 'Private & Secure',
+                feat_voice_title: 'Natural Voice Interaction',
+                feat_voice_desc: 'Advanced Text-to-Speech (TTS) and Speech-to-Text (STT) ensure you can speak naturally. SenseVoice technology captures every nuance.',
+                feat_voice_point_1: 'High-Fidelity TTS',
+                feat_voice_point_2: 'SenseVoice Recognition',
+                feat_history_title: 'Seamless Tracking',
+                feat_history_desc: 'Never lose a conversation. Your translation history is saved locally, allowing you to review past interactions and ensure no context is lost during your travels.',
+                feat_history_point_1: 'Local Storage',
+                feat_history_point_2: 'Instant Retrieval'
+            },
+            'zh-TW': {
+                name: '繁體中文',
+                nav_download: '下載應用',
+                hero_badge: '雙面混合 AI',
+                hero_title_1: '面對面交流。',
+                hero_title_2: '自然流暢。',
+                hero_subtitle: '螢幕會自動旋轉面向說話者。混合 AI 驅動：線上 GPT 精準翻譯，離線 TranslateGemma 4B 隱私保護。',
+                btn_ios: 'App Store',
+                btn_android: 'Google Play',
+                status_rotate: '自動旋轉的面對面體驗',
+                status_offline: '離線：Gemma 4B + SenseVoice',
+                section_features_title: '極致效能',
+                section_features_subtitle: '為旅行而生，為連結而造。',
+                feat_intelligence_title: '裝置端智慧',
+                feat_intelligence_desc: '由 Google TranslateGemma 4B 模型驅動。即使沒有網路，也能在裝置上體驗伺服器級的翻譯品質。',
+                feat_intelligence_point_1: 'TranslateGemma 4B',
+                feat_intelligence_point_2: '隱私與安全',
+                feat_voice_title: '自然語音互動',
+                feat_voice_desc: '先進的文字轉語音 (TTS) 與語音轉文字 (STT) 確保您能自然交談。SenseVoice 技術捕捉每一個細微差別。',
+                feat_voice_point_1: '高保真 TTS',
+                feat_voice_point_2: 'SenseVoice 辨識',
+                feat_history_title: '無縫追蹤',
+                feat_history_desc: '從不錯過任何對話。您的翻譯紀錄儲存在本地，讓您能隨時回顧過去的互動，確保旅途中不丟失任何語境。',
+                feat_history_point_1: '本地儲存',
+                feat_history_point_2: '即時檢索'
+            },
+            'zh-CN': {
+                name: '简体中文',
+                nav_download: '下载应用',
+                hero_badge: '双面混合 AI',
+                hero_title_1: '面对面交流。',
+                hero_title_2: '自然流畅。',
+                hero_subtitle: '屏幕会自动旋转面向说话者。混合 AI 驱动：在线 GPT 精准翻译，离线 TranslateGemma 4B 隐私保护。',
+                btn_ios: 'App Store',
+                btn_android: 'Google Play',
+                status_rotate: '自动旋转的面对面体验',
+                status_offline: '离线：Gemma 4B + SenseVoice',
+                section_features_title: '极致性能',
+                section_features_subtitle: '为旅行而生，为连接而造。',
+                feat_intelligence_title: '端侧智能',
+                feat_intelligence_desc: '由 Google TranslateGemma 4B 模型驱动。即使没有网络，也能在设备上体验服务器级的翻译质量。',
+                feat_intelligence_point_1: 'TranslateGemma 4B',
+                feat_intelligence_point_2: '隐私与安全',
+                feat_voice_title: '自然语音交互',
+                feat_voice_desc: '先进的文字转语音 (TTS) 与语音转文字 (STT) 确保您能自然交谈。SenseVoice 技术捕捉每一个细微差别。',
+                feat_voice_point_1: '高保真 TTS',
+                feat_voice_point_2: 'SenseVoice 识别',
+                feat_history_title: '无缝追踪',
+                feat_history_desc: '从不错过任何对话。您的翻译记录存储在本地，让您能随时回顾过去的互动，确保旅途中不丢失任何语境。',
+                feat_history_point_1: '本地存储',
+                feat_history_point_2: '即时检索'
+            },
+            'ja-JP': {
+                name: '日本語',
+                nav_download: 'アプリを入手',
+                hero_badge: '対面式ハイブリッドAI',
+                hero_title_1: '顔を見合わせて',
+                hero_title_2: '自然な会話を。',
+                hero_subtitle: '話している人に合わせて画面が自動回転。ハイブリッドAI搭載：オンラインはGPTの精度、オフラインはGemma 4Bのプライバシー。',
+                btn_ios: 'App Store',
+                btn_android: 'Google Play',
+                status_rotate: '対面会話のための自動回転',
+                status_offline: 'オフライン：Gemma 4B + SenseVoice',
+                section_features_title: '細部まで宿る力',
+                section_features_subtitle: '旅のために設計され、つながるために作られました。',
+                feat_intelligence_title: 'オンデバイス・インテリジェンス',
+                feat_intelligence_desc: 'GoogleのGemma 4Bモデルを搭載。インターネット接続がなくても、サーバーグレードの翻訳品質をデバイス上で体験できます。',
+                feat_intelligence_point_1: 'TranslateGemma 4B',
+                feat_intelligence_point_2: 'プライバシーとセキュリティ',
+                feat_voice_title: '自然な音声対話',
+                feat_voice_desc: '高度なテキスト読み上げ（TTS）と音声認識（STT）により、自然に話すことができます。SenseVoice技術が細かなニュアンスまで捉えます。',
+                feat_voice_point_1: '高忠実度 TTS',
+                feat_voice_point_2: 'SenseVoice 認識',
+                feat_history_title: 'シームレスな記録',
+                feat_history_desc: '会話を見逃しません。翻訳履歴はローカルに保存されるため、過去のやり取りを見直し、旅の間も文脈を失うことはありません。',
+                feat_history_point_1: 'ローカル保存',
+                feat_history_point_2: '即時検索'
+            },
+            'ko-KR': {
+                name: '한국어',
+                nav_download: '앱 다운로드',
+                hero_badge: '듀얼 페이스 하이브리드 AI',
+                hero_title_1: '얼굴을 마주보고',
+                hero_title_2: '자연스러운 대화.',
+                hero_subtitle: '말하는 사람을 향해 화면이 자동으로 회전합니다. 하이브리드 AI 구동: 온라인은 GPT 정밀도, 오프라인은 TranslateGemma 4B 보안.',
+                btn_ios: 'App Store',
+                btn_android: 'Google Play',
+                status_rotate: '대면 대화를 위한 자동 회전',
+                status_offline: '오프라인: TranslateGemma 4B + SenseVoice',
+                section_features_title: '모든 픽셀에 담긴 힘',
+                section_features_subtitle: '여행을 위해 설계되었으며, 연결을 위해 제작되었습니다.',
+                feat_intelligence_title: '온디바이스 인텔리전스',
+                feat_intelligence_desc: 'Google의 TranslateGemma 4B 모델로 구동됩니다. 인터넷 연결 없이도 기기에서 서버급 번역 품질을 경험하세요.',
+                feat_intelligence_point_1: 'TranslateGemma 4B',
+                feat_intelligence_point_2: '개인정보 보호 및 보안',
+                feat_voice_title: '자연스러운 음성 상호 작용',
+                feat_voice_desc: '고급 텍스트 음성 변환(TTS) 및 음성 텍스트 변환(STT)으로 자연스럽게 대화할 수 있습니다. SenseVoice 기술이 모든 뉘앙스를 포착합니다.',
+                feat_voice_point_1: '고음질 TTS',
+                feat_voice_point_2: 'SenseVoice 인식',
+                feat_history_title: '원활한 추적',
+                feat_history_desc: '대화를 놓치지 마세요. 번역 기록이 로컬에 저장되므로 과거 상호 작용을 검토하고 여행 중에 문맥을 잃지 않도록 할 수 있습니다.',
+                feat_history_point_1: '로컬 저장소',
+                feat_history_point_2: '즉시 검색'
+            },
+            'vi-VN': {
+                name: 'Tiếng Việt',
+                nav_download: 'Tải ứng dụng',
+                hero_badge: 'AI Lai Hai Mặt',
+                hero_title_1: 'Trò chuyện Đối mặt.',
+                hero_title_2: 'Tự nhiên & Trôi chảy.',
+                hero_subtitle: 'Màn hình tự động xoay về phía người nói. Sức mạnh Hybrid AI: Chính xác GPT khi online, bảo mật TranslateGemma 4B khi offline.',
+                btn_ios: 'App Store',
+                btn_android: 'Google Play',
+                status_rotate: 'Tự động xoay khi giao tiếp',
+                status_offline: 'Offline: TranslateGemma 4B + SenseVoice',
+                section_features_title: 'Sức mạnh trong từng Điểm ảnh',
+                section_features_subtitle: 'Thiết kế cho du lịch, kiến tạo cho kết nối.',
+                feat_intelligence_title: 'Trí tuệ trên Thiết bị',
+                feat_intelligence_desc: 'Được vận hành bởi mô hình TranslateGemma 4B của Google. Trải nghiệm chất lượng dịch thuật cấp máy chủ ngay trên thiết bị của bạn, ngay cả khi không có internet.',
+                feat_intelligence_point_1: 'TranslateGemma 4B',
+                feat_intelligence_point_2: 'Riêng tư & Bảo mật',
+                feat_voice_title: 'Tương tác Giọng nói Tự nhiên',
+                feat_voice_desc: 'Công nghệ Chuyển văn bản thành giọng nói (TTS) và Chuyển giọng nói thành văn bản (STT) tiên tiến đảm bảo bạn có thể nói chuyện tự nhiên. SenseVoice bắt trọn mọi sắc thái.',
+                feat_voice_point_1: 'TTS Trung thực cao',
+                feat_voice_point_2: 'Nhận dạng SenseVoice',
+                feat_history_title: 'Theo dõi Liền mạch',
+                feat_history_desc: 'Không bao giờ mất cuộc trò chuyện. Lịch sử dịch thuật của bạn được lưu cục bộ, cho phép bạn xem lại các tương tác trước đó và đảm bảo không mất ngữ cảnh trong chuyến đi.',
+                feat_history_point_1: 'Lưu trữ Cục bộ',
+                feat_history_point_2: 'Truy xuất Tức thì'
+            },
+            'id-ID': {
+                name: 'Bahasa Indonesia',
+                nav_download: 'Unduh',
+                hero_badge: 'AI Hybrid Dua Sisi',
+                hero_title_1: 'Bicara Tatap Muka.',
+                hero_title_2: 'Alami & Lancar.',
+                hero_subtitle: 'Layar otomatis berputar menghadap pembicara. Ditenagai AI Hybrid: Presisi GPT saat online, privasi TranslateGemma 4B saat offline.',
+                btn_ios: 'App Store',
+                btn_android: 'Google Play',
+                status_rotate: 'Rotasi Otomatis untuk Tatap Muka',
+                status_offline: 'Offline: TranslateGemma 4B + SenseVoice',
+                section_features_title: 'Kekuatan di Setiap Piksel',
+                section_features_subtitle: 'Dirancang untuk perjalanan, diciptakan untuk koneksi.',
+                feat_intelligence_title: 'Kecerdasan Perangkat',
+                feat_intelligence_desc: 'Ditenagai oleh model TranslateGemma 4B Google. Nikmati kualitas terjemahan sekelas server langsung di perangkat Anda, bahkan tanpa koneksi internet.',
+                feat_intelligence_point_1: 'TranslateGemma 4B',
+                feat_intelligence_point_2: 'Privasi & Keamanan',
+                feat_voice_title: 'Interaksi Suara Alami',
+                feat_voice_desc: 'Text-to-Speech (TTS) dan Speech-to-Text (STT) canggih memastikan Anda dapat berbicara secara alami. Teknologi SenseVoice menangkap setiap nuansa.',
+                feat_voice_point_1: 'TTS High-Fidelity',
+                feat_voice_point_2: 'Pengenalan SenseVoice',
+                feat_history_title: 'Pelacakan Mulus',
+                feat_history_desc: 'Jangan pernah kehilangan percakapan. Riwayat terjemahan Anda disimpan secara lokal, memungkinkan Anda meninjau interaksi masa lalu dan memastikan tidak ada konteks yang hilang selama perjalanan.',
+                feat_history_point_1: 'Penyimpanan Lokal',
+                feat_history_point_2: 'Pengambilan Instan'
+            },
+            'th-TH': {
+                name: 'ไทย',
+                nav_download: 'ดาวน์โหลด',
+                hero_badge: 'AI ไฮบริดสองหน้า',
+                hero_title_1: 'คุยกันแบบเห็นหน้า',
+                hero_title_2: 'ลื่นไหลเป็นธรรมชาติ',
+                hero_subtitle: 'หน้าจอหมุนหาผู้พูดโดยอัตโนมัติ ขับเคลื่อนด้วย Hybrid AI: แม่นยำด้วย GPT เมื่อออนไลน์ และปลอดภัยด้วย TranslateGemma 4B เมื่อออฟไลน์',
+                btn_ios: 'App Store',
+                btn_android: 'Google Play',
+                status_rotate: 'หมุนอัตโนมัติเพื่อการสนทนา',
+                status_offline: 'ออฟไลน์: TranslateGemma 4B + SenseVoice',
+                section_features_title: 'พลังในทุกพิกเซล',
+                section_features_subtitle: 'ออกแบบมาเพื่อการเดินทาง สร้างสรรค์เพื่อการเชื่อมต่อ',
+                feat_intelligence_title: 'ความฉลาดบนอุปกรณ์',
+                feat_intelligence_desc: 'ขับเคลื่อนโดยโมเดล TranslateGemma 4B ของ Google สัมผัสคุณภาพการแปลระดับเซิร์ฟเวอร์ได้โดยตรงบนอุปกรณ์ของคุณ แม้ไม่มีการเชื่อมต่ออินเทอร์เน็ต',
+                feat_intelligence_point_1: 'TranslateGemma 4B',
+                feat_intelligence_point_2: 'ส่วนตัวและปลอดภัย',
+                feat_voice_title: 'การโต้ตอบด้วยเสียงที่เป็นธรรมชาติ',
+                feat_voice_desc: 'Text-to-Speech (TTS) และ Speech-to-Text (STT) ขั้นสูงช่วยให้คุณพูดได้อย่างเป็นธรรมชาติ เทคโนโลยี SenseVoice จับทุกรายละเอียด',
+                feat_voice_point_1: 'TTS ความจงรักภักดีสูง',
+                feat_voice_point_2: 'การจดจำ SenseVoice',
+                feat_history_title: 'การติดตามที่ราบรื่น',
+                feat_history_desc: 'ไม่พลาดทุกบทสนทนา ประวัติการแปลของคุณจะถูกบันทึกไว้ในเครื่อง ช่วยให้คุณดูการโต้ตอบที่ผ่านมาและมั่นใจได้ว่าบริบทจะไม่สูญหายระหว่างการเดินทาง',
+                feat_history_point_1: 'ที่เก็บข้อมูลในเครื่อง',
+                feat_history_point_2: 'เรียกดูทันที'
+            },
+            'my-MM': {
+                name: 'မြန်မာ',
+                nav_download: 'ဒေါင်းလုဒ်လုပ်ရန်',
+                hero_badge: 'မျက်နှာနှစ်ဖက် Hybrid AI',
+                hero_title_1: 'မျက်နှာချင်းဆိုင်',
+                hero_title_2: 'သဘာဝကျကျ ပြောဆိုပါ။',
+                hero_subtitle: 'စကားပြောသူဘက်သို့ မျက်နှာပြင် အလိုအလျောက် လှည့်ပေးသည်။ Hybrid AI စွမ်းအား - အွန်လိုင်းတွင် GPT တိကျမှု၊ အော့ဖ်လိုင်းတွင် TranslateGemma 4B လုံခြုံမှု။',
+                btn_ios: 'App Store',
+                btn_android: 'Google Play',
+                status_rotate: 'မျက်နှာချင်းဆိုင်ပြောရန် Auto-Rotation',
+                status_offline: 'အော့ဖ်လိုင်း- TranslateGemma 4B + SenseVoice',
+                section_features_title: 'Pixel တိုင်းတွင် စွမ်းအား',
+                section_features_subtitle: 'ခရီးသွားရန် ဒီဇိုင်းထုတ်ထားပြီး၊ ချိတ်ဆက်မှုအတွက် တည်ဆောက်ထားသည်။',
+                feat_intelligence_title: 'ဖုန်းတွင်း ဉာဏ်ရည်',
+                feat_intelligence_desc: 'Google ၏ TranslateGemma 4B မော်ဒယ်ဖြင့် မောင်းနှင်ထားသည်။ အင်တာနက်မရှိလျှင်ပင် ဆာဗာအဆင့် ဘာသာပြန်အရည်အသွေးကို သင့်ဖုန်းတွင် တိုက်ရိုက်ခံစားနိုင်သည်။',
+                feat_intelligence_point_1: 'TranslateGemma 4B',
+                feat_intelligence_point_2: 'လုံခြုံပြီး ကိုယ်ပိုင်',
+                feat_voice_title: 'သဘာဝကျသော အသံတုံ့ပြန်မှု',
+                feat_voice_desc: 'အဆင့်မြင့် Text-to-Speech (TTS) နှင့် Speech-to-Text (STT) တို့က သင့်ကို သဘာဝကျကျ ပြောဆိုစေသည်။ SenseVoice နည်းပညာက အသေးစိတ်တိုင်းကို ဖမ်းယူသည်။',
+                feat_voice_point_1: 'အရည်အသွေးမြင့် TTS',
+                feat_voice_point_2: 'SenseVoice မှတ်သားမှု',
+                feat_history_title: 'အဆီးအတားမရှိ ခြေရာခံခြင်း',
+                feat_history_desc: 'စကားပြောဆိုမှုကို ဘယ်တော့မှ မလွတ်ပါစေနှင့်။ သင့်ဘာသာပြန်မှတ်တမ်းကို ဖုန်းထဲတွင် သိမ်းဆည်းထားသဖြင့် ပြီးခဲ့သော စကားပြောဆိုမှုများကို ပြန်လည်ကြည့်ရှုနိုင်ပြီး ခရီးသွားစဉ် အကြောင်းအရာများ မပျောက်ပျက်စေရန် အာမခံပါသည်။',
+                feat_history_point_1: 'ဖုန်းတွင်း သိမ်းဆည်းခြင်း',
+                feat_history_point_2: 'ချက်ချင်း ပြန်ရှာနိုင်ခြင်း'
+            }
+        };
+
+        const langMenu = document.getElementById('lang-menu');
+        const currentLangSpan = document.getElementById('current-lang');
+        let currentLang = 'en-US';
+
+        Object.keys(translations).forEach(lang => {
+            const btn = document.createElement('button');
+            btn.className = 'w-full text-left px-4 py-3 text-sm text-gray-400 hover:bg-white/5 hover:text-white transition-colors border-l-2 border-transparent hover:border-brand-500';
+            btn.innerText = translations[lang].name;
+            btn.onclick = () => setLanguage(lang);
+            langMenu.appendChild(btn);
+        });
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            currentLangSpan.innerText = translations[lang].name;
+
+            const data = translations[lang];
+            const elements = document.querySelectorAll('[data-key]');
+
+            elements.forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (data[key]) {
+                    // Fade out
+                    el.style.transition = 'opacity 0.2s ease';
+                    el.style.opacity = '0';
+
+                    setTimeout(() => {
+                        el.innerText = data[key];
+                        // Fade in
+                        el.style.opacity = '1';
+                    }, 200);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
