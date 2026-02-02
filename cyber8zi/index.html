@@ -17,7 +17,6 @@
 <head>
     <meta charset="UTF-8">
     <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-37PZVZEPQD"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -26,7 +25,8 @@
 
         gtag('config', 'G-37PZVZEPQD');
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750932727344358" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750932727344358"
+        crossorigin="anonymous"></script>
 
     <meta name="author" content="Jakevin 羅旭辰" />
     <meta name="publisher" content="Jakevin 羅旭辰" />
@@ -37,7 +37,7 @@
     <meta name="robots" content="all" />
     <meta name="spiders" content="all" />
     <meta name="webcrawlers" content="all" />
-    <meta name="theme-color" content="#0085d5">
+    <meta name="theme-color" content="#0a0a0f">
     <meta name="abstract" content="天樞命理Agent| CyberFate" />
     <meta name="subject" content="天樞命理Agent| CyberFate" />
     <meta name="description" content="天樞命理Agent| CyberFate" />
@@ -61,309 +61,599 @@
     <script src="config.js"></script>
 
     <style>
-        body {
-            font-family: sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #001f3f;
-            color: #ffd700;
+        /* CSS Variables - Eastern Mystical Theme */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --bg-input: #252535;
+            --gold-primary: #d4a853;
+            --gold-light: #f0d878;
+            --gold-dark: #b8923e;
+            --gold-glow: rgba(212, 168, 83, 0.3);
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6a6a7a;
+            --accent-red: #c94a4a;
+            --accent-orange: #e87a3d;
+            --border-color: rgba(212, 168, 83, 0.2);
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --shadow-gold: 0 0 30px rgba(212, 168, 83, 0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(212, 168, 83, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(201, 74, 74, 0.02) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(212, 168, 83, 0.01) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Language Switcher Override */
+        .language-switcher {
+            position: fixed !important;
+            top: 20px !important;
+            left: 20px !important;
+            z-index: 1000 !important;
+        }
+
+        .language-switcher select {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--gold-primary) !important;
+            padding: 10px 36px 10px 14px !important;
+            border-radius: var(--radius-sm) !important;
+            font-size: 14px !important;
+            cursor: pointer !important;
+            transition: all var(--transition-fast) !important;
+            box-shadow: var(--shadow-soft) !important;
+        }
+
+        .language-switcher select:hover {
+            border-color: var(--gold-primary) !important;
+            box-shadow: 0 0 15px var(--gold-glow) !important;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            padding: 40px 20px;
             position: relative;
-            padding: 20px 0;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin: 0;
-            color: #ffd700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            font-size: 2.8em;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--gold-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px var(--gold-glow);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
         }
 
         .subtitle {
-            color: #ffd700;
-            font-size: 1.2em;
-            margin-top: 10px;
-            font-weight: bold;
-            opacity: 0.8;
+            color: var(--text-secondary);
+            font-size: 1.1em;
+            letter-spacing: 2px;
+            margin-top: 15px;
         }
 
-        .social-link {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            transition: transform 0.3s ease;
+        /* Social Links */
+        .social-links-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
         }
 
-        .social-link img {
-            width: 30px;
-            height: 30px;
-            filter: hue-rotate(358deg) brightness(101%) contrast(107%);
+        .social-links-container span {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-right: 5px;
         }
 
-        .social-link:hover {
-            transform: scale(1.1);
-        }
-
-        .social-link {
-            transition: transform 0.3s ease;
-        }
-
-        .share-link img {
-            width: 30px;
-            height: 30px;
+        .share-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-normal);
+            overflow: hidden;
         }
 
         .share-link:hover {
-            transform: scale(1.1);
+            transform: translateY(-3px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 5px 20px var(--gold-glow);
         }
 
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background-color: #002f5f;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        .share-link img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
         }
 
+        /* Visitor Count */
+        #visitor-count {
+            color: var(--text-muted);
+            font-size: 0.85em;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        #visitor-count span {
+            color: var(--gold-primary);
+            font-weight: 600;
+        }
+
+        /* Form Sections */
+        .form-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-soft);
+            transition: all var(--transition-normal);
+        }
+
+        .form-section:hover {
+            border-color: rgba(212, 168, 83, 0.3);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Labels */
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #ffd700;
+            color: var(--gold-primary);
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            letter-spacing: 0.5px;
         }
 
+        /* Inputs */
+        input[type="text"],
         input[type="number"],
+        input[type="date"],
         input[type="time"],
         select,
-        input[type="text"] {
+        textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-            font-size: 16px;
+            padding: 12px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: all var(--transition-fast);
+            outline: none;
         }
 
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 0 3px var(--gold-glow);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Date Group */
         .date-group {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            align-items: flex-start;
         }
 
-        .date-group input {
-            width: 33%;
+        .date-group input,
+        .date-group select {
+            flex: 1;
         }
 
+        /* Radio Group */
         .radio-group {
             display: flex;
-            gap: 20px;
+            gap: 25px;
+            padding: 8px 0;
         }
 
         .radio-group label {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             cursor: pointer;
+            color: var(--text-secondary);
+            font-weight: normal;
+            margin-bottom: 0;
+            transition: color var(--transition-fast);
+        }
+
+        .radio-group label:hover {
+            color: var(--gold-primary);
         }
 
         input[type="radio"] {
-            margin: 0;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--gold-primary);
+            cursor: pointer;
         }
 
+        /* Checkbox */
+        checkbox {
+            display: flex !important;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        checkbox label {
+            margin-bottom: 0;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--gold-primary);
+            cursor: pointer;
+        }
+
+        /* Buttons */
         .orange-red-btn {
             width: 100%;
-            padding: 12px;
-            background-color: #ff4500;
-            color: white;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 50%, var(--gold-light) 100%);
+            color: var(--bg-primary);
             border: none;
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
+            font-size: 1.1em;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 18px;
+            transition: all var(--transition-normal);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
         }
 
-        #orange-red-btn:hover {
-            background-color: #ff6347;
+        .orange-red-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
         }
 
+        .orange-red-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 168, 83, 0.4);
+        }
+
+        .orange-red-btn:hover::before {
+            left: 100%;
+        }
+
+        .orange-red-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Error Message */
         #error-message {
-            color: red;
-            margin-top: 10px;
+            color: var(--accent-red);
+            margin-top: 15px;
+            padding: 12px 16px;
+            background: rgba(201, 74, 74, 0.1);
+            border: 1px solid rgba(201, 74, 74, 0.3);
+            border-radius: var(--radius-sm);
             display: none;
+            font-size: 0.95em;
         }
 
+        /* True Solar Time Display */
+        #true-solar-time {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(212, 168, 83, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--gold-primary);
+        }
+
+        #true-solar-time strong {
+            color: var(--gold-light);
+        }
+
+        /* Tab Container */
         .tab-container {
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .tab-buttons {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #fff;
-            padding-bottom: 0px;
+            gap: 8px;
+            margin-bottom: 0;
+            background: var(--bg-card);
+            padding: 6px;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
         }
 
         .tab-button {
-            padding: 5px 10px;
+            padding: 12px 24px;
             border: none;
-            background-color: #f0f0f0;
+            background: transparent;
+            color: var(--text-secondary);
             cursor: pointer;
-            border-radius: 4px 4px 0 0;
-            font-size: 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button:hover {
+            color: var(--gold-primary);
+            background: rgba(212, 168, 83, 0.1);
         }
 
         .tab-button.active {
-            background-color: #ff4500;
-            color: white;
+            color: var(--bg-primary);
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            font-weight: 600;
         }
 
         .tab-content {
             display: none;
-            background-color: #002f5f
-                /* padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px; */
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            min-height: 200px;
         }
 
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
 
-        pre {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 15px;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Output Areas */
+        #svgOutput,
+        #output {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 0.95em;
+        }
+
+        #svgOutput code,
+        #output code {
+            background: var(--bg-primary);
+            padding: 3px 8px;
             border-radius: 4px;
-            white-space: pre-wrap;
-            position: relative;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            color: var(--gold-primary);
         }
 
-        .form-section {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-        }
-
-        .form-section:last-child {
-            border-bottom: none;
-        }
-
-        .copy-btn {
-            padding: 5px 10px;
-            background-color: #ff4500;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .copy-btn:hover {
-            background-color: #ff6347;
-        }
-
-        #svgOutput {
-            border: 1px solid #ddd;
-            padding: 15px;
-            line-height: 1.6;
-            color: #fff"
-
-        }
-
-        #svgOutput code {
-            background-color: #f5f5f5;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-
-        #svgOutput pre {
-            background-color: #f5f5f5;
-            padding: 15px;
-            border-radius: 4px;
+        #svgOutput pre,
+        #output pre {
+            background: var(--bg-primary);
+            padding: 16px;
+            border-radius: var(--radius-sm);
             overflow-x: auto;
+            border: 1px solid var(--border-color);
         }
 
-        #svgOutput pre code {
-            background-color: transparent;
+        #svgOutput pre code,
+        #output pre code {
+            background: transparent;
             padding: 0;
         }
 
-        #svgOutput blockquote {
-            border-left: 4px solid #ddd;
-            padding-left: 15px;
-            margin-left: 0;
-            color: #666;
+        #svgOutput blockquote,
+        #output blockquote {
+            border-left: 3px solid var(--gold-primary);
+            padding-left: 16px;
+            margin: 16px 0;
+            color: var(--text-secondary);
+            font-style: italic;
         }
 
         #svgOutput h1,
         #svgOutput h2,
         #svgOutput h3,
-        #svgOutput h4 {
+        #svgOutput h4,
+        #output h1,
+        #output h2,
+        #output h3,
+        #output h4 {
+            color: var(--gold-primary);
             margin-top: 24px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             font-weight: 600;
-            line-height: 1.25;
         }
 
         #svgOutput ul,
-        #svgOutput ol {
-            padding-left: 20px;
+        #svgOutput ol,
+        #output ul,
+        #output ol {
+            padding-left: 24px;
+            margin: 12px 0;
         }
 
+        #svgOutput li,
+        #output li {
+            margin: 6px 0;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            padding: 8px 16px;
+            background: transparent;
+            color: var(--gold-primary);
+            border: 1px solid var(--gold-primary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all var(--transition-fast);
+            margin-bottom: 15px;
+        }
+
+        .copy-btn:hover {
+            background: var(--gold-primary);
+            color: var(--bg-primary);
+        }
+
+        /* Ask Content */
         .ask-content {
-            border: 1px solid #ddd;
-            padding: 15px;
-            line-height: 1.6;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            line-height: 1.8;
         }
 
+        /* Loading Overlay */
         .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 31, 63, 0.9);
+            background: rgba(10, 10, 15, 0.95);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
 
         .loading-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 30px;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--gold-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .loading-text {
-            color: #ffd700;
-            font-size: 24px;
+            color: var(--gold-primary);
+            font-size: 1.3em;
             text-align: center;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .loading-dots {
-            animation: dots 1.5s infinite;
-            width: 30px;
+            font-weight: 500;
+            letter-spacing: 2px;
         }
 
         .progress-bar {
-            width: 80%;
-            max-width: 300px;
-            height: 10px;
-            background-color: rgba(255, 69, 0, 0.3);
-            border-radius: 10px;
+            width: 280px;
+            height: 4px;
+            background: var(--bg-input);
+            border-radius: 2px;
             overflow: hidden;
             position: relative;
         }
@@ -371,140 +661,224 @@
         .progress-bar-inner {
             width: 100%;
             height: 100%;
-            background-color: #ffd700;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary), var(--gold-light));
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 1s linear;
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes dots {
-
-            0%,
-            20% {
-                content: '.';
-            }
-
-            40%,
-            60% {
-                content: '..';
-            }
-
-            80%,
-            100% {
-                content: '...';
-            }
-        }
-
-        a:link {
-            color: yellow;
-            background-color: transparent;
+        /* Links */
+        a {
+            color: var(--gold-primary);
             text-decoration: none;
-        }
-
-        a:visited {
-            color: pink;
-            background-color: transparent;
-            text-decoration: none;
+            transition: color var(--transition-fast);
+            border-bottom: 1px solid transparent;
         }
 
         a:hover {
-            color: red;
-            background-color: transparent;
-            text-decoration: underline;
+            color: var(--gold-light);
+            border-bottom-color: var(--gold-primary);
         }
 
-        a:active {
-            color: yellow;
-            background-color: transparent;
-            text-decoration: underline;
+        a:visited {
+            color: var(--gold-dark);
         }
 
-        @keyframes progress {
-            0% {
-                transform: scaleX(0);
-            }
-
-            50% {
-                transform: scaleX(1);
-            }
-
-            100% {
-                transform: scaleX(0);
-            }
-        }
-
-        /* 問事對話框樣式 */
+        /* Dialog */
         .dialog {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
+            background: rgba(10, 10, 15, 0.8);
+            display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
         }
 
         .dialog-content {
-            display: block;
-            text-align: center;
-            background-color: #002f5f;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            width: 90%;
             max-width: 500px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-gold);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .dialog-content h2 {
-            color: #ffd700;
+            color: var(--gold-primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.4em;
+            letter-spacing: 1px;
+        }
+
+        .dialog-content label {
+            color: var(--text-secondary);
+            font-size: 0.9em;
             margin-bottom: 15px;
             text-align: center;
         }
 
         .dialog-content textarea {
-            width: 90%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ffd700;
-            border-radius: 4px;
+            width: 100%;
+            padding: 14px;
+            margin: 15px 0;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
             resize: vertical;
-            background-color: #001f3f;
-            color: #fff;
             min-height: 100px;
+            font-family: inherit;
+        }
+
+        .dialog-content textarea:focus {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 0 3px var(--gold-glow);
         }
 
         .dialog-buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
+            margin-top: 20px;
         }
 
         .dialog-buttons button {
-            padding: 8px 24px;
+            padding: 12px 32px;
             border: none;
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            background-color: #ff4500;
-            color: white;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all var(--transition-fast);
         }
 
-        .dialog-buttons button:hover {
-            background-color: #ff6347;
+        .dialog-buttons button:first-child {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .dialog-buttons button:first-child:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        .dialog-buttons button:last-child {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            color: var(--bg-primary);
+        }
+
+        .dialog-buttons button:last-child:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 168, 83, 0.4);
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: rgba(201, 74, 74, 0.1);
+            border: 1px solid rgba(201, 74, 74, 0.2);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        .disclaimer strong {
+            color: var(--accent-red);
+        }
+
+        /* Footer Links */
+        .footer-links {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .footer-links p {
+            color: var(--text-muted);
+            font-size: 0.85em;
+            margin: 8px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2em;
+                letter-spacing: 2px;
+            }
+
+            .form-section {
+                padding: 20px;
+            }
+
+            .date-group {
+                flex-direction: column;
+            }
+
+            .date-group input,
+            .date-group select {
+                width: 100%;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .tab-buttons {
+                flex-wrap: wrap;
+            }
+
+            .tab-button {
+                padding: 10px 16px;
+                font-size: 0.9em;
+            }
+
+            .dialog-content {
+                padding: 20px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-primary);
         }
     </style>
 </head>
@@ -512,6 +886,7 @@
 <body>
     <div class="loading-overlay">
         <div class="loading-content">
+            <div class="loading-spinner"></div>
             <div class="loading-text">
                 <div class="loading-message"></div>
             </div>
@@ -520,181 +895,196 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="header">
             <h1 data-i18n="title">天樞命理Agent</h1>
             <div class="subtitle" data-i18n="subtitle">AI解命與Prompt生成器</div>
-            <div style="display: flex; justify-self:center; align-items: center; margin-top: 2px;">
+
+            <div class="social-links-container">
                 <span>分享：</span>
                 <a class="share-link"
                     href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;linkname="
-                    target="_blank"><img src="https://static.addtoany.com/buttons/facebook.svg" width="32" height="32" style="background-color:#1877F2"></a>
-
-                <a class="share-link" href="https://www.addtoany.com/add_to/line?linkurl=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;linkname="
-                    target="_blank"><img src="https://static.addtoany.com/buttons/line.svg" width="32" height="32" style="background-color:#06c755"></a>
+                    target="_blank">
+                    <img src="https://static.addtoany.com/buttons/facebook.svg" alt="Facebook">
+                </a>
+                <a class="share-link"
+                    href="https://www.addtoany.com/add_to/line?linkurl=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;linkname="
+                    target="_blank">
+                    <img src="https://static.addtoany.com/buttons/line.svg" alt="Line">
+                </a>
                 <a class="share-link"
                     href="https://www.addtoany.com/add_to/facebook_messenger?linkurl=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;linkname="
-                    target="_blank"><img src="https://static.addtoany.com/buttons/facebook_messenger.svg" width="32" height="32"
-                        style="background-color:#9F33FF"></a>
+                    target="_blank">
+                    <img src="https://static.addtoany.com/buttons/facebook_messenger.svg" alt="Messenger">
+                </a>
                 <a class="share-link"
                     href="https://www.addtoany.com/add_to/threads?linkurl=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;linkname="
-                    target="_blank"><img src="https://static.addtoany.com/buttons/threads.svg" width="32" height="32" style="background-color:black"></a>
-                <a class="share-link" href="https://www.addtoany.com/add_to/wechat?linkurl=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;linkname="
-                    target="_blank"><img src="https://static.addtoany.com/buttons/wechat.svg" width="32" height="32" style="background-color:#09B83E"></a>
+                    target="_blank">
+                    <img src="https://static.addtoany.com/buttons/threads.svg" alt="Threads">
+                </a>
+                <a class="share-link"
+                    href="https://www.addtoany.com/add_to/wechat?linkurl=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;linkname="
+                    target="_blank">
+                    <img src="https://static.addtoany.com/buttons/wechat.svg" alt="WeChat">
+                </a>
                 <a class="share-link"
                     href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;linkname="
-                    target="_blank"><img src="https://static.addtoany.com/buttons/x.svg" width="32" height="32" style="background-color:black"></a>
+                    target="_blank">
+                    <img src="https://static.addtoany.com/buttons/x.svg" alt="X">
+                </a>
                 <a class="share-link"
                     href="https://www.addtoany.com/add_to/telegram?linkurl=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;linkname="
-                    target="_blank"><img src="https://static.addtoany.com/buttons/telegram.svg" width="32" height="32" style="background-color:#0088cc"></a>
-                <a class="share-link" href="https://www.addtoany.com/share#url=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;title="
-                    target="_blank"><img src="https://static.addtoany.com/buttons/a2a.svg" style="background-color:royalblue"></a>
+                    target="_blank">
+                    <img src="https://static.addtoany.com/buttons/telegram.svg" alt="Telegram">
+                </a>
+                <a class="share-link"
+                    href="https://www.addtoany.com/share#url=https%3A%2F%2Fjakevin.github.io%2Fazure-tts%2Fcyber8zi&amp;title="
+                    target="_blank">
+                    <img src="https://static.addtoany.com/buttons/a2a.svg" alt="More">
+                </a>
             </div>
-            <div id="visitor-count" style="color: #ffd700; font-size: 0.5em; margin-top: 5px;">AI已算：<span id="count">-</span>次</div>
 
+            <div id="visitor-count">AI已算：<span id="count">-</span>次</div>
         </div>
-        <!-- AddToAny BEGIN -->
 
-        <!-- AddToAny END -->
         <div class="form-section">
-            <div style="display: flex; margin-bottom: 10px;">
-                <div>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <div style="flex: 1; min-width: 120px;">
                     <label data-i18n="lastName">姓氏:</label>
-                    <input type="text" id="familyName">
+                    <input type="text" id="familyName" placeholder="請輸入姓氏">
                 </div>
-                <div style="margin-left: 10px;">
+                <div style="flex: 1; min-width: 120px;">
                     <label data-i18n="firstName">名字:</label>
-                    <input type="text" id="giveName">
+                    <input type="text" id="giveName" placeholder="請輸入名字">
                 </div>
-                <div style="margin-left: 10px;">
+                <div style="flex: 1; min-width: 150px;">
                     <label data-i18n="gender">性別:</label>
                     <div class="radio-group">
-                        <label><input type="radio" name="gender" value="男" required> <span data-i18n="male">男</span></label>
-                        <label><input type="radio" name="gender" value="女" required> <span data-i18n="female">女</span></label>
+                        <label><input type="radio" name="gender" value="男" required> <span
+                                data-i18n="male">男</span></label>
+                        <label><input type="radio" name="gender" value="女" required> <span
+                                data-i18n="female">女</span></label>
                     </div>
                 </div>
             </div>
-
-
-
         </div>
+
         <div class="form-section">
             <label data-i18n="birthDateTime">陽曆出生年月日時分 | 請用+8時區:</label>
-            <div class="date-group">
-                <input type="date" id="birth-date" style="width: 200px">
-                <div style="display:block;">
-                    <checkbox style="display: flex;">
-                        <label>不知道詳細時間</label>
-                        <input type="checkbox" id="unknow-hours">
-                    </checkbox>
-                    <div style="display: flex;">
-                        <select id="birth-hour" style="width: 100px">
-                            <option value="--">--</option>
-                            <option value="00">00時</option>
-                            <option value="01">01時</option>
-                            <option value="02">02時</option>
-                            <option value="03">03時</option>
-                            <option value="04">04時</option>
-                            <option value="05">05時</option>
-                            <option value="06">06時</option>
-                            <option value="07">07時</option>
-                            <option value="08">08時</option>
-                            <option value="09">09時</option>
-                            <option value="10">10時</option>
-                            <option value="11">11時</option>
-                            <option value="12">12時</option>
-                            <option value="13">13時</option>
-                            <option value="14">14時</option>
-                            <option value="15">15時</option>
-                            <option value="16">16時</option>
-                            <option value="17">17時</option>
-                            <option value="18">18時</option>
-                            <option value="19">19時</option>
-                            <option value="20">20時</option>
-                            <option value="21">21時</option>
-                            <option value="22">22時</option>
-                            <option value="23">23時</option>
-                        </select>
-                        <select id="birth-minute" style="width: 100px; margin-left: 5px;">
-                            <option value="--">--</option>
-                            <option value="00">00分</option>
-                            <option value="01">01分</option>
-                            <option value="02">02分</option>
-                            <option value="03">03分</option>
-                            <option value="04">04分</option>
-                            <option value="05">05分</option>
-                            <option value="06">06分</option>
-                            <option value="07">07分</option>
-                            <option value="08">08分</option>
-                            <option value="09">09分</option>
-                            <option value="10">10分</option>
-                            <option value="11">11分</option>
-                            <option value="12">12分</option>
-                            <option value="13">13分</option>
-                            <option value="14">14分</option>
-                            <option value="15">15分</option>
-                            <option value="16">16分</option>
-                            <option value="17">17分</option>
-                            <option value="18">18分</option>
-                            <option value="19">19分</option>
-                            <option value="20">20分</option>
-                            <option value="21">21分</option>
-                            <option value="22">22分</option>
-                            <option value="23">23分</option>
-                            <option value="24">24分</option>
-                            <option value="25">25分</option>
-                            <option value="26">26分</option>
-                            <option value="27">27分</option>
-                            <option value="28">28分</option>
-                            <option value="29">29分</option>
-                            <option value="30">30分</option>
-                            <option value="31">31分</option>
-                            <option value="32">32分</option>
-                            <option value="33">33分</option>
-                            <option value="34">34分</option>
-                            <option value="35">35分</option>
-                            <option value="36">36分</option>
-                            <option value="37">37分</option>
-                            <option value="38">38分</option>
-                            <option value="39">39分</option>
-                            <option value="40">40分</option>
-                            <option value="41">41分</option>
-                            <option value="42">42分</option>
-                            <option value="43">43分</option>
-                            <option value="44">44分</option>
-                            <option value="45">45分</option>
-                            <option value="46">46分</option>
-                            <option value="47">47分</option>
-                            <option value="48">48分</option>
-                            <option value="49">49分</option>
-                            <option value="50">50分</option>
-                            <option value="51">51分</option>
-                            <option value="52">52分</option>
-                            <option value="53">53分</option>
-                            <option value="54">54分</option>
-                            <option value="55">55分</option>
-                            <option value="56">56分</option>
-                            <option value="57">57分</option>
-                            <option value="58">58分</option>
-                            <option value="59">59分</option>
-                        </select>
-                    </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start;">
+                <input type="date" id="birth-date" style="flex: 2; min-width: 150px;">
+                <div style="display: flex; gap: 10px; flex: 2; min-width: 200px;">
+                    <select id="birth-hour" style="flex: 1;">
+                        <option value="--">--</option>
+                        <option value="00">00時</option>
+                        <option value="01">01時</option>
+                        <option value="02">02時</option>
+                        <option value="03">03時</option>
+                        <option value="04">04時</option>
+                        <option value="05">05時</option>
+                        <option value="06">06時</option>
+                        <option value="07">07時</option>
+                        <option value="08">08時</option>
+                        <option value="09">09時</option>
+                        <option value="10">10時</option>
+                        <option value="11">11時</option>
+                        <option value="12">12時</option>
+                        <option value="13">13時</option>
+                        <option value="14">14時</option>
+                        <option value="15">15時</option>
+                        <option value="16">16時</option>
+                        <option value="17">17時</option>
+                        <option value="18">18時</option>
+                        <option value="19">19時</option>
+                        <option value="20">20時</option>
+                        <option value="21">21時</option>
+                        <option value="22">22時</option>
+                        <option value="23">23時</option>
+                    </select>
+                    <select id="birth-minute" style="flex: 1;">
+                        <option value="--">--</option>
+                        <option value="00">00分</option>
+                        <option value="01">01分</option>
+                        <option value="02">02分</option>
+                        <option value="03">03分</option>
+                        <option value="04">04分</option>
+                        <option value="05">05分</option>
+                        <option value="06">06分</option>
+                        <option value="07">07分</option>
+                        <option value="08">08分</option>
+                        <option value="09">09分</option>
+                        <option value="10">10分</option>
+                        <option value="11">11分</option>
+                        <option value="12">12分</option>
+                        <option value="13">13分</option>
+                        <option value="14">14分</option>
+                        <option value="15">15分</option>
+                        <option value="16">16分</option>
+                        <option value="17">17分</option>
+                        <option value="18">18分</option>
+                        <option value="19">19分</option>
+                        <option value="20">20分</option>
+                        <option value="21">21分</option>
+                        <option value="22">22分</option>
+                        <option value="23">23分</option>
+                        <option value="24">24分</option>
+                        <option value="25">25分</option>
+                        <option value="26">26分</option>
+                        <option value="27">27分</option>
+                        <option value="28">28分</option>
+                        <option value="29">29分</option>
+                        <option value="30">30分</option>
+                        <option value="31">31分</option>
+                        <option value="32">32分</option>
+                        <option value="33">33分</option>
+                        <option value="34">34分</option>
+                        <option value="35">35分</option>
+                        <option value="36">36分</option>
+                        <option value="37">37分</option>
+                        <option value="38">38分</option>
+                        <option value="39">39分</option>
+                        <option value="40">40分</option>
+                        <option value="41">41分</option>
+                        <option value="42">42分</option>
+                        <option value="43">43分</option>
+                        <option value="44">44分</option>
+                        <option value="45">45分</option>
+                        <option value="46">46分</option>
+                        <option value="47">47分</option>
+                        <option value="48">48分</option>
+                        <option value="49">49分</option>
+                        <option value="50">50分</option>
+                        <option value="51">51分</option>
+                        <option value="52">52分</option>
+                        <option value="53">53分</option>
+                        <option value="54">54分</option>
+                        <option value="55">55分</option>
+                        <option value="56">56分</option>
+                        <option value="57">57分</option>
+                        <option value="58">58分</option>
+                        <option value="59">59分</option>
+                    </select>
                 </div>
-
+                <checkbox style="flex: 1; min-width: 140px; margin: 0;">
+                    <input type="checkbox" id="unknow-hours">
+                    <label>不知道詳細時間</label>
+                </checkbox>
             </div>
-            <div id="true-solar-time" style="margin-top: 10px; padding: 10px; background-color: #e8f5e9; border-radius: 4px; display: none; color:red">
+            <div id="true-solar-time" style="display: none; margin-top: 15px;">
                 <strong data-i18n="trueSolarTime">真太陽時：</strong> <span id="solar-time-result"></span>
             </div>
         </div>
+
         <div class="form-section">
-            <div style="display: flex;">
-                <div>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <div style="flex: 1; min-width: 150px;">
                     <label for="province" data-i18n="birthPlace">出生地:</label>
                     <select id="province" required>
                         <option value="台灣">台灣</option>
                     </select>
                 </div>
-                <div style="margin-left: 10px;">
+                <div style="flex: 1; min-width: 150px;">
                     <label for="city" data-i18n="birthCity">出生城市:</label>
                     <select id="city" required>
                         <option value="" data-i18n="pleaseSelect">-- 請選擇 --</option>
@@ -702,74 +1092,86 @@
                 </div>
             </div>
 
-
-
-
-            <div style="margin-top: 10px;">
+            <div style="margin-top: 20px;">
                 <label for="custom-longitude" data-i18n="customLongitude">自訂經度（選填）:</label>
                 <input type="number" id="custom-longitude" step="0.1" min="-180" max="180" placeholder="例如：121.5">
-                <div style="color: #ffd700; font-size: 0.9em;" data-i18n="longitudeHint">若填寫此欄位將優先使用自訂經度（有效範圍：-180 到 180，東經為正值）</div>
+                <div style="color: var(--text-muted); font-size: 0.85em; margin-top: 8px;" data-i18n="longitudeHint">
+                    若填寫此欄位將優先使用自訂經度（有效範圍：-180 到 180，東經為正值）</div>
             </div>
-
-
-        </div>
-        <div style="display: flex;">
-            <label for="teacher">AI老師：</label>
-            <select id="teacher" style="width: 250px">
-                <option value="openai">OpenAI</option>
-                <option value="google">谷哥大神（Google）</option>
-                <option value="deepseek">深度精靈（DeepSeek）</option>
-            </select>
         </div>
 
-        <checkbox style="display: flex;">
-            <label data-i18n="useTrueSolarTime">使用真太陽時：</label>
-            <input type="checkbox" id="true-solar-time-checkbox" checked>
-        </checkbox>
-        <checkbox style="display: flex;">
-            <label data-i18n="includeZiwei">加入紫微斗數：</label>
-            <input type="checkbox" id="ziwei-checkbox" checked>
-        </checkbox>
+        <div class="form-section">
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
+                <div style="flex: 1; min-width: 200px;">
+                    <label for="teacher">AI老師：</label>
+                    <select id="teacher">
+                        <option value="google">谷哥大神（Google）</option>
+                        <option value="openai">OpenAI</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <checkbox>
+                        <input type="checkbox" id="true-solar-time-checkbox" checked>
+                        <label data-i18n="useTrueSolarTime">使用真太陽時</label>
+                    </checkbox>
+                    <checkbox>
+                        <input type="checkbox" id="ziwei-checkbox" checked>
+                        <label data-i18n="includeZiwei">加入紫微斗數</label>
+                    </checkbox>
+                </div>
+            </div>
+        </div>
+
         <button class="orange-red-btn" id="generate-btn" data-i18n="calculateButton">請幫我算一算！</button>
+
         <div id="error-message"></div>
+
         <div id="result-layout" class="tab-container" style="display: none;">
-            <div style="display: flex; margin-bottom: 10px;">
-                <button class="orange-red-btn" style="margin-right: 5px;" id="ask-things-btn" data-i18n="askThings">我要問事</button>
-                <button class="orange-red-btn" style="margin-left: 5px;" id="match-btn" data-i18n="askPeople">我要問人</button>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button class="orange-red-btn" style="flex: 1;" id="ask-things-btn" data-i18n="askThings">我要問事</button>
+                <button class="orange-red-btn" style="flex: 1;" id="match-btn" data-i18n="askPeople">我要問人</button>
             </div>
-            <p style="margin-top: 10px; padding: 10px; background-color: #f5dddd; border-radius: 4px; color: #000;">
-                <span data-i18n="important">重要宣告：</span></br>
+
+            <div class="disclaimer">
+                <strong data-i18n="important">重要宣告：</strong>
                 <span data-i18n="disclaimer">命理學是一種複雜的學問僅供參考，不能作為決策的唯一依據。</span>
-            </p>
+            </div>
+
             <div class="tab-buttons">
                 <button class="tab-button active" onclick="switchTab('result')" data-i18n="aiAnalysis">AI解盤</button>
                 <button class="tab-button" onclick="switchTab('prompt')" data-i18n="chartPrompt">盤面提示詞</button>
             </div>
-            <div id="result-tab" class="tab-content active" style="background-color: #002f5f;color: white;">
-                <p style="margin-top: 10px; padding: 10px; background-color: #e8f5e9; border-radius: 4px; color: #000;">
+
+            <div id="result-tab" class="tab-content active">
+                <p
+                    style="margin-bottom: 15px; padding: 12px 16px; background: rgba(212, 168, 83, 0.1); border-radius: var(--radius-sm); color: var(--gold-primary); font-size: 0.9em;">
                     如果輸出結果亂碼太多時，請再算一次
                 </p>
                 <div id="svgOutput"></div>
             </div>
-            <div id="prompt-tab" class="tab-content " style="background-color: #002f5f">
-                <div style="margin-top: 10px; padding: 10px; background-color: #e8f5e9; border-radius: 4px; color: #000;">請把內容複製後，貼給ChatGPT。就能夠無時無刻的與AI老師商談了！
+
+            <div id="prompt-tab" class="tab-content">
+                <div
+                    style="margin-bottom: 15px; padding: 12px 16px; background: rgba(212, 168, 83, 0.1); border-radius: var(--radius-sm); color: var(--text-secondary); font-size: 0.9em;">
+                    請把內容複製後，貼給ChatGPT。就能夠無時無刻的與AI老師商談了！
                 </div>
-                <pre id="output" style="background-color: #002f5f; color:#fff">
+                <pre id="output">
                     <button class="copy-btn" onclick="copyPrompt()">複製</button>
                 </pre>
             </div>
         </div>
-        <div>
-            <p>本工具使用 <a href="https://lunisolar.js.org/" style="color: ffd700;" target="_blank">lunisolar</a> 作為天干地支的轉換工具</p>
+
+        <div class="footer-links">
+            <p>本工具使用 <a href="https://lunisolar.js.org/" target="_blank">lunisolar</a> 作為天干地支的轉換工具</p>
             <p>本工具使用 <a href="https://iztro.com/" target="_blank">iztro</a> 作為紫微斗數的轉換工具</p>
             <p>本工具使用 <a href="https://github.com/theajack/cnchar" target="_blank">cnchar</a> 作為簡中與生僻字的筆劃查詢工具</p>
-            <p>本工具使用 <a href="https://github.com/breezyreeds/kangxi-strokecount" target="_blank">kangxi-strokecount</a> 作為康熙字典筆劃資料來源</p>
-
+            <p>本工具使用 <a href="https://github.com/breezyreeds/kangxi-strokecount" target="_blank">kangxi-strokecount</a>
+                作為康熙字典筆劃資料來源</p>
         </div>
     </div>
 
     <script>
-        const DEBUG = false; // 設定為 true 以使用本地端 API
+        const DEBUG = false;
         const SKIP_FETCH_RESULT = false;
         const VERSION = '2';
         const OLD_VERSION = '1';
@@ -782,11 +1184,9 @@
         localStorage.removeItem('savedRequestPrompt' + OLD_VERSION);
         localStorage.removeItem('savedSvgOutput' + OLD_VERSION);
 
-
         let requestPrompt = '';
 
         document.addEventListener('DOMContentLoaded', function () {
-
             const loadingOverlay = document.querySelector('.loading-overlay');
             const progressBar = document.querySelector('.progress-bar-inner');
             const messageElement = document.querySelector('.loading-message');
@@ -825,26 +1225,22 @@
             const targetGenderRadios = document.getElementsByName('target-gender');
             const matchQuestionInput = document.getElementById('match-question-input');
 
-            fetchCount()
+            fetchCount();
 
-            // 添加「我要問事」按鈕點擊事件
             askButton.addEventListener('click', () => {
                 askDialog.style.display = 'flex';
             });
 
-            // 關閉對話框
             window.closeDialog = function () {
                 askDialog.style.display = 'none';
                 matchDialog.style.display = 'none';
                 questionInput.value = '';
             };
 
-            // 添加「我要問人」按鈕點擊事件
             matchButton.addEventListener('click', () => {
                 matchDialog.style.display = 'flex';
             });
 
-            // 提交問題
             window.submitQuestion = async function () {
                 const question = questionInput.value.trim();
                 if (!question) {
@@ -852,10 +1248,8 @@
                     return;
                 }
 
-                // 生成唯一的標籤ID
                 const tabId = 'ask-' + Date.now();
 
-                // 添加新的標籤按鈕
                 const tabButton = document.createElement('button');
                 tabButton.className = 'tab-button';
                 const buttonText = '問事';
@@ -863,25 +1257,19 @@
                 tabButton.textContent = buttonText;
                 document.querySelector('.tab-buttons').appendChild(tabButton);
 
-                // 添加新的內容區域
                 const tabContent = document.createElement('div');
                 tabContent.id = `${tabId}-tab`;
                 tabContent.className = 'tab-content';
-                tabContent.style.backgroundColor = '#002f5f';
-                tabContent.style.color = 'white';
                 tabContent.innerHTML = `<div id="${tabId}-content" class="ask-content"></div>`;
                 document.querySelector('#result-layout').insertBefore(
                     tabContent,
                     document.querySelector('#prompt-tab')
                 );
 
-                // 關閉對話框
                 closeDialog();
 
-                // 開始分析
                 const result = await fetchAsk(question, `${tabId}-content`);
 
-                // 切換到新的問事標籤
                 switchTab(tabId);
             };
 
@@ -892,10 +1280,8 @@
                     return;
                 }
 
-                // 生成唯一的標籤ID
                 const tabId = 'match-' + Date.now();
 
-                // 添加新的標籤按鈕
                 const tabButton = document.createElement('button');
                 tabButton.className = 'tab-button';
                 const buttonText = '問人';
@@ -903,12 +1289,9 @@
                 tabButton.textContent = buttonText;
                 document.querySelector('.tab-buttons').appendChild(tabButton);
 
-                // 添加新的內容區域
                 const tabContent = document.createElement('div');
                 tabContent.id = `${tabId}-tab`;
                 tabContent.className = 'tab-content';
-                tabContent.style.backgroundColor = '#002f5f';
-                tabContent.style.color = 'white';
                 tabContent.innerHTML = `<div id="${tabId}-content" class="ask-content"></div>`;
                 document.querySelector('#result-layout').insertBefore(
                     tabContent,
@@ -926,29 +1309,22 @@
                     minutes: targetUnknowHoursCheckbox.checked ? "--" : "00",
                     gender: targetGenderRadios[0].checked ? '男' : '女',
                 }
-                console.log('targetInfo', targetInfo)
-                // 關閉對話框
+
                 closeDialog();
 
                 if (DEBUG && SKIP_FETCH_RESULT) {
-                    //for test prompt
                     setTimeout(() => {
                         progressBar.style.transform = 'scaleX(0)';
                         messageElement.textContent = '';
-
-                        // 重置進度條和消息
                         currentProgress = 0;
                         messageIndex = 0;
-
                         loadingOverlay.style.display = 'none';
                     }, 500);
                     return
                 }
 
-                // 開始分析
                 const result = await fetchMatch(targetInfo, question, `${tabId}-content`);
 
-                // 切換到新的問事標籤
                 switchTab(tabId);
             };
 
@@ -973,9 +1349,7 @@
                 }
             }
 
-
             function initializeSelectors() {
-                // 嘗試從 localStorage 恢復數據
                 const savedRequestPrompt = localStorage.getItem('savedRequestPrompt' + VERSION);
                 const savedSvgOutput = localStorage.getItem('savedSvgOutput' + VERSION);
 
@@ -992,12 +1366,10 @@
                     resultLayout.style.display = 'block';
                 }
 
-                // 恢復表單數據
                 const savedFormData = localStorage.getItem('savedFormData' + VERSION);
                 if (savedFormData) {
                     const formData = JSON.parse(savedFormData);
 
-                    // 設置日期時間
                     if (formData.birthDay) {
                         birthDateInput.value = `${formData.birthDay.year}-${formData.birthDay.month}-${formData.birthDay.day}`;
                         birthHourSelect.value = formData.birthDay.hours;
@@ -1010,16 +1382,13 @@
                         const hours = now.getHours().toString().padStart(2, '0');
                         const minutes = now.getMinutes().toString().padStart(2, '0');
                         const seconds = now.getSeconds().toString().padStart(2, '0');
-                        datetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
                     }
 
-                    // 設置性別
                     if (formData.gender) {
                         const genderInput = document.querySelector(`input[name="gender"][value="${formData.gender}"]`);
                         if (genderInput) genderInput.checked = true;
                     }
 
-                    // 設置省份和城市
                     if (formData.province) {
                         provinceSelect.value = formData.province;
                         populateCities(formData.province);
@@ -1028,7 +1397,6 @@
                         }
                     }
 
-                    // 設置自訂經度
                     if (formData.customLongitude) {
                         customLongitude.value = formData.customLongitude;
                     }
@@ -1041,7 +1409,6 @@
                         giveNameInput.value = formData.giveName;
                     }
 
-                    // 設置真太陽時和紫微斗數選項
                     trueSolarTimeCheckbox.checked = formData.usingTrueSolarTime;
                     ziweiCheckbox.checked = formData.includeZiwei;
                     unknowHoursCheckbox.checked = formData.unknowHours;
@@ -1090,7 +1457,6 @@
                     });
             };
 
-
             window.copyResult = function (elementId) {
                 const element = document.getElementById(elementId);
                 if (!element) return;
@@ -1108,7 +1474,6 @@
 
             generateBtn.addEventListener('click', async function () {
                 if (validateForm()) {
-                    // 清除之前儲存的數據
                     localStorage.removeItem('savedRequestPrompt' + VERSION);
                     localStorage.removeItem('savedSvgOutput' + VERSION);
 
@@ -1128,7 +1493,6 @@
                     }
                     const unknowHours = unknowHoursCheckbox.checked;
 
-                    // 獲取出生地經度
                     const birthProvince = provinceSelect.value;
                     const birthCity = citySelect.value;
                     const customLongitudeValue = customLongitude.value;
@@ -1137,15 +1501,11 @@
                     await fetchPrompt(familyName, giveName, unknowHours, birthDay, gender, usingTrueSolarTime, includeZiwei, longitude);
 
                     if (DEBUG && SKIP_FETCH_RESULT) {
-                        //for test prompt
                         setTimeout(() => {
                             progressBar.style.transform = 'scaleX(0)';
                             messageElement.textContent = '';
-
-                            // 重置進度條和消息
                             currentProgress = 0;
                             messageIndex = 0;
-
                             loadingOverlay.style.display = 'none';
                         }, 500);
                         return
@@ -1155,18 +1515,13 @@
                 }
             });
 
-
             function setLoadingOverlay(messages) {
-
                 let currentProgress = 0;
                 let messageIndex = 0;
 
                 loadingOverlay.style.display = 'flex';
-
-                // 設置初始消息
                 messageElement.textContent = messages[0];
 
-                // 更新消息的函數
                 const updateMessage = () => {
                     if (messageIndex < messages.length - 1) {
                         messageIndex++;
@@ -1180,9 +1535,7 @@
                     }
                 };
 
-                // 設置定時器，每2秒更新一次消息
                 const messageInterval = setInterval(updateMessage, 2000);
-
 
                 return { messageInterval }
             }
@@ -1194,7 +1547,6 @@
                 ];
                 const { messageInterval } = setLoadingOverlay(messages);
 
-                // 保存表單數據
                 const formData = {
                     familyName,
                     giveName,
@@ -1242,7 +1594,6 @@
                         requestPrompt = data.prompt.requestPrompt.replaceAll('鬥數', '斗數');
                         outputDiv.textContent = prompt + requestPrompt;
 
-                        // 保存 requestPrompt 到 localStorage
                         localStorage.setItem('savedRequestPrompt' + VERSION, prompt + requestPrompt);
 
                         outputDiv.innerHTML = `<button class="copy-btn" onclick="copyPrompt()">複製</button>` + `<br>` + marked.parse(prompt + requestPrompt);
@@ -1252,27 +1603,20 @@
                     console.error('API請求失敗:', error);
                     confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
 
-
                     setTimeout(() => {
                         progressBar.style.transform = 'scaleX(0)';
                         messageElement.textContent = '';
-
-                        // 重置進度條和消息
                         currentProgress = 0;
                         messageIndex = 0;
-
                         loadingOverlay.style.display = 'none';
                     }, 500);
 
                 } finally {
-                    // 清理定時器
                     await clearInterval(messageInterval);
-
                 }
             }
 
             async function fetchResult(requestPrompt) {
-
                 const messages = [
                     "調整坐姿...",
                     "點香祈禱...",
@@ -1315,7 +1659,6 @@
                         svgOutput.innerHTML = `<button class="copy-btn" onclick="copyResult('svgOutput')">複製</button></br>` +
                             marked.parse(processedMsg);
 
-                        // 保存解盤結果到 localStorage
                         localStorage.setItem('savedSvgOutput' + VERSION, processedMsg);
                     }
 
@@ -1324,18 +1667,13 @@
                     confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
 
                 } finally {
-                    // 清理定時器
                     await clearInterval(messageInterval);
-
 
                     setTimeout(() => {
                         progressBar.style.transform = 'scaleX(0)';
                         messageElement.textContent = '';
-
-                        // 重置進度條和消息
                         currentProgress = 0;
                         messageIndex = 0;
-
                         loadingOverlay.style.display = 'none';
                     }, 500);
                 }
@@ -1388,7 +1726,7 @@
                                 `問事內容：${ask}</br>` +
                                 `雷雨百詩：</br>` +
                                 `${resultDraw.drawList} ${resultDraw.fate}</br>【${resultDraw.poem}】</br>` +
-                                `<img src="https://image.pollinations.ai/prompt/${resultDraw.poem}" style="max-width: 90%;"></br>` +
+                                `<img src="https://image.pollinations.ai/prompt/${resultDraw.poem}" style="max-width: 90%; border-radius: 8px; margin: 10px 0;"></br>` +
                                 marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
                         }
                     }
@@ -1398,18 +1736,13 @@
                     confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
 
                 } finally {
-                    // 清理定時器
                     await clearInterval(messageInterval);
-
 
                     setTimeout(() => {
                         progressBar.style.transform = 'scaleX(0)';
                         messageElement.textContent = '';
-
-                        // 重置進度條和消息
                         currentProgress = 0;
                         messageIndex = 0;
-
                         loadingOverlay.style.display = 'none';
                     }, 500);
                 }
@@ -1473,7 +1806,7 @@
                                 `問人內容：生日${targetInfo.year}/${targetInfo.month}/${targetInfo.day} ${targetInfo.familyName}${targetInfo.giveName} ${targetInfo.gender}。</br>${question}</br>` +
                                 `雷雨百詩：${resultDraw.drawList} ${resultDraw.fate}</br>` +
                                 `【${resultDraw.poem}】</br>` +
-                                `<img src="https://image.pollinations.ai/prompt/${resultDraw.poem}" style="max-width: 90%;"></br>` +
+                                `<img src="https://image.pollinations.ai/prompt/${resultDraw.poem}" style="max-width: 90%; border-radius: 8px; margin: 10px 0;"></br>` +
                                 marked.parse(data.msg.trim().replaceAll('鬥數', '斗數'));
                         }
                     }
@@ -1483,18 +1816,13 @@
                     confirm('目前使用人數眾多，請稍後再試。或複製Prompt到ChatGPT中進行分析。');
 
                 } finally {
-                    // 清理定時器
                     await clearInterval(messageInterval);
-
 
                     setTimeout(() => {
                         progressBar.style.transform = 'scaleX(0)';
                         messageElement.textContent = '';
-
-                        // 重置進度條和消息
                         currentProgress = 0;
                         messageIndex = 0;
-
                         loadingOverlay.style.display = 'none';
                     }, 500);
                 }
@@ -1520,12 +1848,10 @@
                 populateCities(selectedProvince);
             });
 
-            // 監聽不知道詳細時間的勾選
             unknowHoursCheckbox.addEventListener('change', function () {
                 if (this.checked) {
                     birthHourSelect.value = "--";
                     birthMinuteSelect.value = "--";
-                    trueSolarTimeCheckbox.checked = false;
                     trueSolarTimeCheckbox.checked = false;
                 }
             });
@@ -1535,10 +1861,7 @@
             });
         });
 
-
-
         function switchTab(tabName) {
-            // 移除所有標籤和內容的active類
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.classList.remove('active');
             });
@@ -1546,13 +1869,10 @@
                 content.classList.remove('active');
             });
 
-            // 為新的問事標籤或原有標籤添加active類
             let targetButton;
-            if (tabName.startsWith('ask-')) {
-                // 對於動態創建的問事標籤
+            if (tabName.startsWith('ask-') || tabName.startsWith('match-')) {
                 targetButton = document.querySelector(`.tab-button[onclick*="${tabName}"]`);
             } else {
-                // 對於原有的標籤（result和prompt）
                 targetButton = document.querySelector(`.tab-button[onclick*="switchTab('${tabName}')"]`);
             }
 
@@ -1560,13 +1880,11 @@
                 targetButton.classList.add('active');
             }
 
-            // 顯示對應的內容
             const targetContent = document.getElementById(`${tabName}-tab`);
             if (targetContent) {
                 targetContent.classList.add('active');
             }
         }
-
     </script>
 
     <script>
@@ -1578,11 +1896,10 @@
         }
     </script>
 
-    <!-- 問事對話框 -->
     <div id="ask-dialog" class="dialog" style="display: none;">
         <div class="dialog-content">
             <h2 data-i18n="askDialogTitle">請輸入您想問的事情</h2>
-            <label data-i18n="timeRelatedNote">有時間相關問題，請說明清楚</br>如：2025年2月23日當周運勢</label>
+            <label data-i18n="timeRelatedNote">有時間相關問題，請說明清楚<br>如：2025年2月23日當周運勢</label>
             <textarea id="question-input" rows="4" data-i18n="questionPlaceholder" placeholder="請輸入您的問題..."></textarea>
             <div class="dialog-buttons">
                 <button onclick="closeDialog()" data-i18n="cancel">取消</button>
@@ -1591,60 +1908,61 @@
         </div>
     </div>
 
-    <!-- 問人對話框 -->
     <div id="match-dialog" class="dialog" style="display: none;">
         <div class="dialog-content">
             <h2 data-i18n="matchDialogTitle">請輸入您想問的事情</h2>
-            <label data-i18n="timeRelatedNote">有時間相關問題，請說明清楚</br>如：2025年2月23日當周運勢</label>
-            <div class="form-section" style="text-align: start;">
+            <label data-i18n="timeRelatedNote">有時間相關問題，請說明清楚<br>如：2025年2月23日當周運勢</label>
+            <div class="form-section" style="text-align: start; padding: 20px;">
                 <label data-i18n="targetFamilyName">對方姓氏:</label>
-                <input type="text" id="target-familyName" style="margin-bottom: 10px;">
+                <input type="text" id="target-familyName" style="margin-bottom: 15px;" placeholder="請輸入姓氏">
 
                 <label data-i18n="targetGivenName">對方名字:</label>
-                <input type="text" id="target-giveName" style="margin-bottom: 15px;">
+                <input type="text" id="target-giveName" style="margin-bottom: 15px;" placeholder="請輸入名字">
 
                 <label data-i18n="targetGender">對方性別:</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="target-gender" value="男" required> <span data-i18n="male">男</span></label>
-                    <label><input type="radio" name="target-gender" value="女" required> <span data-i18n="female">女</span></label>
+                <div class="radio-group" style="margin-bottom: 15px;">
+                    <label><input type="radio" name="target-gender" value="男" required> <span
+                            data-i18n="male">男</span></label>
+                    <label><input type="radio" name="target-gender" value="女" required> <span
+                            data-i18n="female">女</span></label>
                 </div>
-                <label>對方陽曆出生年月日時(請用+8時區) 可不填</label>
-                <div class="date-group">
-                    <input type="date" id="target-date" style="width: 100%;" step="1">
 
+                <label>對方陽曆出生年月日時(請用+8時區) 可不填</label>
+                <div class="date-group" style="margin-bottom: 15px;">
+                    <input type="date" id="target-date" style="flex: 1;">
                 </div>
-                <div style="margin-top: 10px;">
-                    <checkbox style="display: flex;">
-                        <label>不知道詳細時間</label>
-                        <input type="checkbox" id="target-unknow-hours">
-                    </checkbox>
-                    <select id="target-time" style="width: 100%;">
-                        <option value="00">00:00~00:59</option>
-                        <option value="01">01:00~01:59</option>
-                        <option value="02">02:00~02:59</option>
-                        <option value="03">03:00~03:59</option>
-                        <option value="04">04:00~04:59</option>
-                        <option value="05">05:00~05:59</option>
-                        <option value="06">06:00~06:59</option>
-                        <option value="07">07:00~07:59</option>
-                        <option value="08">08:00~08:59</option>
-                        <option value="09">09:00~09:59</option>
-                        <option value="10">10:00~10:59</option>
-                        <option value="11">11:00~11:59</option>
-                        <option value="12">12:00~12:59</option>
-                        <option value="13">13:00~13:59</option>
-                        <option value="14">14:00~14:59</option>
-                        <option value="15">15:00~15:59</option>
-                        <option value="16">16:00~16:59</option>
-                        <option value="17">17:00~17:59</option>
-                        <option value="18">18:00~18:59</option>
-                        <option value="19">19:00~19:59</option>
-                        <option value="20">20:00~20:59</option>
-                        <option value="21">21:00~21:59</option>
-                        <option value="22">22:00~22:59</option>
-                        <option value="23">23:00~23:59</option>
-                    </select>
-                </div>
+
+                <checkbox style="margin-bottom: 10px;">
+                    <input type="checkbox" id="target-unknow-hours">
+                    <label>不知道詳細時間</label>
+                </checkbox>
+
+                <select id="target-time" style="width: 100%;">
+                    <option value="00">00:00~00:59</option>
+                    <option value="01">01:00~01:59</option>
+                    <option value="02">02:00~02:59</option>
+                    <option value="03">03:00~03:59</option>
+                    <option value="04">04:00~04:59</option>
+                    <option value="05">05:00~05:59</option>
+                    <option value="06">06:00~06:59</option>
+                    <option value="07">07:00~07:59</option>
+                    <option value="08">08:00~08:59</option>
+                    <option value="09">09:00~09:59</option>
+                    <option value="10">10:00~10:59</option>
+                    <option value="11">11:00~11:59</option>
+                    <option value="12">12:00~12:59</option>
+                    <option value="13">13:00~13:59</option>
+                    <option value="14">14:00~14:59</option>
+                    <option value="15">15:00~15:59</option>
+                    <option value="16">16:00~16:59</option>
+                    <option value="17">17:00~17:59</option>
+                    <option value="18">18:00~18:59</option>
+                    <option value="19">19:00~19:59</option>
+                    <option value="20">20:00~20:59</option>
+                    <option value="21">21:00~21:59</option>
+                    <option value="22">22:00~22:59</option>
+                    <option value="23">23:00~23:59</option>
+                </select>
             </div>
             <textarea id="match-question-input" rows="4" placeholder="請輸入您與對方的問題..."></textarea>
             <div class="dialog-buttons">
